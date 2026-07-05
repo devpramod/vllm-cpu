@@ -17,7 +17,7 @@ server_command: >
   vllm serve Qwen/Qwen3-30B-A3B --port 18192
   --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128
   --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code
-  --disable-log-requests {arm_extra_args}
+  --disable-log-stats {arm_extra_args}
 command: >
   vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192
   --dataset-name random --random-input-len 128 --random-output-len 128
