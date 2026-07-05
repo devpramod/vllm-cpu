@@ -10,6 +10,7 @@ Run via: ./labctl ui   (or: uv run server/app.py --port 8800)
 
 import argparse
 import json
+import subprocess
 from pathlib import Path
 
 import uvicorn
@@ -29,6 +30,17 @@ if CACHE.is_dir():
     app.mount("/artifacts", StaticFiles(directory=str(CACHE)), name="artifacts")
 
 
+_subjects: dict = {}
+
+
+def commit_subject(sha):
+    if sha not in _subjects:
+        r = subprocess.run(["git", "log", "-1", "--format=%s", sha],
+                           capture_output=True, text=True, cwd=LAB)
+        _subjects[sha] = r.stdout.strip() if r.returncode == 0 else ""
+    return _subjects[sha]
+
+
 def load_runs():
     runs = []
     for p in sorted(RUNS.glob("*/run.json"), reverse=True):
@@ -39,6 +51,9 @@ def load_runs():
             for an, arm in r.get("arms", {}).items():
                 arm.setdefault("server_command",
                                job.get("arms", {}).get(an, {}).get("server_command"))
+        if not r.get("git", {}).get("subject"):
+            r.setdefault("git", {})["subject"] = commit_subject(
+                r.get("git", {}).get("sha", ""))
         exp_file = LAB / "experiments" / f"{r['experiment']}.yaml"
         r["_primary"] = (yaml.safe_load(exp_file.read_text()).get("primary_metric")
                          if exp_file.exists() else None)

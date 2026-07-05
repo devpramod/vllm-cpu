@@ -6,7 +6,8 @@
 <p><b>Hypothesis:</b> {{ run.hypothesis }}</p>
 <p class="muted">
   experiment <code>{{ run.experiment }}</code> ·
-  sha <a href="{{ fork }}/commit/{{ run.git.sha }}"><code>{{ run.git.sha[:7] }}</code></a> ·
+  commit <a href="{{ fork }}/commit/{{ run.git.sha }}"><code>{{ run.git.sha[:7] }}</code></a>
+  “{{ run.git.subject }}” ·
   worker <code>{{ run.worker }}</code>
   {% if run.host %}· {{ run.host.cpu }} ({{ run.host.isa | join(", ") }},
     {{ run.host.numa_nodes }} NUMA){% endif %}

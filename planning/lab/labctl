@@ -209,7 +209,11 @@ def cmd_run(cfg, args):
     run = {
         "id": run_id, "experiment": exp["name"],
         "hypothesis": args.hypothesis.strip(), "status": "queued",
-        "worker": name, "git": {"sha": sha, "branch": branch}, "host": host,
+        "worker": name,
+        "git": {"sha": sha, "branch": branch,
+                "subject": sh(["git", "log", "-1", "--format=%s", sha],
+                              capture=True)},
+        "host": host,
         "env": env, "repeats": repeats,
         "arms": {an: {k: v for k, v in a.items()
                       if k in ("command", "server_command")}

@@ -9,7 +9,8 @@
 <tr>
   <td><a href="/run/{{ r.id }}">{{ r.id }}</a></td>
   <td><span class="badge {{ r.status }}">{{ r.status }}</span></td>
-  <td><a href="{{ fork }}/commit/{{ r.git.sha }}"><code>{{ r.git.sha[:7] }}</code></a></td>
+  <td><a href="{{ fork }}/commit/{{ r.git.sha }}" title="{{ r.git.subject }}"><code>{{ r.git.sha[:7] }}</code></a>
+      <span class="muted">{{ r.git.subject | truncate(48) }}</span></td>
   <td class="muted">{{ r.hypothesis | truncate(70) }}</td>
   <td>
     {% for an, arm in r.arms.items() %}
