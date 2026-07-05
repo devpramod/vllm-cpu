@@ -17,9 +17,11 @@ import json
 import os
 import re
 import signal
+import socket
 import subprocess
 import sys
 import time
+import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from functools import reduce
@@ -80,6 +82,38 @@ class Run:
             if rc != 0:
                 raise RuntimeError(f"git step failed: {cmd}")
 
+    def port_open(self):
+        u = urllib.parse.urlparse(self.job["health_url"])
+        try:
+            with socket.create_connection((u.hostname, u.port or 80), timeout=2):
+                return True
+        except OSError:
+            return False
+
+    def stop_server(self, server):
+        """Kill the server group and wait for the PORT to close, not just the
+        shell: vLLM traps SIGTERM for graceful shutdown and can hold the port
+        long after the wrapper shell is reaped."""
+        if server.poll() is None:
+            os.killpg(server.pid, signal.SIGTERM)
+        try:
+            server.wait(timeout=60)
+        except subprocess.TimeoutExpired:
+            pass
+        deadline = time.time() + 120
+        while time.time() < deadline and self.port_open():
+            time.sleep(5)
+        if self.port_open():
+            try:
+                os.killpg(server.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            deadline = time.time() + 60
+            while time.time() < deadline and self.port_open():
+                time.sleep(5)
+        if self.port_open():
+            raise RuntimeError("server port still open after SIGKILL")
+
     def wait_healthy(self, proc, url, timeout_s, log_path):
         deadline = time.time() + timeout_s
         while time.time() < deadline:
@@ -117,6 +151,10 @@ class Run:
         server_log = arm_dir / "server.log"
         try:
             if arm.get("server_command"):
+                if self.port_open():
+                    raise RuntimeError(
+                        "health port already in use before server start "
+                        "(tenant process or leftover server from a previous arm)")
                 with open(server_log, "w") as log:
                     server = subprocess.Popen(
                         arm["server_command"], shell=True, cwd=self.repo,
@@ -151,12 +189,8 @@ class Run:
             arm_state["status"] = "failed"
             raise
         finally:
-            if server and server.poll() is None:
-                os.killpg(server.pid, signal.SIGTERM)
-                try:
-                    server.wait(timeout=60)
-                except subprocess.TimeoutExpired:
-                    os.killpg(server.pid, signal.SIGKILL)
+            if server:
+                self.stop_server(server)
             self.save()
 
     def execute(self):
