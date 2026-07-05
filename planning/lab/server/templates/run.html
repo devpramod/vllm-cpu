@@ -21,6 +21,11 @@
 <h2>arm: {{ an }}
   {% if arm.compile_time_s %}<span class="muted">(compile: {{ arm.compile_time_s }}s)</span>{% endif %}
 </h2>
+{% if arm.server_command %}
+<p class="muted" style="margin-bottom:0.2rem">server</p>
+<pre>{{ arm.server_command }}</pre>
+<p class="muted" style="margin-bottom:0.2rem">bench</p>
+{% endif %}
 <pre>{{ arm.command }}</pre>
 {% if arm.metrics %}
 <div class="scroll"><table>

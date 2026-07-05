@@ -33,6 +33,12 @@ def load_runs():
     runs = []
     for p in sorted(RUNS.glob("*/run.json"), reverse=True):
         r = json.loads(p.read_text())
+        job_file = p.parent / "job.json"
+        if job_file.exists():
+            job = json.loads(job_file.read_text())
+            for an, arm in r.get("arms", {}).items():
+                arm.setdefault("server_command",
+                               job.get("arms", {}).get(an, {}).get("server_command"))
         exp_file = LAB / "experiments" / f"{r['experiment']}.yaml"
         r["_primary"] = (yaml.safe_load(exp_file.read_text()).get("primary_metric")
                          if exp_file.exists() else None)

@@ -208,7 +208,9 @@ def cmd_run(cfg, args):
         "hypothesis": args.hypothesis.strip(), "status": "queued",
         "worker": name, "git": {"sha": sha, "branch": branch}, "host": host,
         "env": env, "repeats": repeats,
-        "arms": {an: {"command": a["command"]} for an, a in arms.items()},
+        "arms": {an: {k: v for k, v in a.items()
+                      if k in ("command", "server_command")}
+                 for an, a in arms.items()},
         "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "conclusion": "",
     }
