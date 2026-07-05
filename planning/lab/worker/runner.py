@@ -22,9 +22,18 @@ import sys
 import time
 import urllib.request
 from datetime import datetime, timezone
+from functools import reduce
 from pathlib import Path
 
 COMPILE_RE = re.compile(r"torch\.compile takes ([0-9.]+)|Compilation took ([0-9.]+)")
+
+
+def dotted(obj, path):
+    try:
+        return reduce(lambda o, k: o[int(k)] if isinstance(o, list) else o[k],
+                      path.split("."), obj)
+    except (KeyError, IndexError, TypeError, ValueError):
+        return None
 
 
 def now():
@@ -124,10 +133,17 @@ class Run:
                 rc = self.sh(cmd, rep_dir / "bench.log")
                 metrics = rep_dir / "metrics.json"
                 ok = rc == 0 and metrics.exists()
+                why = f"rc={rc}"
+                sanity = self.job.get("sanity_metric")
+                if ok and sanity:
+                    v = dotted(json.loads(metrics.read_text()), sanity)
+                    if not isinstance(v, (int, float)) or v <= 0:
+                        ok = False
+                        why = f"sanity: {sanity}={v} (benchmark ran but measured nothing real)"
                 arm_state["reps"].append({"rep": rep, "ok": ok})
                 self.save()
                 if not ok:
-                    raise RuntimeError(f"{name}/rep{rep} failed (rc={rc})")
+                    raise RuntimeError(f"{name}/rep{rep} failed ({why})")
             first_rep_log = arm_dir / "rep1" / "bench.log"
             arm_state["compile_time_s"] = self.grep_compile_time(server_log, first_rep_log)
             arm_state["status"] = "done"

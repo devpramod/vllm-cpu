@@ -201,6 +201,7 @@ def cmd_run(cfg, args):
         "forbidden_env": forbidden,
         "health_url": exp.get("health_url", "http://127.0.0.1:8000/health"),
         "health_timeout_s": exp.get("health_timeout_s", 5400),
+        "sanity_metric": exp["metrics"][exp["primary_metric"]],
     }
     run = {
         "id": run_id, "experiment": exp["name"],
