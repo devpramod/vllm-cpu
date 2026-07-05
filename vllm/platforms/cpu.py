@@ -180,6 +180,7 @@ class CpuPlatform(Platform):
                     "nan_asserts": False,
                     "epilogue_fusion": True,
                     "cpp.dynamic_threads": True,
+                    "max_autotune": True,
                 }
             )
             compilation_config.ir_enable_torch_wrap = False
