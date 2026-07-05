@@ -11,7 +11,10 @@ arms:
     extra_args: []
   eager:
     extra_args: [--enforce-eager]
-env: {}
+# Engine-ready watchdog raised: slow warmup compiles (e.g. max-autotune
+# experiments) exceed the 600s default before serving even starts.
+env:
+  VLLM_ENGINE_READY_TIMEOUT_S: "7200"
 # xeon is a shared box — never use default port 8000 (tenant collision).
 server_command: >
   vllm serve Qwen/Qwen3-30B-A3B --port 18192
