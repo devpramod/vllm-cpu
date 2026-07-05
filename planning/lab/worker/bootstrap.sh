@@ -62,7 +62,7 @@ if [[ "$FULL_BUILD" == "--full-build" ]]; then
     VLLM_TARGET_DEVICE=cpu uv pip install -e . --no-build-isolation
 else
     VLLM_USE_PRECOMPILED=1 VLLM_PRECOMPILED_WHEEL_VARIANT=cpu VLLM_TARGET_DEVICE=cpu \
-        uv pip install -e .
+        uv pip install -e . --torch-backend cpu --index-strategy unsafe-best-match
 fi
 
 SHAREGPT="$REMOTE_ROOT/datasets/ShareGPT_V3_unfiltered_cleaned_split.json"
