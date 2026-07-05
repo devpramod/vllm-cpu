@@ -56,7 +56,7 @@
     }
   },
   "created_at": "2026-07-05T20:17:26+00:00",
-  "conclusion": "",
+  "conclusion": "BLOCKED, not refuted \u2014 max-autotune warmup compile exceeded vLLM's own engine-ready watchdog (VLLM_ENGINE_READY_TIMEOUT_S=600 default): engine core killed at 10 min before any measurement. Finding: max-autotune's compile cost alone (>10 min vs ~3 min default full boot) already violates a product default \u2014 any PR would need the compile-time story addressed, not just steady-state wins. Retrying with the watchdog raised to isolate steady-state effect.",
   "started_at": "2026-07-05T20:17:34+00:00",
   "finished_at": "2026-07-05T21:47:35+00:00",
   "error": "server not healthy after 5400s"
