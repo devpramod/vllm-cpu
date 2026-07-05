@@ -1,0 +1,30 @@
+{
+  "id": "2026-07-05-dcccd8a-baseline-qwen-serve",
+  "status": "done",
+  "current": null,
+  "started_at": "2026-07-05T19:58:37+00:00",
+  "finished_at": "2026-07-05T20:06:02+00:00",
+  "error": null,
+  "arms": {
+    "inductor": {
+      "status": "done",
+      "compile_time_s": null,
+      "reps": [
+        {
+          "rep": 1,
+          "ok": true
+        }
+      ]
+    },
+    "eager": {
+      "status": "done",
+      "compile_time_s": null,
+      "reps": [
+        {
+          "rep": 1,
+          "ok": true
+        }
+      ]
+    }
+  }
+}

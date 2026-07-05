@@ -2,7 +2,7 @@
   "id": "2026-07-05-dcccd8a-baseline-qwen-serve",
   "experiment": "baseline-qwen-serve",
   "hypothesis": "N/A \u2014 smoke run 5 (runner shipped with job; zombie-port fix now actually deployed): Qwen3-30B-A3B MoE tp1, inductor vs eager, 1 repeat. Expect both arms nonzero.",
-  "status": "queued",
+  "status": "done",
   "worker": "xeon",
   "git": {
     "sha": "dcccd8a70d5d5fcfb6cd1bd96f8d1ee1870b3f4b",
@@ -41,12 +41,93 @@
   "repeats": 1,
   "arms": {
     "inductor": {
-      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "metrics": {
+        "output_tok_per_s": {
+          "median": 205.1173,
+          "spread": 0.0,
+          "values": [
+            205.1173220459258
+          ]
+        },
+        "ttft_ms_median": {
+          "median": 18173.1663,
+          "spread": 0.0,
+          "values": [
+            18173.16629551351
+          ]
+        },
+        "ttft_ms_p99": {
+          "median": 33942.7422,
+          "spread": 0.0,
+          "values": [
+            33942.74220984429
+          ]
+        },
+        "tpot_ms_median": {
+          "median": 822.7043,
+          "spread": 0.0,
+          "values": [
+            822.7043447825384
+          ]
+        },
+        "itl_ms_median": {
+          "median": 677.4077,
+          "spread": 0.0,
+          "values": [
+            677.4076595902443
+          ]
+        }
+      },
+      "status": "done",
+      "compile_time_s": null
     },
     "eager": {
-      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "metrics": {
+        "output_tok_per_s": {
+          "median": 192.9517,
+          "spread": 0.0,
+          "values": [
+            192.95166684806676
+          ]
+        },
+        "ttft_ms_median": {
+          "median": 19079.1192,
+          "spread": 0.0,
+          "values": [
+            19079.119212925434
+          ]
+        },
+        "ttft_ms_p99": {
+          "median": 35956.4075,
+          "spread": 0.0,
+          "values": [
+            35956.40752065927
+          ]
+        },
+        "tpot_ms_median": {
+          "median": 875.4341,
+          "spread": 0.0,
+          "values": [
+            875.4340680242758
+          ]
+        },
+        "itl_ms_median": {
+          "median": 714.5332,
+          "spread": 0.0,
+          "values": [
+            714.5331911742687
+          ]
+        }
+      },
+      "status": "done",
+      "compile_time_s": null
     }
   },
   "created_at": "2026-07-05T19:58:30+00:00",
-  "conclusion": ""
+  "conclusion": "",
+  "started_at": "2026-07-05T19:58:37+00:00",
+  "finished_at": "2026-07-05T20:06:02+00:00",
+  "error": null
 }
