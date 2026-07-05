@@ -1,3 +1,12 @@
+# DEPRECATED — superseded by `planning/lab/`
+
+The lab system (`planning/lab/README.md`) now owns experiment execution and
+tracking: `runs/<id>/run.json` is this template's machine twin, produced by
+`labctl run`/`sync`. This file remains only as the prose reference for what a
+defensible experiment record contains.
+
+---
+
 # <YYYY-MM-DD> — <topic, e.g. "baselines" or "rmsnorm custom-op vs inductor">
 
 ## Environment

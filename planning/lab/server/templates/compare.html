@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}compare{% endblock %}
+{% block content %}
+<h1>Compare runs</h1>
+<form method="get">
+  <select name="a">{% for r in runs %}
+    <option value="{{ r.id }}" {% if a and r.id == a.id %}selected{% endif %}>{{ r.id }}</option>
+  {% endfor %}</select>
+  vs
+  <select name="b">{% for r in runs %}
+    <option value="{{ r.id }}" {% if b and r.id == b.id %}selected{% endif %}>{{ r.id }}</option>
+  {% endfor %}</select>
+  <button type="submit">compare</button>
+</form>
+
+{% if rows %}
+<p class="muted">A = {{ a.id }} · B = {{ b.id }} · delta = (B−A)/A</p>
+<div class="scroll"><table>
+<tr><th>metric</th><th>arm</th><th>A</th><th>B</th><th>delta</th></tr>
+{% for r in rows %}
+<tr><td>{{ r.metric }}</td><td>{{ r.arm }}</td>
+    <td>{{ r.a }}</td><td>{{ r.b }}</td><td>{{ r.delta }}</td></tr>
+{% endfor %}
+</table></div>
+<p class="muted">PR-ready markdown: <code>./labctl compare {{ a.id }} {{ b.id }} --format md</code></p>
+{% elif a and b %}
+<p class="muted">no shared metrics between these runs yet.</p>
+{% endif %}
+{% endblock %}

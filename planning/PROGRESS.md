@@ -8,7 +8,7 @@ An agent resuming work: read CLAUDE.md → this file → CURRICULUM.md stage.
 
 | Stage | What | Status |
 |---|---|---|
-| 0 | Environment + baselines on x86 server | **NOT STARTED** — blocked on server access; scripts ready in `step0/` |
+| 0 | Environment + baselines on xeon | **READY TO RUN** — lab built; next: `lab/labctl setup xeon`, then the three baseline experiments |
 | 0b | Talk to bigPYJ1151 (question list in CURRICULUM.md "Maintainer channel") | NOT STARTED — user-driven |
 | 1 | Reproduce/fix open CPU bugs (#46470, #47014, #46693, #46347) | NOT STARTED |
 | 2 | CPU compile test coverage (Inductor smoke test + CI) | NOT STARTED — needs Stage 0b CI-budget answer |
@@ -19,13 +19,16 @@ An agent resuming work: read CLAUDE.md → this file → CURRICULUM.md stage.
 
 ## Next actions (in order)
 
-1. User: get SSH access to the x86 Linux server; run `step0/setup_server.sh`.
-2. User: message bigPYJ1151 with the 5 maintainer-channel questions
+1. `cd planning/lab && ./labctl setup xeon` (idempotent; enforces the
+   /mnt/nvme-only rule; add `--full-build` only when csrc work starts).
+2. Smoke-run the lab E2E: `./labctl run baseline-llama-latency
+   --hypothesis "N/A — baseline" --repeats 1`, then `status` / `sync`.
+3. Full baselines: all three `baseline-*` experiments at default repeats;
+   `sync` + `conclude` each. This completes curriculum Step 0.
+4. User: message bigPYJ1151 with the 5 maintainer-channel questions
    (CURRICULUM.md); record answers in this file.
-3. Agent+user: run `step0/run_baselines.sh`, fill in
-   `step0/results/<date>-baselines.md` from `results-template.md`.
-4. Re-run duplicate checks (issue/PR numbers in FINDINGS.md may be stale).
-5. Pick the first Stage 1 bug and start the loop.
+5. Re-run duplicate checks (issue/PR numbers in FINDINGS.md may be stale).
+6. Pick the first Stage 1 bug and start the loop.
 
 ## Answers from bigPYJ1151
 
@@ -39,6 +42,11 @@ An agent resuming work: read CLAUDE.md → this file → CURRICULUM.md stage.
 
 ## Log
 
+- 2026-07-05: Built `planning/lab/` — portable control plane (labctl CLI,
+  git-committed run ledger, web UI) + xeon worker harness (flock'd runner,
+  nvme-pinned bootstrap for /mnt/nvme/pramod/torch_compile_perf). Retired
+  step0 scripts into lab experiments. Verified: validate/dry-run/rails/UI
+  pass locally; E2E on xeon pending (next action 1).
 - 2026-07-05: Planning session. Explored codebase, checked upstream landscape,
   wrote CURRICULUM.md / FINDINGS.md / step0 kit / this tracker. Models locked:
   Llama-3.1-8B-Instruct (tp2) + Qwen3-30B-A3B (tp1). Hardware: x86 Linux

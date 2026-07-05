@@ -24,9 +24,11 @@ Read in this order:
 3. **FINDINGS.md** — distilled codebase facts (file:line) and the upstream
    issue/PR landscape as of 2026-07-05. Re-verify issue/PR state before
    relying on it.
-4. **step0/** — executable environment-setup and baseline-benchmark kit for
-   the x86 server (`setup_server.sh`, `run_baselines.sh`,
-   `results-template.md`). Results land in `step0/results/`.
+4. **lab/** — the experiment control plane (see `lab/README.md`): `labctl`
+   runs experiments on the worker `xeon` over SSH, keeps a git-committed
+   ledger in `lab/runs/`, and serves a local web UI (`./labctl ui`). It
+   replaces the old step0 scripts; `step0/results-template.md` survives only
+   as the prose reference for what a run record contains.
 
 ## Fixed decisions (don't re-litigate)
 
@@ -52,8 +54,10 @@ Read in this order:
   and the human must understand and defend every line.
 - **Never set `VLLM_CPU_CI_ENV`** when benchmarking — it silently forces the
   eager backend and invalidates any compile measurement.
-- Every experiment gets a results log (`step0/results-template.md` format)
-  with hypothesis written *before* the run; before/after numbers from these
-  logs are what make PRs defensible.
+- Every experiment goes through `lab/labctl` (hypothesis required at launch,
+  ledger committed to git); before/after numbers from `lab/runs/` are what
+  make PRs defensible. `labctl compare --format md` produces the PR table.
+- Worker `xeon`: root fs is FULL — everything lives under
+  `/mnt/nvme/pramod/torch_compile_perf` (bootstrap enforces this).
 - No-fly: files touched by open PR #40777; anything covered by an open
   bigPYJ1151 PR (`gh pr list --repo vllm-project/vllm --author bigPYJ1151 --state open`).

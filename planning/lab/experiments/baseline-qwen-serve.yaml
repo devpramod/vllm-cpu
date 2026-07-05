@@ -1,0 +1,34 @@
+# Qwen3-30B-A3B (MoE) tp1 serving, inductor vs eager. Mirrors the
+# serving_qwen30B_tp1_random_128_128 entry in
+# .buildkite/performance-benchmarks/tests/serving-tests-cpu-text.json.
+# runner.py starts/stops the server per arm; first inductor boot compiles
+# for many minutes — health_timeout_s is generous on purpose.
+name: baseline-qwen-serve
+description: Qwen3-30B-A3B tp1 serving (random 128/128), inductor vs eager
+repeats: 3
+arms:
+  inductor:
+    extra_args: []
+  eager:
+    extra_args: [--enforce-eager]
+env: {}
+server_command: >
+  vllm serve Qwen/Qwen3-30B-A3B
+  --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128
+  --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code
+  --disable-log-requests {arm_extra_args}
+command: >
+  vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B
+  --dataset-name random --random-input-len 128 --random-output-len 128
+  --num-prompts 200 --ignore-eos --temperature 0
+  --save-result --result-dir {rep_dir} --result-filename metrics.json
+health_url: http://127.0.0.1:8000/health
+health_timeout_s: 5400
+metrics:
+  output_tok_per_s: output_throughput
+  ttft_ms_median: median_ttft_ms
+  ttft_ms_p99: p99_ttft_ms
+  tpot_ms_median: median_tpot_ms
+  itl_ms_median: median_itl_ms
+primary_metric: output_tok_per_s
+forbidden_env: [VLLM_CPU_CI_ENV]

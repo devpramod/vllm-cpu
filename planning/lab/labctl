@@ -1,0 +1,451 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pyyaml"]
+# ///
+"""labctl — control-plane CLI for the CPU torch.compile experiment lab.
+
+Portable by design: state = git (runs/ ledger) + worker disk (artifacts).
+Any machine with this repo clone + ssh access to a worker is a control plane.
+
+  labctl setup [worker] [--full-build]     bootstrap a worker (idempotent)
+  labctl run <exp> --hypothesis "..."      launch an experiment on the worker
+  labctl status [run-id]                   local ledger / live remote status
+  labctl sync <run-id> [--artifacts]       pull results, compute stats, commit
+  labctl list | show <run-id>              read the ledger
+  labctl compare <a> <b> [--format md]     before/after table (PR evidence)
+  labctl conclude <run-id> "text"          record the verdict
+  labctl validate                          check experiment definitions
+  labctl ui [--port 8800]                  local web UI
+"""
+
+import argparse
+import json
+import statistics
+import subprocess
+import sys
+from datetime import date, datetime, timezone
+from functools import reduce
+from pathlib import Path
+
+import yaml
+
+LAB = Path(__file__).resolve().parent
+REPO_ROOT = LAB.parent.parent
+RUNS = LAB / "runs"
+HOSTS = LAB / "hosts"
+
+
+# ---------- config ----------
+
+def load_config():
+    cfg = yaml.safe_load((LAB / "config" / "lab.yaml").read_text())
+    local = LAB / "config" / "local.yaml"
+    if local.exists():
+        for k, v in (yaml.safe_load(local.read_text()) or {}).items():
+            if isinstance(v, dict) and isinstance(cfg.get(k), dict):
+                cfg[k].update(v)
+            else:
+                cfg[k] = v
+    for w in cfg["workers"].values():
+        root = w["remote_root"]
+        for key in ("repo_dir", "runs_dir", "env_file"):
+            w[key] = w[key].replace("{remote_root}", root)
+    return cfg
+
+
+def get_worker(cfg, name):
+    name = name or cfg["defaults"]["worker"]
+    if name not in cfg["workers"]:
+        die(f"unknown worker '{name}' (known: {', '.join(cfg['workers'])})")
+    return name, cfg["workers"][name]
+
+
+def die(msg):
+    print(f"labctl: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+# ---------- process helpers ----------
+
+def sh(cmd, check=True, capture=False, cwd=None):
+    r = subprocess.run(cmd, shell=isinstance(cmd, str), cwd=cwd or REPO_ROOT,
+                       capture_output=capture, text=True)
+    if check and r.returncode != 0:
+        die(f"command failed ({r.returncode}): {cmd}"
+            + (f"\n{r.stderr}" if capture and r.stderr else ""))
+    return r.stdout.strip() if capture else r.returncode
+
+
+def ssh(worker, cmd, check=True, capture=False):
+    wrapped = f"source {worker['env_file']} >/dev/null 2>&1 || true; {cmd}"
+    return sh(["ssh", worker["ssh"], wrapped], check=check, capture=capture)
+
+
+def git_commit_push(paths, msg):
+    sh(["git", "add", *[str(p) for p in paths]])
+    if sh(["git", "diff", "--cached", "--quiet"], check=False) == 0:
+        return
+    sh(["git", "commit", "-q", "-m", msg + "\n\nCo-Authored-By: Claude Fable 5 <noreply@anthropic.com>"])
+    branch = sh(["git", "rev-parse", "--abbrev-ref", "HEAD"], capture=True)
+    sh(["git", "push", "-q", "origin", branch])
+
+
+# ---------- experiments / runs ----------
+
+def load_experiment(name):
+    p = LAB / "experiments" / f"{name}.yaml"
+    if not p.exists():
+        avail = sorted(f.stem for f in (LAB / "experiments").glob("*.yaml"))
+        die(f"no experiment '{name}' (available: {', '.join(avail)})")
+    return yaml.safe_load(p.read_text())
+
+
+def load_run(run_id):
+    p = RUNS / run_id / "run.json"
+    if not p.exists():
+        die(f"no run '{run_id}'")
+    return json.loads(p.read_text())
+
+
+def save_run(run):
+    d = RUNS / run["id"]
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "run.json").write_text(json.dumps(run, indent=2) + "\n")
+    return d / "run.json"
+
+
+def dotted(obj, path):
+    try:
+        return reduce(lambda o, k: o[int(k)] if isinstance(o, list) else o[k],
+                      path.split("."), obj)
+    except (KeyError, IndexError, TypeError, ValueError):
+        return None
+
+
+def resolve_cmd(template, worker, arm_extra):
+    return (" ".join(template.split())
+            .replace("{remote_root}", worker["remote_root"])
+            .replace("{arm_extra_args}", " ".join(arm_extra)).strip())
+
+
+# ---------- commands ----------
+
+def cmd_setup(cfg, args):
+    name, w = get_worker(cfg, args.worker)
+    fork_url = sh(["git", "remote", "get-url", "origin"], capture=True)
+    branch = cfg["defaults"]["branch"]
+    sh(["ssh", w["ssh"], f"mkdir -p {w['remote_root']}"])
+    sh(["scp", "-q", str(LAB / "worker" / "bootstrap.sh"),
+        f"{w['ssh']}:{w['remote_root']}/bootstrap.sh"])
+    full = " --full-build" if args.full_build else ""
+    sh(["ssh", "-t", w["ssh"],
+        f"bash {w['remote_root']}/bootstrap.sh {w['remote_root']} {fork_url} {branch}{full}"])
+    HOSTS.mkdir(exist_ok=True)
+    sh(["scp", "-q", f"{w['ssh']}:{w['remote_root']}/host.json",
+        str(HOSTS / f"{name}.json")])
+    print(f"worker '{name}' ready: {(HOSTS / f'{name}.json').read_text().strip()}")
+    git_commit_push([HOSTS], f"lab: host probe for {name}")
+
+
+def cmd_run(cfg, args):
+    name, w = get_worker(cfg, args.worker)
+    exp = load_experiment(args.experiment)
+    repeats = args.repeats or exp.get("repeats") or cfg["defaults"]["repeats"]
+    env = {**w.get("default_env", {}), **(exp.get("env") or {})}
+    env = {k: str(v) for k, v in env.items()}
+    forbidden = exp.get("forbidden_env", ["VLLM_CPU_CI_ENV"])
+    for var in forbidden:
+        if var in env:
+            die(f"forbidden env var in experiment/worker env: {var}")
+
+    arms = {}
+    for arm_name, arm in exp["arms"].items():
+        extra = arm.get("extra_args", [])
+        arms[arm_name] = {"command": resolve_cmd(exp["command"], w, extra)}
+        if exp.get("server_command"):
+            arms[arm_name]["server_command"] = resolve_cmd(
+                exp["server_command"], w, extra)
+
+    if args.dry_run:
+        print(f"experiment: {exp['name']}  worker: {name}  repeats: {repeats}")
+        print(f"env: {json.dumps(env)}")
+        for an, a in arms.items():
+            if "server_command" in a:
+                print(f"\n[{an}] server: {a['server_command']}")
+            print(f"[{an}] bench:  {a['command']}")
+        return
+
+    if not args.hypothesis or not args.hypothesis.strip():
+        die("--hypothesis is required (write it BEFORE the run; 'N/A — baseline' is valid)")
+    dirty = sh(["git", "status", "--porcelain"], capture=True)
+    if dirty:
+        die("worktree is dirty — commit or drop changes first (a run's SHA must "
+            f"mean what it says):\n{dirty}")
+
+    branch = sh(["git", "rev-parse", "--abbrev-ref", "HEAD"], capture=True)
+    sh(["git", "push", "-q", "origin", branch])
+    sha = sh(["git", "rev-parse", "HEAD"], capture=True)
+    run_id = f"{date.today().isoformat()}-{sha[:7]}-{exp['name']}"
+    run_dir_remote = f"{w['runs_dir']}/{run_id}"
+
+    host = {}
+    host_file = HOSTS / f"{name}.json"
+    if host_file.exists():
+        host = json.loads(host_file.read_text())
+
+    job = {
+        "id": run_id, "sha": sha, "repo_dir": w["repo_dir"],
+        "runs_dir": w["runs_dir"], "run_dir": run_dir_remote,
+        "env": env, "repeats": repeats, "arms": arms,
+        "forbidden_env": forbidden,
+        "health_url": exp.get("health_url", "http://127.0.0.1:8000/health"),
+        "health_timeout_s": exp.get("health_timeout_s", 5400),
+    }
+    run = {
+        "id": run_id, "experiment": exp["name"],
+        "hypothesis": args.hypothesis.strip(), "status": "queued",
+        "worker": name, "git": {"sha": sha, "branch": branch}, "host": host,
+        "env": env, "repeats": repeats,
+        "arms": {an: {"command": a["command"]} for an, a in arms.items()},
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "conclusion": "",
+    }
+    save_run(run)
+    (RUNS / run_id / "job.json").write_text(json.dumps(job, indent=2) + "\n")
+    git_commit_push([RUNS / run_id], f"lab: queue {run_id}")
+
+    ssh(w, f"mkdir -p {run_dir_remote}")
+    sh(["scp", "-q", str(RUNS / run_id / "job.json"),
+        f"{w['ssh']}:{run_dir_remote}/job.json"])
+    runner = f"{w['repo_dir']}/planning/lab/worker/runner.py"
+    ssh(w, f"cd {w['repo_dir']} && nohup .venv/bin/python {runner} "
+           f"--job {run_dir_remote}/job.json "
+           f"> {run_dir_remote}/runner.log 2>&1 & echo submitted pid $!")
+    print(f"submitted: {run_id}")
+    print(f"  status:  ./labctl status {run_id}")
+    print(f"  results: ./labctl sync {run_id}   (after it finishes)")
+    if args.follow:
+        ssh(w, f"tail -f {run_dir_remote}/runner.log", check=False)
+
+
+def cmd_status(cfg, args):
+    if not args.run_id:
+        for p in sorted(RUNS.glob("*/run.json")):
+            r = json.loads(p.read_text())
+            print(f"{r['status']:>8}  {r['id']}")
+        return
+    run = load_run(args.run_id)
+    _, w = get_worker(cfg, run["worker"])
+    remote = f"{w['runs_dir']}/{run['id']}"
+    out = ssh(w, f"cat {remote}/remote_state.json 2>/dev/null", check=False,
+              capture=True)
+    if out:
+        st = json.loads(out)
+        print(f"{st['status']}  current={st.get('current')}  "
+              f"error={st.get('error')}")
+        for an, a in st["arms"].items():
+            print(f"  {an}: {a['status']} reps={len(a['reps'])}")
+    else:
+        print(f"local status: {run['status']} (no remote state yet)")
+    print("--- runner.log tail ---")
+    ssh(w, f"tail -5 {remote}/runner.log 2>/dev/null", check=False)
+
+
+def cmd_sync(cfg, args):
+    run = load_run(args.run_id)
+    exp = load_experiment(run["experiment"])
+    _, w = get_worker(cfg, run["worker"])
+    remote = f"{w['runs_dir']}/{run['id']}"
+    local = RUNS / run["id"] / "remote"
+    local.mkdir(parents=True, exist_ok=True)
+    sh(["rsync", "-az", "--max-size=2m",
+        "--include=*/", "--include=*.json", "--include=*.log", "--exclude=*",
+        f"{w['ssh']}:{remote}/", str(local) + "/"])
+
+    state_file = local / "remote_state.json"
+    if not state_file.exists():
+        die("no remote_state.json on worker yet — is the run submitted?")
+    state = json.loads(state_file.read_text())
+    run["status"] = state["status"]
+    run["started_at"] = state.get("started_at")
+    run["finished_at"] = state.get("finished_at")
+    run["error"] = state.get("error")
+
+    for an in run["arms"]:
+        arm_res = {"metrics": {}}
+        arm_state = state["arms"].get(an, {})
+        arm_res["status"] = arm_state.get("status")
+        arm_res["compile_time_s"] = arm_state.get("compile_time_s")
+        per_metric = {}
+        for rep_metrics in sorted(local.glob(f"arms/{an}/rep*/metrics.json")):
+            data = json.loads(rep_metrics.read_text())
+            for mname, mpath in (exp.get("metrics") or {}).items():
+                v = dotted(data, mpath)
+                if v is not None:
+                    per_metric.setdefault(mname, []).append(v)
+        for mname, values in per_metric.items():
+            arm_res["metrics"][mname] = {
+                "median": round(statistics.median(values), 4),
+                "spread": round(max(values) - min(values), 4),
+                "values": values,
+            }
+        run["arms"][an].update(arm_res)
+    save_run(run)
+    git_commit_push([RUNS / run["id"]], f"lab: sync {run['id']} ({run['status']})")
+    print(f"{run['id']}: {run['status']}")
+    for an, a in run["arms"].items():
+        for mn, m in a.get("metrics", {}).items():
+            print(f"  {an:>10} {mn}: {m['median']} (±{m['spread']})")
+
+    if args.artifacts:
+        cache = LAB / "artifact-cache" / run["id"]
+        cache.mkdir(parents=True, exist_ok=True)
+        sh(["rsync", "-az", f"{w['ssh']}:{remote}/", str(cache) + "/"])
+        print(f"artifacts: {cache}")
+
+
+def cmd_list(cfg, args):
+    rows = []
+    for p in sorted(RUNS.glob("*/run.json")):
+        r = json.loads(p.read_text())
+        exp = load_experiment(r["experiment"])
+        primary = exp.get("primary_metric")
+        vals = []
+        for an, a in r.get("arms", {}).items():
+            m = a.get("metrics", {}).get(primary)
+            if m:
+                vals.append(f"{an}={m['median']}")
+        rows.append((r["id"], r["status"], primary or "", " ".join(vals)))
+    if not rows:
+        print("no runs yet")
+        return
+    for row in rows:
+        print(f"{row[1]:>8}  {row[0]}  {row[2]} {row[3]}")
+
+
+def cmd_show(cfg, args):
+    print(json.dumps(load_run(args.run_id), indent=2))
+
+
+def cmd_compare(cfg, args):
+    a, b = load_run(args.a), load_run(args.b)
+    md = args.format == "md"
+    metrics = sorted({m for r in (a, b) for arm in r["arms"].values()
+                      for m in arm.get("metrics", {})})
+    header = ["metric", "arm", f"A:{a['id']}", f"B:{b['id']}", "delta"]
+    rows = []
+    for m in metrics:
+        for an in sorted(set(a["arms"]) | set(b["arms"])):
+            va = dotted(a, f"arms.{an}.metrics.{m}.median")
+            vb = dotted(b, f"arms.{an}.metrics.{m}.median")
+            delta = (f"{(vb - va) / va * 100:+.1f}%"
+                     if isinstance(va, (int, float)) and isinstance(vb, (int, float)) and va
+                     else "")
+            rows.append([m, an, str(va), str(vb), delta])
+    if md:
+        print("| " + " | ".join(header) + " |")
+        print("|" + "---|" * len(header))
+        for r in rows:
+            print("| " + " | ".join(r) + " |")
+    else:
+        widths = [max(len(x[i]) for x in [header] + rows) for i in range(len(header))]
+        for r in [header] + rows:
+            print("  ".join(x.ljust(w) for x, w in zip(r, widths)))
+
+
+def cmd_conclude(cfg, args):
+    run = load_run(args.run_id)
+    run["conclusion"] = args.text
+    save_run(run)
+    git_commit_push([RUNS / run["id"]], f"lab: conclude {run['id']}")
+    print("recorded.")
+
+
+def cmd_validate(cfg, args):
+    ok = True
+    for p in sorted((LAB / "experiments").glob("*.yaml")):
+        exp = yaml.safe_load(p.read_text())
+        errs = []
+        for field in ("name", "arms", "command", "metrics", "primary_metric"):
+            if field not in exp:
+                errs.append(f"missing '{field}'")
+        if "{metrics_json}" not in exp.get("command", "") \
+                and "{rep_dir}" not in exp.get("command", ""):
+            errs.append("command lacks {metrics_json}/{rep_dir} placeholder")
+        if exp.get("name") != p.stem:
+            errs.append(f"name '{exp.get('name')}' != filename '{p.stem}'")
+        if exp.get("primary_metric") not in (exp.get("metrics") or {}):
+            errs.append("primary_metric not in metrics")
+        status = "OK " if not errs else "BAD"
+        print(f"{status} {p.name}" + ("".join(f"\n     - {e}" for e in errs)))
+        ok = ok and not errs
+    for name in load_config()["workers"]:
+        pass  # config parse itself is the check
+    sys.exit(0 if ok else 1)
+
+
+def cmd_ui(cfg, args):
+    sh(["uv", "run", str(LAB / "server" / "app.py"), "--port", str(args.port)],
+       cwd=LAB)
+
+
+def main():
+    ap = argparse.ArgumentParser(prog="labctl", description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    p = sub.add_parser("setup")
+    p.add_argument("worker", nargs="?")
+    p.add_argument("--full-build", action="store_true")
+    p.set_defaults(fn=cmd_setup)
+
+    p = sub.add_parser("run")
+    p.add_argument("experiment")
+    p.add_argument("--hypothesis", default="")
+    p.add_argument("--worker")
+    p.add_argument("--repeats", type=int)
+    p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--follow", action="store_true")
+    p.set_defaults(fn=cmd_run)
+
+    p = sub.add_parser("status")
+    p.add_argument("run_id", nargs="?")
+    p.set_defaults(fn=cmd_status)
+
+    p = sub.add_parser("sync")
+    p.add_argument("run_id")
+    p.add_argument("--artifacts", action="store_true")
+    p.set_defaults(fn=cmd_sync)
+
+    p = sub.add_parser("list")
+    p.set_defaults(fn=cmd_list)
+
+    p = sub.add_parser("show")
+    p.add_argument("run_id")
+    p.set_defaults(fn=cmd_show)
+
+    p = sub.add_parser("compare")
+    p.add_argument("a")
+    p.add_argument("b")
+    p.add_argument("--format", choices=["table", "md"], default="table")
+    p.set_defaults(fn=cmd_compare)
+
+    p = sub.add_parser("conclude")
+    p.add_argument("run_id")
+    p.add_argument("text")
+    p.set_defaults(fn=cmd_conclude)
+
+    p = sub.add_parser("validate")
+    p.set_defaults(fn=cmd_validate)
+
+    p = sub.add_parser("ui")
+    p.add_argument("--port", type=int, default=8800)
+    p.set_defaults(fn=cmd_ui)
+
+    args = ap.parse_args()
+    args.fn(load_config(), args)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,24 @@
+# Committed lab config: workers registry + defaults.
+# Per-control-plane overrides go in config/local.yaml (gitignored).
+# Paths may reference {remote_root}; labctl expands it.
+defaults:
+  worker: xeon
+  branch: torch_compile_tutorial
+  repeats: 3
+
+workers:
+  xeon:
+    ssh: xeon                          # ssh-config alias; host/user/key live in ~/.ssh/config
+    # Root fs on xeon is FULL. Everything derives from remote_root on /mnt/nvme;
+    # bootstrap.sh aborts if any derived path resolves to the root filesystem.
+    remote_root: /mnt/nvme/pramod/torch_compile_perf
+    repo_dir: "{remote_root}/vllm-cpu"
+    runs_dir: "{remote_root}/lab-runs"
+    env_file: "{remote_root}/lab.env"
+    numa_nodes: 2
+    default_env:
+      VLLM_CPU_KVCACHE_SPACE: "40"
+      VLLM_CPU_SGL_KERNEL: "1"
+      VLLM_ALLOW_LONG_MAX_MODEL_LEN: "1"
+      VLLM_ENGINE_ITERATION_TIMEOUT_S: "120"
+      VLLM_CPU_OMP_THREADS_BIND: "auto"

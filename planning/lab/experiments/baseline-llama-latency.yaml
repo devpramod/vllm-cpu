@@ -1,0 +1,23 @@
+# Llama-3.1-8B tp2 decode latency, inductor vs eager. Mirrors vLLM's own CPU
+# perf-CI parameters (.buildkite/performance-benchmarks/tests/latency-tests-cpu.json).
+name: baseline-llama-latency
+description: Llama-3.1-8B-Instruct tp2 latency, inductor vs eager
+repeats: 3
+arms:
+  inductor:
+    extra_args: []
+  eager:
+    extra_args: [--enforce-eager]
+env: {}
+command: >
+  vllm bench latency --model meta-llama/Llama-3.1-8B-Instruct
+  --dtype bfloat16 -tp 2 --distributed-executor-backend mp --block-size 128
+  --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code
+  --num-iters-warmup 5 --num-iters 15
+  --output-json {metrics_json} {arm_extra_args}
+metrics:
+  avg_latency_s: avg_latency
+  p50_latency_s: percentiles.50
+  p99_latency_s: percentiles.99
+primary_metric: avg_latency_s
+forbidden_env: [VLLM_CPU_CI_ENV]

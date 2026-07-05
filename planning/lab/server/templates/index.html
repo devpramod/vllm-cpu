@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Experiment ledger</h1>
+{% if not runs %}<p class="muted">No runs yet. Launch one with
+<code>./labctl run &lt;experiment&gt; --hypothesis "..."</code></p>{% endif %}
+<div class="scroll"><table>
+<tr><th>run</th><th>status</th><th>sha</th><th>hypothesis</th><th>primary metric</th></tr>
+{% for r in runs %}
+<tr>
+  <td><a href="/run/{{ r.id }}">{{ r.id }}</a></td>
+  <td><span class="badge {{ r.status }}">{{ r.status }}</span></td>
+  <td><a href="{{ fork }}/commit/{{ r.git.sha }}"><code>{{ r.git.sha[:7] }}</code></a></td>
+  <td class="muted">{{ r.hypothesis | truncate(70) }}</td>
+  <td>
+    {% for an, arm in r.arms.items() %}
+      {% set m = arm.metrics.get(r._primary) if arm.metrics is defined and r._primary %}
+      {% if m %}<code>{{ an }}={{ m.median }}</code> {% endif %}
+    {% endfor %}
+  </td>
+</tr>
+{% endfor %}
+</table></div>
+{% if runs and runs[0].status in ("queued", "running") %}
+<meta http-equiv="refresh" content="30">
+<p class="muted">auto-refreshing while runs are active (remember: <code>./labctl sync</code> updates the ledger)</p>
+{% endif %}
+{% endblock %}
