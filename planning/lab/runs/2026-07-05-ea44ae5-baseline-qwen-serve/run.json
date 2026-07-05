@@ -2,7 +2,7 @@
   "id": "2026-07-05-ea44ae5-baseline-qwen-serve",
   "experiment": "baseline-qwen-serve",
   "hypothesis": "N/A \u2014 smoke run 2 (post port-collision fix): Qwen3-30B-A3B MoE tp1 serving on xeon, inductor vs eager, 1 repeat. Expect nonzero throughput both arms; inductor arm pays a multi-minute compile at boot.",
-  "status": "queued",
+  "status": "failed",
   "worker": "xeon",
   "git": {
     "sha": "ea44ae5f8d5c45cc253b53dc53f52951f4bcacdd",
@@ -41,12 +41,21 @@
   "repeats": 1,
   "arms": {
     "inductor": {
-      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "metrics": {},
+      "status": "failed",
+      "compile_time_s": null
     },
     "eager": {
-      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "metrics": {},
+      "status": "pending",
+      "compile_time_s": null
     }
   },
   "created_at": "2026-07-05T19:29:31+00:00",
-  "conclusion": ""
+  "conclusion": "",
+  "started_at": "2026-07-05T19:29:38+00:00",
+  "finished_at": "2026-07-05T19:29:48+00:00",
+  "error": "server exited rc=2, see /mnt/nvme/pramod/torch_compile_perf/lab-runs/2026-07-05-ea44ae5-baseline-qwen-serve/arms/inductor/server.log"
 }
