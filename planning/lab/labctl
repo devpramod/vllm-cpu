@@ -222,7 +222,7 @@ def cmd_run(cfg, args):
     runner = f"{w['repo_dir']}/planning/lab/worker/runner.py"
     ssh(w, f"cd {w['repo_dir']} && nohup .venv/bin/python {runner} "
            f"--job {run_dir_remote}/job.json "
-           f"> {run_dir_remote}/runner.log 2>&1 & echo submitted pid $!")
+           f"> {run_dir_remote}/runner.log 2>&1 < /dev/null & echo submitted pid $!")
     print(f"submitted: {run_id}")
     print(f"  status:  ./labctl status {run_id}")
     print(f"  results: ./labctl sync {run_id}   (after it finishes)")
