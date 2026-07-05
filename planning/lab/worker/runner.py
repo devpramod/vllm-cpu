@@ -27,7 +27,11 @@ from datetime import datetime, timezone
 from functools import reduce
 from pathlib import Path
 
-COMPILE_RE = re.compile(r"torch\.compile takes ([0-9.]+)|Compilation took ([0-9.]+)")
+# In order of preference: VLLM_COMPILE's monitor line, generic, then the CPU
+# DYNAMO_TRACE_ONCE path where compile time shows up as the first warmup run.
+COMPILE_RE = re.compile(
+    r"torch\.compile takes ([0-9.]+)|Compilation took ([0-9.]+)"
+    r"|warmup run took ([0-9.]+)")
 
 
 def dotted(obj, path):
@@ -134,7 +138,7 @@ class Run:
             if not p.exists():
                 continue
             for m in COMPILE_RE.finditer(p.read_text(errors="replace")):
-                return float(m.group(1) or m.group(2))
+                return float(m.group(1) or m.group(2) or m.group(3))
         return None
 
     def resolve(self, template, rep_dir):
@@ -206,6 +210,10 @@ class Run:
         self.save()
         try:
             self.checkout()
+            if self.job.get("setup_command"):
+                rc = self.sh(self.job["setup_command"], self.run_dir / "setup.log")
+                if rc != 0:
+                    raise RuntimeError(f"setup_command failed (rc={rc}), see setup.log")
             for name, arm in self.job["arms"].items():
                 self.run_arm(name, arm)
             self.state["status"] = "done"

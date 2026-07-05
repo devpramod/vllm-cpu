@@ -202,6 +202,9 @@ def cmd_run(cfg, args):
         "health_url": exp.get("health_url", "http://127.0.0.1:8000/health"),
         "health_timeout_s": exp.get("health_timeout_s", 5400),
         "sanity_metric": exp["metrics"][exp["primary_metric"]],
+        # optional post-checkout hook, e.g. a csrc rebuild:
+        #   setup: VLLM_TARGET_DEVICE=cpu uv pip install -e . --no-build-isolation
+        "setup_command": exp.get("setup"),
     }
     run = {
         "id": run_id, "experiment": exp["name"],

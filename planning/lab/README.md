@@ -57,6 +57,57 @@ cd planning/lab
 | `artifact-cache/` | rsynced big artifacts (gitignored) |
 | `hosts/<worker>.json` | probed CPU/ISA/NUMA facts, stamped into each run |
 
+## The iterative perf loop
+
+This is the workflow the lab exists for. One iteration:
+
+```bash
+# 1. HYPOTHESIZE — from a profile, a code read, or a prior run's conclusion.
+#    Write it down; it goes into --hypothesis verbatim.
+
+# 2. CHANGE — edit vLLM source on this branch (python changes need no rebuild:
+#    the worker install is editable, checkout is enough). Commit + let labctl push.
+git commit -am "[EXPERIMENT] ..."
+
+# 3. RUN — the worker checks out exactly your SHA and benchmarks it.
+./labctl run baseline-qwen-serve --hypothesis "max_autotune improves ... because ..."
+
+# 4. OBSERVE
+./labctl status <new-run-id>        # live arm/rep state + runner log tail
+./labctl sync <new-run-id>          # when done: metrics -> run.json -> git
+
+# 5. COMPARE — across runs = across commits. This is the before/after evidence.
+./labctl compare <baseline-run-id> <new-run-id> --format md
+
+# 6. CONCLUDE — verdict into the ledger (also: negative results are results).
+./labctl conclude <new-run-id> "CONFIRMED/REFUTED — ..."
+```
+
+Notes per step:
+
+- **Rebuilds (C++/csrc changes)**: add a `setup:` line to the experiment —
+  it runs on the worker after checkout, before any arm:
+  `setup: VLLM_TARGET_DEVICE=cpu uv pip install -e . --no-build-isolation`
+  (TMPDIR/ccache are already pinned to nvme by lab.env).
+- **Compile observability**: the compile happens in the server warmup — read
+  `arms/<arm>/server.log` (synced under `runs/<id>/remote/`). For deeper views
+  add env to the experiment: `TORCH_TRACE: /mnt/nvme/pramod/torch_compile_perf/tmp/trace`
+  (inspect with `tlparse`) or `VLLM_DEBUG_DUMP_PATH` (depyf dump of generated
+  code). List those dirs in `artifacts:` and pull with `labctl sync --artifacts`.
+- **Op-level profiling**: add `--profiler-config '{"profiler":"torch",
+  "torch_profiler_dir":"{rep_dir}/profile"}'` to `server_command`, drive
+  traffic with `--profile` on `vllm bench serve`, add `profile/*` to
+  `artifacts:`; view the trace in ui.perfetto.dev.
+- **Compile time**: runner greps it per arm (`compile_time_s` in run.json —
+  on CPU's DYNAMO_TRACE_ONCE path this is the first warmup run's duration).
+  A warm `~/.cache`-equivalent on nvme means cache hits; delete
+  `{remote_root}/.cache/vllm/torch_compile_cache` on the worker to force a
+  cold compile measurement.
+- **Fair comparisons**: keep repeats/env identical between the two runs;
+  the compare view shows arms side by side, so compare inductor-arm vs
+  inductor-arm across SHAs (the eager arm doubles as a sanity control —
+  it should NOT move when you only touched compile behavior).
+
 ## Defining an experiment
 
 ```yaml
