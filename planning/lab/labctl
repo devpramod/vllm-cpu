@@ -217,9 +217,13 @@ def cmd_run(cfg, args):
     git_commit_push([RUNS / run_id], f"lab: queue {run_id}")
 
     ssh(w, f"mkdir -p {run_dir_remote}")
+    # Ship job AND runner: executing the worker-tree runner would use the
+    # pre-checkout version (the sha checkout happens inside the runner), so
+    # harness fixes would take effect one run late.
     sh(["scp", "-q", str(RUNS / run_id / "job.json"),
-        f"{w['ssh']}:{run_dir_remote}/job.json"])
-    runner = f"{w['repo_dir']}/planning/lab/worker/runner.py"
+        str(LAB / "worker" / "runner.py"),
+        f"{w['ssh']}:{run_dir_remote}/"])
+    runner = f"{run_dir_remote}/runner.py"
     # setsid-in-subshell: fully daemonize so sshd doesn't wait on the runner's
     # descendants (a plain `nohup ... &` keeps the ssh session open on xeon).
     ssh(w, f"cd {w['repo_dir']} && (setsid nohup .venv/bin/python {runner} "
