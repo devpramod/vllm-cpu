@@ -1,0 +1,52 @@
+{
+  "id": "2026-07-05-ea44ae5-baseline-qwen-serve",
+  "experiment": "baseline-qwen-serve",
+  "hypothesis": "N/A \u2014 smoke run 2 (post port-collision fix): Qwen3-30B-A3B MoE tp1 serving on xeon, inductor vs eager, 1 repeat. Expect nonzero throughput both arms; inductor arm pays a multi-minute compile at boot.",
+  "status": "queued",
+  "worker": "xeon",
+  "git": {
+    "sha": "ea44ae5f8d5c45cc253b53dc53f52951f4bcacdd",
+    "branch": "torch_compile_tutorial"
+  },
+  "host": {
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8568Y+",
+    "numa_nodes": 2,
+    "isa": [
+      "amx_bf16",
+      "amx_int8",
+      "amx_tile",
+      "avx512_bf16",
+      "avx512_bitalg",
+      "avx512_fp16",
+      "avx512_vbmi2",
+      "avx512_vnni",
+      "avx512_vpopcntdq",
+      "avx512bw",
+      "avx512cd",
+      "avx512dq",
+      "avx512f",
+      "avx512ifma",
+      "avx512vbmi",
+      "avx512vl"
+    ],
+    "torch": "2.11.0+cpu"
+  },
+  "env": {
+    "VLLM_CPU_KVCACHE_SPACE": "40",
+    "VLLM_CPU_SGL_KERNEL": "1",
+    "VLLM_ALLOW_LONG_MAX_MODEL_LEN": "1",
+    "VLLM_ENGINE_ITERATION_TIMEOUT_S": "120",
+    "VLLM_CPU_OMP_THREADS_BIND": "auto"
+  },
+  "repeats": 1,
+  "arms": {
+    "inductor": {
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+    },
+    "eager": {
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+    }
+  },
+  "created_at": "2026-07-05T19:29:31+00:00",
+  "conclusion": ""
+}
