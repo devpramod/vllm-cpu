@@ -1,0 +1,30 @@
+{
+  "id": "2026-07-05-a16f7b3-baseline-qwen-serve",
+  "status": "failed",
+  "current": null,
+  "started_at": "2026-07-05T19:31:18+00:00",
+  "finished_at": "2026-07-05T19:39:37+00:00",
+  "error": "eager/rep1 failed (sanity: output_throughput=0.0 (benchmark ran but measured nothing real))",
+  "arms": {
+    "inductor": {
+      "status": "done",
+      "compile_time_s": null,
+      "reps": [
+        {
+          "rep": 1,
+          "ok": true
+        }
+      ]
+    },
+    "eager": {
+      "status": "failed",
+      "compile_time_s": null,
+      "reps": [
+        {
+          "rep": 1,
+          "ok": false
+        }
+      ]
+    }
+  }
+}

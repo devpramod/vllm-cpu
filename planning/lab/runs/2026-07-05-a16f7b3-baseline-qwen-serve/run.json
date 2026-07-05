@@ -2,7 +2,7 @@
   "id": "2026-07-05-a16f7b3-baseline-qwen-serve",
   "experiment": "baseline-qwen-serve",
   "hypothesis": "N/A \u2014 smoke run 3: Qwen3-30B-A3B MoE tp1 serving on xeon, inductor vs eager, 1 repeat. Expect nonzero throughput both arms; inductor arm pays a multi-minute compile at boot.",
-  "status": "queued",
+  "status": "failed",
   "worker": "xeon",
   "git": {
     "sha": "a16f7b3dc4a9265ccf145cdaa30dcddc9a32610c",
@@ -41,12 +41,93 @@
   "repeats": 1,
   "arms": {
     "inductor": {
-      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "metrics": {
+        "output_tok_per_s": {
+          "median": 210.9801,
+          "spread": 0.0,
+          "values": [
+            210.98010447687776
+          ]
+        },
+        "ttft_ms_median": {
+          "median": 19120.1741,
+          "spread": 0.0,
+          "values": [
+            19120.174130424857
+          ]
+        },
+        "ttft_ms_p99": {
+          "median": 33545.3,
+          "spread": 0.0,
+          "values": [
+            33545.30004456639
+          ]
+        },
+        "tpot_ms_median": {
+          "median": 787.503,
+          "spread": 0.0,
+          "values": [
+            787.5030085913779
+          ]
+        },
+        "itl_ms_median": {
+          "median": 649.7842,
+          "spread": 0.0,
+          "values": [
+            649.7841998934746
+          ]
+        }
+      },
+      "status": "done",
+      "compile_time_s": null
     },
     "eager": {
-      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json"
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "metrics": {
+        "output_tok_per_s": {
+          "median": 0.0,
+          "spread": 0.0,
+          "values": [
+            0.0
+          ]
+        },
+        "ttft_ms_median": {
+          "median": 0.0,
+          "spread": 0.0,
+          "values": [
+            0.0
+          ]
+        },
+        "ttft_ms_p99": {
+          "median": 0.0,
+          "spread": 0.0,
+          "values": [
+            0.0
+          ]
+        },
+        "tpot_ms_median": {
+          "median": 0.0,
+          "spread": 0.0,
+          "values": [
+            0.0
+          ]
+        },
+        "itl_ms_median": {
+          "median": 0.0,
+          "spread": 0.0,
+          "values": [
+            0.0
+          ]
+        }
+      },
+      "status": "failed",
+      "compile_time_s": null
     }
   },
   "created_at": "2026-07-05T19:31:11+00:00",
-  "conclusion": ""
+  "conclusion": "",
+  "started_at": "2026-07-05T19:31:18+00:00",
+  "finished_at": "2026-07-05T19:39:37+00:00",
+  "error": "eager/rep1 failed (sanity: output_throughput=0.0 (benchmark ran but measured nothing real))"
 }
