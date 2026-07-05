@@ -220,9 +220,11 @@ def cmd_run(cfg, args):
     sh(["scp", "-q", str(RUNS / run_id / "job.json"),
         f"{w['ssh']}:{run_dir_remote}/job.json"])
     runner = f"{w['repo_dir']}/planning/lab/worker/runner.py"
-    ssh(w, f"cd {w['repo_dir']} && nohup .venv/bin/python {runner} "
+    # setsid-in-subshell: fully daemonize so sshd doesn't wait on the runner's
+    # descendants (a plain `nohup ... &` keeps the ssh session open on xeon).
+    ssh(w, f"cd {w['repo_dir']} && (setsid nohup .venv/bin/python {runner} "
            f"--job {run_dir_remote}/job.json "
-           f"> {run_dir_remote}/runner.log 2>&1 < /dev/null & echo submitted pid $!")
+           f"> {run_dir_remote}/runner.log 2>&1 < /dev/null &) && echo submitted")
     print(f"submitted: {run_id}")
     print(f"  status:  ./labctl status {run_id}")
     print(f"  results: ./labctl sync {run_id}   (after it finishes)")
