@@ -1,0 +1,1 @@
+{"cpu": "INTEL(R) XEON(R) PLATINUM 8568Y+", "numa_nodes": 2, "isa": ["amx_bf16", "amx_int8", "amx_tile", "avx512_bf16", "avx512_bitalg", "avx512_fp16", "avx512_vbmi2", "avx512_vnni", "avx512_vpopcntdq", "avx512bw", "avx512cd", "avx512dq", "avx512f", "avx512ifma", "avx512vbmi", "avx512vl"], "torch": "2.11.0+cpu"}
