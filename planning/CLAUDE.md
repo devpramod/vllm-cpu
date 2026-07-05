@@ -17,6 +17,8 @@ Read in this order:
 
 1. **PROGRESS.md** — current stage, next actions, log. Update it after every
    work session; it is the single source of truth for state.
+   (**LEARNING_PATH.md** is Pramod's personal step-1-2-3 track through the
+   same material — when he asks "what next", answer from there.)
 2. **CURRICULUM.md** — the 6-stage contribution ladder (bug fixes → CI
    coverage → per-op benchmarking → fusion passes → piecewise research →
    FusedMoE MK refactor #36739), the profile→hypothesize→fix→benchmark loop,
