@@ -1,0 +1,31 @@
+{
+  "id": "2026-07-05-cf46ae6-baseline-qwen-serve",
+  "sha": "cf46ae624d4f64cdfe672423d9a77421f2263590",
+  "repo_dir": "/mnt/nvme/pramod/torch_compile_perf/vllm-cpu",
+  "runs_dir": "/mnt/nvme/pramod/torch_compile_perf/lab-runs",
+  "run_dir": "/mnt/nvme/pramod/torch_compile_perf/lab-runs/2026-07-05-cf46ae6-baseline-qwen-serve",
+  "env": {
+    "VLLM_CPU_KVCACHE_SPACE": "40",
+    "VLLM_CPU_SGL_KERNEL": "1",
+    "VLLM_ALLOW_LONG_MAX_MODEL_LEN": "1",
+    "VLLM_ENGINE_ITERATION_TIMEOUT_S": "120",
+    "VLLM_CPU_OMP_THREADS_BIND": "auto"
+  },
+  "repeats": 1,
+  "arms": {
+    "inductor": {
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "server_command": "vllm serve Qwen/Qwen3-30B-A3B --port 18192 --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128 --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code --disable-log-stats"
+    },
+    "eager": {
+      "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
+      "server_command": "vllm serve Qwen/Qwen3-30B-A3B --port 18192 --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128 --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code --disable-log-stats --enforce-eager"
+    }
+  },
+  "forbidden_env": [
+    "VLLM_CPU_CI_ENV"
+  ],
+  "health_url": "http://127.0.0.1:18192/health",
+  "health_timeout_s": 5400,
+  "sanity_metric": "output_throughput"
+}
