@@ -2,7 +2,7 @@
   "id": "2026-07-05-63a5a60-baseline-qwen-serve",
   "experiment": "baseline-qwen-serve",
   "hypothesis": "Enabling inductor max_autotune (which also activates weight freezing via the dormant hook in cpu_model_runner._set_global_compilation_settings, unlocking MKLDNN/CPP-GEMM templates) improves Qwen3-30B-A3B tp1 serving output throughput vs the 205.1 tok/s baseline (run dcccd8a), at the cost of significantly longer warmup compile.",
-  "status": "queued",
+  "status": "failed",
   "worker": "xeon",
   "git": {
     "sha": "63a5a6056ef01e920a27434bb39f305f06732921",
@@ -42,13 +42,22 @@
   "arms": {
     "inductor": {
       "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
-      "server_command": "vllm serve Qwen/Qwen3-30B-A3B --port 18192 --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128 --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code --disable-log-stats"
+      "server_command": "vllm serve Qwen/Qwen3-30B-A3B --port 18192 --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128 --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code --disable-log-stats",
+      "metrics": {},
+      "status": "failed",
+      "compile_time_s": null
     },
     "eager": {
       "command": "vllm bench serve --backend vllm --model Qwen/Qwen3-30B-A3B --port 18192 --dataset-name random --random-input-len 128 --random-output-len 128 --num-prompts 200 --ignore-eos --temperature 0 --save-result --result-dir {rep_dir} --result-filename metrics.json",
-      "server_command": "vllm serve Qwen/Qwen3-30B-A3B --port 18192 --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128 --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code --disable-log-stats --enforce-eager"
+      "server_command": "vllm serve Qwen/Qwen3-30B-A3B --port 18192 --dtype bfloat16 -tp 1 --distributed-executor-backend mp --block-size 128 --max-num-batched-tokens 2048 --max-num-seqs 256 --trust-remote-code --disable-log-stats --enforce-eager",
+      "metrics": {},
+      "status": "pending",
+      "compile_time_s": null
     }
   },
   "created_at": "2026-07-05T20:17:26+00:00",
-  "conclusion": ""
+  "conclusion": "",
+  "started_at": "2026-07-05T20:17:34+00:00",
+  "finished_at": "2026-07-05T21:47:35+00:00",
+  "error": "server not healthy after 5400s"
 }

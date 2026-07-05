@@ -1,0 +1,20 @@
+{
+  "id": "2026-07-05-63a5a60-baseline-qwen-serve",
+  "status": "failed",
+  "current": null,
+  "started_at": "2026-07-05T20:17:34+00:00",
+  "finished_at": "2026-07-05T21:47:35+00:00",
+  "error": "server not healthy after 5400s",
+  "arms": {
+    "inductor": {
+      "status": "failed",
+      "compile_time_s": null,
+      "reps": []
+    },
+    "eager": {
+      "status": "pending",
+      "compile_time_s": null,
+      "reps": []
+    }
+  }
+}
