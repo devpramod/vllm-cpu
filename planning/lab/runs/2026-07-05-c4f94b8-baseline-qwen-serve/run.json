@@ -2,7 +2,7 @@
   "id": "2026-07-05-c4f94b8-baseline-qwen-serve",
   "experiment": "baseline-qwen-serve",
   "hypothesis": "N/A \u2014 smoke run: first E2E exercise of the lab on xeon; Qwen3-30B-A3B MoE tp1 serving, inductor vs eager, 1 repeat. Expect inductor arm to show compile-time cost at boot and (hypothesis) equal-or-better steady-state output throughput than eager.",
-  "status": "done",
+  "status": "failed",
   "worker": "xeon",
   "git": {
     "sha": "c4f94b8885c40cca291cc97e066e0d1e81bc76ac",
@@ -126,8 +126,8 @@
     }
   },
   "created_at": "2026-07-05T19:26:19+00:00",
-  "conclusion": "",
+  "conclusion": "INVALID \u2014 health check hit a foreign tenant server on default port 8000; our server lost the bind race and all requests failed with zero metrics. Fixed by pinning lab serve experiments to port 18192 and adding a runner sanity gate (primary metric must be > 0). Kept as the lab's first honest failure record.",
   "started_at": "2026-07-05T19:26:25+00:00",
   "finished_at": "2026-07-05T19:26:53+00:00",
-  "error": null
+  "error": "invalid measurement: port-8000 collision with a tenant vLLM (granite-8b) on shared xeon; all bench requests failed, metrics are zeros"
 }
