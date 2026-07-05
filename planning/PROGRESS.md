@@ -8,7 +8,7 @@ An agent resuming work: read CLAUDE.md → this file → CURRICULUM.md stage.
 
 | Stage | What | Status |
 |---|---|---|
-| 0 | Environment + baselines on xeon | **READY TO RUN** — lab built; next: `lab/labctl setup xeon`, then the three baseline experiments |
+| 0 | Environment + baselines on xeon | **IN PROGRESS** — xeon bootstrapped, lab proven E2E (MoE smoke run done: compile +6.3% tok/s vs eager); next: full 3-repeat baselines for all three experiments |
 | 0b | Talk to bigPYJ1151 (question list in CURRICULUM.md "Maintainer channel") | NOT STARTED — user-driven |
 | 1 | Reproduce/fix open CPU bugs (#46470, #47014, #46693, #46347) | NOT STARTED |
 | 2 | CPU compile test coverage (Inductor smoke test + CI) | NOT STARTED — needs Stage 0b CI-budget answer |
@@ -42,6 +42,15 @@ An agent resuming work: read CLAUDE.md → this file → CURRICULUM.md stage.
 
 ## Log
 
+- 2026-07-05: First clean E2E lab run on xeon (run dcccd8a): Qwen3-30B-A3B
+  tp1, 200 random 128/128 prompts — compile 205.1 tok/s vs eager 193.0
+  (+6.3%), TPOT median 822.7 vs 875.4 ms. Single repeat, directional. Smoke
+  runs 1-4 flushed out and fixed 5 lab bugs (tenant port collision,
+  zero-metric false success, ssh submit hang, zombie server port, stale
+  runner deployment) — all documented in the run conclusions. Xeon:
+  Platinum 8568Y+ (AMX), all caches verified on /mnt/nvme. Open thread:
+  "Inductor compilation was disabled by user settings" warning on the
+  compile arm — investigate what mode 2 actually engages (Stage 1 learning).
 - 2026-07-05: Built `planning/lab/` — portable control plane (labctl CLI,
   git-committed run ledger, web UI) + xeon worker harness (flock'd runner,
   nvme-pinned bootstrap for /mnt/nvme/pramod/torch_compile_perf). Retired
