@@ -15,6 +15,7 @@ vLLM supports a variety of methods of speculative decoding. Model-based methods 
 - [Multi-Layer Perceptron](mlp.md)
 - [N-Gram](n_gram.md)
 - [Suffix Decoding](suffix.md)
+- [Template Drafting](template.md)
 - [Hidden State Extraction](extract_hidden_states.md)
 - [Custom Proposer Backend (Experimental)](#custom-proposer-backend-experimental)
 - [Dynamic Speculative Decoding](dynamic_speculative_decoding.md)
@@ -33,6 +34,7 @@ depend on your model family, traffic pattern, hardware, and sampling settings.
 | MLP speculator | Medium to high gain | Medium gain | Good when compatible MLP speculators are available. |
 | N-gram | Low to medium gain | Medium gain | Lightweight and easy to enable. |
 | Suffix decoding | Low to medium gain | Medium gain | No extra draft model; dynamic speculation depth. |
+| Template drafting | High gain | High gain | Structured-output workloads (guard/judge models) with known response templates only. |
 | Custom Proposer | Varies | Varies | Bring your own proposer class (experimental). |
 | Dynamic Speculative Decoding | High gain | Higher than base SD method | Useful for RL or workload with fluctuating QPS |
 
@@ -78,8 +80,8 @@ only apply to model-based methods such as `draft_model`, `mtp`, `eagle3`, and
 
 | Key | Type | Default | Allowed values / meaning |
 | --- | --- | --- | --- |
-| `method` | `string` | `None` | Speculation method. Common values include `draft_model`, `ngram`, `suffix`, `mtp`, `eagle3`, and `dflash`. If omitted, vLLM infers the method from the provided configuration when possible. |
-| `model` | `string` | `None` | Draft model, EAGLE head, or auxiliary model identifier. For `ngram`, `ngram_gpu`, `suffix`, and `mtp`, this can often be omitted. |
+| `method` | `string` | `None` | Speculation method. Common values include `draft_model`, `ngram`, `suffix`, `template`, `mtp`, `eagle3`, and `dflash`. If omitted, vLLM infers the method from the provided configuration when possible. |
+| `model` | `string` | `None` | Draft model, EAGLE head, or auxiliary model identifier. For `ngram`, `ngram_gpu`, `suffix`, `template`, and `mtp`, this can often be omitted. |
 | `num_speculative_tokens` | `integer > 0` | `None` | Number of speculative tokens to propose per step. Required for methods that do not infer it from model metadata. |
 | `draft_tensor_parallel_size` | `integer >= 1` | `None` | Tensor parallel size for the draft model. |
 | `max_model_len` | `integer >= 1` | `None` | Maximum context length for the draft model. |
@@ -140,6 +142,25 @@ vllm serve <target-model> \
     "suffix_decoding_max_cached_requests": 10000,
     "suffix_decoding_max_spec_factor": 1.0,
     "suffix_decoding_min_token_prob": 0.1
+  }'
+```
+
+#### Template drafting
+
+| Key | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `template_drafts` | `list[string]` | `None` | Response templates as plain strings, tokenized with the target tokenizer at startup. Required. Ties on shared prefixes go to the earliest entry. |
+| `template_append_eos` | `boolean` | `true` | Append the tokenizer's EOS token to each template. |
+
+Example:
+
+```bash
+vllm serve <target-model> \
+  --speculative-config '{
+    "method": "template",
+    "num_speculative_tokens": 12,
+    "template_drafts": ["<think>\n</think>\n<score> yes </score>",
+                        "<think>\n</think>\n<score> no </score>"]
   }'
 ```
 

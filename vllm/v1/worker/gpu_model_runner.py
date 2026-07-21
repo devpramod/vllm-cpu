@@ -205,6 +205,7 @@ from vllm.v1.spec_decode.ngram_proposer_gpu import (
 )
 from vllm.v1.spec_decode.step3p5 import Step3p5MTPProposer
 from vllm.v1.spec_decode.suffix_decoding import SuffixDecodingProposer
+from vllm.v1.spec_decode.template_proposer import TemplateProposer
 from vllm.v1.spec_decode.utils import update_num_computed_tokens_for_batch_change
 from vllm.v1.structured_output.utils import apply_grammar_bitmask
 from vllm.v1.utils import CpuGpuBuffer, record_function_or_nullcontext
@@ -583,6 +584,7 @@ class GPUModelRunner(
                 NgramProposer  # noqa: F823
                 | NgramProposerGPU
                 | SuffixDecodingProposer
+                | TemplateProposer
                 | EagleProposer
                 | DFlashProposer
                 | DraftModelProposer
@@ -631,6 +633,8 @@ class GPUModelRunner(
                 self.use_aux_hidden_state_outputs = True
             elif self.speculative_config.method == "suffix":
                 self.drafter = SuffixDecodingProposer(self.vllm_config)
+            elif self.speculative_config.method == "template":
+                self.drafter = TemplateProposer(self.vllm_config)
             elif self.speculative_config.use_eagle():
                 self.drafter = EagleProposer(self.vllm_config, self.device, self)
                 if self.speculative_config.method == "eagle3":
@@ -5029,6 +5033,15 @@ class GPUModelRunner(
         elif spec_config.method == "suffix":
             assert isinstance(sampled_token_ids, list)
             assert isinstance(self.drafter, SuffixDecodingProposer)
+            draft_token_ids = self.drafter.propose(
+                num_spec_tokens_to_schedule,
+                self.input_batch,
+                sampled_token_ids,
+                slot_mappings=slot_mappings,
+            )
+        elif spec_config.method == "template":
+            assert isinstance(sampled_token_ids, list)
+            assert isinstance(self.drafter, TemplateProposer)
             draft_token_ids = self.drafter.propose(
                 num_spec_tokens_to_schedule,
                 self.input_batch,

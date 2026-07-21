@@ -69,6 +69,7 @@ SpeculativeMethod = Literal[
     "mlp_speculator",
     "draft_model",
     "suffix",
+    "template",
     "custom_class",
     EagleModelTypes,
     NgramGPUTypes,
@@ -208,6 +209,22 @@ class SpeculativeConfig:
     """The minimum token probability for suffix decoding. Will only speculate
     tokens with estimated probability (based on frequency counts) greater than
     or equal to this value."""
+
+    # Template drafting configuration
+    template_drafts: list[str] | None = None
+    """Response templates for the `template` speculative method, as plain
+    text strings. Each template is tokenized with the target model's
+    tokenizer at startup. A draft is proposed only while a request's
+    generated tokens are an exact prefix of one of the templates, so
+    responses that deviate from every template incur no further speculation
+    overhead. When several templates share a prefix, the earliest match in
+    this list is proposed — list the most likely template first."""
+
+    template_append_eos: bool = True
+    """Whether to append the target tokenizer's EOS token to each template in
+    `template_drafts`. Enabled by default since templates typically describe
+    complete responses, which lets the final verification step also accept
+    the EOS token."""
 
     draft_load_config: LoadConfig | None = None
     """Load config for the draft model. If not specified, will use the load
@@ -716,6 +733,8 @@ class SpeculativeConfig:
                 self.model = "ngram_gpu"
             elif self.method == "suffix":
                 self.model = "suffix"
+            elif self.method == "template":
+                self.model = "template"
             elif self.method == "extract_hidden_states":
                 self.model = "extract_hidden_states"
             elif self.method == "custom_class":
@@ -769,6 +788,8 @@ class SpeculativeConfig:
             self.draft_parallel_config = self.target_parallel_config
         elif self.method == "suffix":
             self._validate_suffix_decoding()
+        elif self.method == "template":
+            self._validate_template_drafting()
         elif self.method == "custom_class":
             # Custom class proposer does not need a draft model.
             # It will dynamically load the user-provided class at runtime.
@@ -1085,6 +1106,29 @@ class SpeculativeConfig:
                 f"{self.suffix_decoding_min_token_prob} must be in [0, 1]"
             )
 
+    def _validate_template_drafting(self):
+        if not self.template_drafts:
+            raise ValueError(
+                "method='template' requires 'template_drafts' to be a "
+                "non-empty list of response template strings."
+            )
+        if any(not isinstance(t, str) or not t for t in self.template_drafts):
+            raise ValueError(
+                "All entries in 'template_drafts' must be non-empty strings."
+            )
+        if len(set(self.template_drafts)) != len(self.template_drafts):
+            raise ValueError("'template_drafts' contains duplicate templates.")
+        if self.num_speculative_tokens is None:
+            # Proposals are capped at the matched template's remainder, so an
+            # over-estimate is harmless; 16 covers typical verdict templates.
+            self.num_speculative_tokens = 16
+            logger.warning(
+                "Defaulted num_speculative_tokens to %s for template "
+                "drafting. Set it to at least the longest template's token "
+                "length to verify a full template in one step.",
+                self.num_speculative_tokens,
+            )
+
     @staticmethod
     def _maybe_override_draft_max_model_len(
         speculative_max_model_len: int | None,
@@ -1353,6 +1397,7 @@ class SpeculativeConfig:
             in (
                 "ngram",
                 "suffix",
+                "template",
                 "extract_hidden_states",
                 "custom_class",
             )
