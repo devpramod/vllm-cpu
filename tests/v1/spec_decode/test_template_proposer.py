@@ -180,6 +180,32 @@ def test_proposer_batch(proposer):
     ]
 
 
+def test_proposer_uses_request_scoped_template_sets(proposer):
+    prompt = [1, 2, 3]
+    batch = _FakeInputBatch(
+        prompt_lens=[3, 3, 3],
+        token_rows=[
+            prompt + [10, 11],
+            prompt + [10, 11],
+            prompt + [30, 31],
+        ],
+    )
+    custom_templates = ((30, 31, 32, 33, 34, 35, 36, 37, 0),)
+
+    drafts = proposer.propose(
+        8,
+        batch,
+        [[11], [11], [31]],
+        request_template_token_ids=[None, (), custom_templates],
+    )
+
+    assert drafts == [[12, 100, 20, 21, 0], [], [32, 33, 34, 35, 36, 37, 0]]
+    assert proposer._get_template_set(custom_templates) is proposer._get_template_set(
+        custom_templates
+    )
+    assert len(proposer.template_set_cache) == 1
+
+
 def test_proposer_skips_partial_prefills_and_long_responses(proposer):
     prompt = [1, 2, 3]
     batch = _FakeInputBatch(

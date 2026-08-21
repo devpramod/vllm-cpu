@@ -5042,10 +5042,16 @@ class GPUModelRunner(
         elif spec_config.method == "template":
             assert isinstance(sampled_token_ids, list)
             assert isinstance(self.drafter, TemplateProposer)
+            request_template_token_ids = []
+            for req_id in self.input_batch.req_ids:
+                sampling_params = self.requests[req_id].sampling_params
+                assert sampling_params is not None
+                request_template_token_ids.append(sampling_params.template_token_ids)
             draft_token_ids = self.drafter.propose(
                 num_spec_tokens_to_schedule,
                 self.input_batch,
                 sampled_token_ids,
+                request_template_token_ids=request_template_token_ids,
                 slot_mappings=slot_mappings,
             )
         elif spec_config.method == "medusa":

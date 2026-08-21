@@ -1011,6 +1011,22 @@ def test_chat_completion_request_n_parameter_default():
     assert sampling_params.n == 1, f"Expected n=1 (default), got n={sampling_params.n}"
 
 
+@pytest.mark.parametrize(
+    ("template_drafts", "expected"),
+    [(None, None), ([], []), (["yes", "no"], ["yes", "no"])],
+)
+def test_chat_completion_request_template_drafts(template_drafts, expected):
+    request = ChatCompletionRequest(
+        model="test-model",
+        messages=[{"role": "user", "content": "Hello"}],
+        template_drafts=template_drafts,
+    )
+
+    sampling_params = request.to_sampling_params(10, {})
+
+    assert sampling_params.template_drafts == expected
+
+
 def test_chat_completion_request_accepts_model_specific_reasoning_effort():
     request = ChatCompletionRequest(
         model="test-model",

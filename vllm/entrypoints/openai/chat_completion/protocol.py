@@ -465,6 +465,14 @@ class ChatCompletionRequest(OpenAIBaseModel):
             "numeric values, used by custom extensions."
         ),
     )
+    template_drafts: list[str] | None = Field(
+        default=None,
+        description=(
+            "Per-request templates for template speculative decoding. Omit to "
+            "use service defaults, pass an empty list to disable template "
+            "drafting, or pass a non-empty list to override the defaults."
+        ),
+    )
 
     repetition_detection: RepetitionDetectionParams | None = Field(
         default=None,
@@ -694,6 +702,7 @@ class ChatCompletionRequest(OpenAIBaseModel):
             logit_bias=self.logit_bias,
             bad_words=self.bad_words,
             thinking_token_budget=self.thinking_token_budget,
+            template_drafts=self.template_drafts,
             allowed_token_ids=self.allowed_token_ids,
             extra_args=extra_args or None,
             skip_clone=True,  # Created fresh per request, safe to skip clone

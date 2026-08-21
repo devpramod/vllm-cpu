@@ -5,10 +5,14 @@ import torch
 
 from vllm.config import VllmConfig
 from vllm.logger import init_logger
+from vllm.sampling_params import tokenize_template_drafts
 from vllm.tokenizers.registry import get_tokenizer
+from vllm.utils.cache import LRUCache
 from vllm.v1.worker.gpu_input_batch import InputBatch
 
 logger = init_logger(__name__)
+
+_TemplateTokenIds = tuple[tuple[int, ...], ...]
 
 
 class _TemplateTrieNode:
@@ -35,6 +39,17 @@ def _build_template_trie(templates: list[np.ndarray]) -> _TemplateTrieNode:
     return root
 
 
+class _TemplateSet:
+    __slots__ = ("max_template_len", "templates", "trie")
+
+    def __init__(self, template_token_ids: _TemplateTokenIds):
+        self.templates = [
+            np.array(token_ids, dtype=np.int32) for token_ids in template_token_ids
+        ]
+        self.trie = _build_template_trie(self.templates)
+        self.max_template_len = max(len(template) for template in self.templates)
+
+
 class TemplateProposer:
     """
     Speculative decoding proposer for template-shaped responses.
@@ -48,10 +63,11 @@ class TemplateProposer:
     O(response_len / num_speculative_tokens) target forward passes, at zero
     drafting cost.
 
-    Templates are configured as plain strings (`template_drafts`) and
-    tokenized with the target model's tokenizer at startup. A draft is
-    proposed for a request if and only if the tokens generated so far are an
-    exact prefix of one of the templates; the proposal is that template's
+    Service-default templates are configured as plain strings
+    (`template_drafts`) and tokenized with the target model's tokenizer at
+    startup. Requests can inherit, disable, or override them. A draft is
+    proposed if and only if the tokens generated so far are an exact prefix
+    of one of the request's active templates; the proposal is that template's
     remainder, capped at `num_speculative_tokens`. Consequently:
 
     * Requests whose responses deviate from every template are never
@@ -77,36 +93,41 @@ class TemplateProposer:
             vllm_config.model_config.tokenizer,
             trust_remote_code=vllm_config.model_config.trust_remote_code,
         )
-        eos_token_id = tokenizer.eos_token_id
-        templates: list[np.ndarray] = []
-        seen_token_ids: set[tuple[int, ...]] = set()
-        for template in config.template_drafts:
-            token_ids = tokenizer.encode(template, add_special_tokens=False)
-            if not token_ids:
-                raise ValueError(
-                    f"Template {template!r} tokenized to an empty sequence."
-                )
-            if config.template_append_eos and eos_token_id is not None:
-                token_ids = token_ids + [eos_token_id]
-            template_key = tuple(token_ids)
-            if template_key in seen_token_ids:
-                raise ValueError(
-                    f"Template {template!r} duplicates an earlier template "
-                    "after tokenization."
-                )
-            seen_token_ids.add(template_key)
-            template_array = np.array(token_ids, dtype=np.int32)
-            templates.append(template_array)
-        self.templates = templates
-        self.template_trie = _build_template_trie(templates)
-        self.max_template_len = max(len(t) for t in templates)
+        template_token_ids = tokenize_template_drafts(
+            config.template_drafts, tokenizer, config.template_append_eos
+        )
+        self.default_template_token_ids = template_token_ids
+        self.default_template_set = _TemplateSet(template_token_ids)
+        self.template_set_cache: LRUCache[_TemplateTokenIds, _TemplateSet] = LRUCache(
+            vllm_config.scheduler_config.max_num_seqs
+        )
+
+        self.templates = self.default_template_set.templates
+        self.template_trie = self.default_template_set.trie
+        self.max_template_len = self.default_template_set.max_template_len
         logger.info(
             "TemplateProposer initialized with %d template(s) of token "
             "lengths %s (append_eos=%s).",
-            len(templates),
-            [len(t) for t in templates],
+            len(self.templates),
+            [len(template) for template in self.templates],
             config.template_append_eos,
         )
+
+    def _get_template_set(
+        self, template_token_ids: _TemplateTokenIds | None
+    ) -> _TemplateSet | None:
+        if template_token_ids is None or (
+            template_token_ids == self.default_template_token_ids
+        ):
+            return self.default_template_set
+        if not template_token_ids:
+            return None
+
+        template_set = self.template_set_cache.get(template_token_ids)
+        if template_set is None:
+            template_set = _TemplateSet(template_token_ids)
+            self.template_set_cache[template_token_ids] = template_set
+        return template_set
 
     def propose(
         self,
@@ -116,6 +137,7 @@ class TemplateProposer:
         slot_mappings: dict[str, torch.Tensor]
         | list[dict[str, torch.Tensor]]
         | None = None,  # unused
+        request_template_token_ids: list[_TemplateTokenIds | None] | None = None,
     ) -> list[list[int]]:
         """
         Propose the remainder of the matching template for each request whose
@@ -136,11 +158,21 @@ class TemplateProposer:
                 draft_token_ids.append([])
                 continue
 
+            template_token_ids = (
+                request_template_token_ids[i]
+                if request_template_token_ids is not None
+                else None
+            )
+            template_set = self._get_template_set(template_token_ids)
+            if template_set is None:
+                draft_token_ids.append([])
+                continue
+
             req_id = input_batch.req_ids[i]
             index = input_batch.req_id_to_index[req_id]
             num_prompt_tokens = input_batch.num_prompt_tokens[index]
             num_output_tokens = num_tokens - num_prompt_tokens
-            if num_output_tokens > self.max_template_len:
+            if num_output_tokens > template_set.max_template_len:
                 # The response has outgrown every template.
                 draft_token_ids.append([])
                 continue
@@ -149,9 +181,7 @@ class TemplateProposer:
             max_tokens = min(
                 num_speculative_tokens, self.max_model_len - num_tokens - 1
             )
-            draft = _propose_template_remainder(
-                response, self.template_trie, max_tokens
-            )
+            draft = _propose_template_remainder(response, template_set.trie, max_tokens)
             draft_token_ids.append(draft)
         return draft_token_ids
 

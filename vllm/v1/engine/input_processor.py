@@ -325,7 +325,20 @@ class InputProcessor:
                 self.renderer.get_eos_token_id(),
             )
             if self.tokenizer is not None:
-                sampling_params.update_from_tokenizer(self.tokenizer)
+                template_append_eos = (
+                    self.speculative_config.template_append_eos
+                    if self.speculative_config is not None
+                    else True
+                )
+                sampling_params.update_from_tokenizer(
+                    self.tokenizer, template_append_eos=template_append_eos
+                )
+            elif sampling_params.template_drafts:
+                raise ValueError(
+                    "Per-request template_drafts require an available tokenizer."
+                )
+            elif sampling_params.template_drafts == []:
+                sampling_params._template_token_ids = ()
         else:
             pooling_params = params.clone()
 

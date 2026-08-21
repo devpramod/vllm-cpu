@@ -83,6 +83,21 @@ class TestResponsesRequestSamplingParams:
         assert sampling_params.stop == []  # Empty list
         assert sampling_params.extra_args == {}  # Empty dict
 
+    @pytest.mark.parametrize(
+        ("template_drafts", "expected"),
+        [(None, None), ([], []), (["yes", "no"], ["yes", "no"])],
+    )
+    def test_template_drafts(self, template_drafts, expected):
+        request = ResponsesRequest(
+            model="test-model",
+            input="test input",
+            template_drafts=template_drafts,
+        )
+
+        sampling_params = request.to_sampling_params(default_max_tokens=1000)
+
+        assert sampling_params.template_drafts == expected
+
     def test_seed_bounds_validation(self):
         """Test that seed values outside torch.long bounds are rejected."""
         # Test seed below minimum

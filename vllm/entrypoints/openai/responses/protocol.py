@@ -281,6 +281,14 @@ class ResponsesRequest(OpenAIBaseModel):
             "numeric values, used by custom extensions."
         ),
     )
+    template_drafts: list[str] | None = Field(
+        default=None,
+        description=(
+            "Per-request templates for template speculative decoding. Omit to "
+            "use service defaults, pass an empty list to disable template "
+            "drafting, or pass a non-empty list to override the defaults."
+        ),
+    )
     kv_transfer_params: dict[str, Any] | None = Field(
         default=None,
         description="KVTransfer parameters used for disaggregated serving.",
@@ -443,6 +451,7 @@ class ResponsesRequest(OpenAIBaseModel):
             skip_clone=True,  # Created fresh per request, safe to skip clone
             skip_special_tokens=self.skip_special_tokens,
             include_stop_str_in_output=self.include_stop_str_in_output,
+            template_drafts=self.template_drafts,
         )
 
     def is_include_output_logprobs(self) -> bool:

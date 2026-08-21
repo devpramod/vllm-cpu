@@ -196,6 +196,30 @@ def _get_llg_tokenizer(tokenizer: TokenizerLike) -> Any:
     return tokenizer.llg_tokenizer if is_mistral_tokenizer(tokenizer) else None
 
 
+def tokenize_template_drafts(
+    template_drafts: list[str],
+    tokenizer: TokenizerLike,
+    append_eos: bool,
+) -> tuple[tuple[int, ...], ...]:
+    tokenized_templates: list[tuple[int, ...]] = []
+    seen_token_ids: set[tuple[int, ...]] = set()
+    for template in template_drafts:
+        token_ids = tokenizer.encode(template, add_special_tokens=False)
+        if not token_ids:
+            raise ValueError(f"Template {template!r} tokenized to an empty sequence.")
+        if append_eos and tokenizer.eos_token_id is not None:
+            token_ids = [*token_ids, tokenizer.eos_token_id]
+        template_key = tuple(int(token_id) for token_id in token_ids)
+        if template_key in seen_token_ids:
+            raise ValueError(
+                f"Template {template!r} duplicates an earlier template "
+                "after tokenization."
+            )
+        seen_token_ids.add(template_key)
+        tokenized_templates.append(template_key)
+    return tuple(tokenized_templates)
+
+
 class SamplingParams(
     PydanticMsgspecMixin,
     msgspec.Struct,
@@ -344,6 +368,13 @@ class SamplingParams(
     thinking_token_budget: int | None = None
     """Maximum number of tokens allowed for thinking operations."""
 
+    template_drafts: list[str] | None = None
+    """Per-request response templates for template speculative decoding.
+
+    ``None`` uses the service-level templates, an empty list disables template
+    drafting for this request, and a non-empty list overrides the defaults."""
+    _template_token_ids: tuple[tuple[int, ...], ...] | None = None
+
     repetition_detection: RepetitionDetectionParams | None = None
     """Parameters for detecting repetitive N-gram patterns in output tokens.
     If such repetition is detected, generation will be ended early. LLMs can
@@ -384,6 +415,7 @@ class SamplingParams(
         skip_clone: bool = False,
         repetition_detection: RepetitionDetectionParams | None = None,
         logprob_token_ids: list[int] | None = None,
+        template_drafts: list[str] | None = None,
     ) -> "SamplingParams":
         if logit_bias is not None:
             # Fast path uses a dict comprehension; on failure we iterate once
@@ -428,6 +460,7 @@ class SamplingParams(
             stop_token_ids=stop_token_ids,
             bad_words=bad_words,
             thinking_token_budget=thinking_token_budget,
+            template_drafts=template_drafts,
             include_stop_str_in_output=include_stop_str_in_output,
             ignore_eos=ignore_eos,
             max_tokens=max_tokens,
@@ -621,6 +654,22 @@ class SamplingParams(
                 f"bad_words cannot contain an empty string. "
                 f"Got bad_words={self.bad_words}"
             )
+        if self.template_drafts is not None:
+            if not isinstance(self.template_drafts, list):
+                raise ValueError(
+                    "template_drafts must be a list of strings, "
+                    f"got {type(self.template_drafts).__name__}."
+                )
+            if any(
+                not isinstance(template, str) or not template
+                for template in self.template_drafts
+            ):
+                raise ValueError(
+                    "template_drafts must contain only non-empty strings, "
+                    f"got {self.template_drafts}."
+                )
+            if len(set(self.template_drafts)) != len(self.template_drafts):
+                raise ValueError("template_drafts contains duplicate templates.")
 
     def _verify_greedy_sampling(self) -> None:
         if self.n > 1:
@@ -656,45 +705,51 @@ class SamplingParams(
                     eos_ids.update(self.stop_token_ids)
                     self.stop_token_ids = list(eos_ids)
 
-    def update_from_tokenizer(self, tokenizer: TokenizerLike) -> None:
-        if not self.bad_words:
-            return
-        self._bad_words_token_ids = []
-        for bad_word in self.bad_words:
-            # To prohibit words both at the beginning
-            # and in the middle of text
-            # (related to add_prefix_space tokenizer parameter)
-            for add_prefix_space in [False, True]:
-                prefix = " " if add_prefix_space else ""
-                prompt = prefix + bad_word.lstrip()
-                prompt_token_ids = tokenizer.encode(
-                    text=prompt, add_special_tokens=False
+    def update_from_tokenizer(
+        self, tokenizer: TokenizerLike, *, template_append_eos: bool = True
+    ) -> None:
+        if self.bad_words:
+            self._bad_words_token_ids = []
+            for bad_word in self.bad_words:
+                # To prohibit words both at the beginning
+                # and in the middle of text
+                # (related to add_prefix_space tokenizer parameter)
+                for add_prefix_space in [False, True]:
+                    prefix = " " if add_prefix_space else ""
+                    prompt = prefix + bad_word.lstrip()
+                    prompt_token_ids = tokenizer.encode(
+                        text=prompt, add_special_tokens=False
+                    )
+
+                    # If no space at the beginning
+                    # or if prefix space produces a new word token
+                    if (not add_prefix_space) or (
+                        add_prefix_space
+                        and prompt_token_ids[0] != self._bad_words_token_ids[-1][0]
+                        and len(prompt_token_ids) == len(self._bad_words_token_ids[-1])
+                    ):
+                        self._bad_words_token_ids.append(prompt_token_ids)
+
+            invalid_token_ids = [
+                token_id
+                for bad_words_token_ids in self._bad_words_token_ids
+                for token_id in bad_words_token_ids
+                if token_id < 0 or token_id > tokenizer.max_token_id
+            ]
+            if len(invalid_token_ids) > 0:
+                raise VLLMValidationError(
+                    f"The model vocabulary size is {tokenizer.max_token_id + 1},"
+                    f" but the following tokens"
+                    f" were specified as bad: {invalid_token_ids}."
+                    f" All token id values should be integers satisfying:"
+                    f" 0 <= token_id <= {tokenizer.max_token_id}.",
+                    parameter="bad_words",
+                    value=self.bad_words,
                 )
 
-                # If no space at the beginning
-                # or if prefix space produces a new word token
-                if (not add_prefix_space) or (
-                    add_prefix_space
-                    and prompt_token_ids[0] != self._bad_words_token_ids[-1][0]
-                    and len(prompt_token_ids) == len(self._bad_words_token_ids[-1])
-                ):
-                    self._bad_words_token_ids.append(prompt_token_ids)
-
-        invalid_token_ids = [
-            token_id
-            for bad_words_token_ids in self._bad_words_token_ids
-            for token_id in bad_words_token_ids
-            if token_id < 0 or token_id > tokenizer.max_token_id
-        ]
-        if len(invalid_token_ids) > 0:
-            raise VLLMValidationError(
-                f"The model vocabulary size is {tokenizer.max_token_id + 1},"
-                f" but the following tokens"
-                f" were specified as bad: {invalid_token_ids}."
-                f" All token id values should be integers satisfying:"
-                f" 0 <= token_id <= {tokenizer.max_token_id}.",
-                parameter="bad_words",
-                value=self.bad_words,
+        if self.template_drafts is not None:
+            self._template_token_ids = tokenize_template_drafts(
+                self.template_drafts, tokenizer, template_append_eos
             )
 
     @cached_property
@@ -717,6 +772,11 @@ class SamplingParams(
     def bad_words_token_ids(self) -> list[list[int]] | None:
         # For internal use only. Backward compatibility not guaranteed
         return self._bad_words_token_ids
+
+    @property
+    def template_token_ids(self) -> tuple[tuple[int, ...], ...] | None:
+        # For internal use only. Backward compatibility not guaranteed
+        return self._template_token_ids
 
     @property
     def num_logprobs(self) -> int | None:
@@ -871,6 +931,13 @@ class SamplingParams(
         self,
         speculative_config: SpeculativeConfig | None,
     ) -> None:
+        if self.template_drafts is not None and (
+            speculative_config is None or speculative_config.method != "template"
+        ):
+            raise ValueError(
+                "template_drafts is only supported when speculative decoding "
+                "uses method='template'."
+            )
         if speculative_config is None:
             return
 
@@ -1079,6 +1146,7 @@ class SamplingParams(
             f"stop_token_ids={self.stop_token_ids}, "
             f"bad_words={self.bad_words}, "
             f"thinking_token_budget={self.thinking_token_budget}, "
+            f"template_drafts={self.template_drafts}, "
             f"include_stop_str_in_output={self.include_stop_str_in_output}, "
             f"ignore_eos={self.ignore_eos}, "
             f"max_tokens={self.max_tokens}, "

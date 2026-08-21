@@ -149,7 +149,7 @@ vllm serve <target-model> \
 
 | Key | Type | Default | Meaning |
 | --- | --- | --- | --- |
-| `template_drafts` | `list[string]` | `None` | Response templates as plain strings, tokenized with the target tokenizer at startup. Required. Ties on shared prefixes go to the earliest entry. |
+| `template_drafts` | `list[string]` | `None` | Default response templates as plain strings, tokenized with the target tokenizer at startup. Required. Ties on shared prefixes go to the earliest entry. |
 | `template_append_eos` | `boolean` | `true` | Append the tokenizer's EOS token to each template. |
 
 Example:
@@ -163,6 +163,8 @@ vllm serve <target-model> \
                         "<think>\n</think>\n<score> no </score>"]
   }'
 ```
+
+Requests can set `template_drafts` through `SamplingParams` or the OpenAI-compatible request body. Omit the field to use the service defaults, pass `[]` to disable template drafting for that request, or pass a non-empty list to override the defaults. Request overrides inherit `template_append_eos`; thinking-related request fields do not select templates automatically.
 
 #### Cross-Vocabulary Draft Models (TLI)
 

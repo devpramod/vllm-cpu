@@ -822,3 +822,19 @@ def test_completion_request_bad_words_default_empty():
         default_sampling_params={},
     )
     assert sampling_params.bad_words == []
+
+
+@pytest.mark.parametrize(
+    ("template_drafts", "expected"),
+    [(None, None), ([], []), (["yes", "no"], ["yes", "no"])],
+)
+def test_completion_request_template_drafts(template_drafts, expected):
+    request = CompletionRequest(
+        model="test-model",
+        prompt="Hello",
+        template_drafts=template_drafts,
+    )
+
+    sampling_params = request.to_sampling_params(10, {})
+
+    assert sampling_params.template_drafts == expected

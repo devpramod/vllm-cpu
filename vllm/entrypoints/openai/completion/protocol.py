@@ -213,6 +213,14 @@ class CompletionRequest(OpenAIBaseModel):
             "numeric values, used by custom extensions."
         ),
     )
+    template_drafts: list[str] | None = Field(
+        default=None,
+        description=(
+            "Per-request templates for template speculative decoding. Omit to "
+            "use service defaults, pass an empty list to disable template "
+            "drafting, or pass a non-empty list to override the defaults."
+        ),
+    )
 
     repetition_detection: RepetitionDetectionParams | None = Field(
         default=None,
@@ -373,6 +381,7 @@ class CompletionRequest(OpenAIBaseModel):
             skip_clone=True,  # Created fresh per request, safe to skip clone
             repetition_detection=self.repetition_detection,
             thinking_token_budget=self.thinking_token_budget,
+            template_drafts=self.template_drafts,
         )
 
     @model_validator(mode="before")
