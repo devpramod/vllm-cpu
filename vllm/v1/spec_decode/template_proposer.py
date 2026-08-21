@@ -11,6 +11,30 @@ from vllm.v1.worker.gpu_input_batch import InputBatch
 logger = init_logger(__name__)
 
 
+class _TemplateTrieNode:
+    __slots__ = ("children", "template")
+
+    def __init__(self):
+        self.children: dict[int, _TemplateTrieNode] = {}
+        self.template: np.ndarray | None = None
+
+
+def _build_template_trie(templates: list[np.ndarray]) -> _TemplateTrieNode:
+    root = _TemplateTrieNode()
+    for template in templates:
+        node = root
+        for token_id in template:
+            if node.template is None:
+                node.template = template
+            token = int(token_id)
+            child = node.children.get(token)
+            if child is None:
+                child = _TemplateTrieNode()
+                node.children[token] = child
+            node = child
+    return root
+
+
 class TemplateProposer:
     """
     Speculative decoding proposer for template-shaped responses.
@@ -55,6 +79,7 @@ class TemplateProposer:
         )
         eos_token_id = tokenizer.eos_token_id
         templates: list[np.ndarray] = []
+        seen_token_ids: set[tuple[int, ...]] = set()
         for template in config.template_drafts:
             token_ids = tokenizer.encode(template, add_special_tokens=False)
             if not token_ids:
@@ -63,14 +88,17 @@ class TemplateProposer:
                 )
             if config.template_append_eos and eos_token_id is not None:
                 token_ids = token_ids + [eos_token_id]
-            template_array = np.array(token_ids, dtype=np.int32)
-            if any(np.array_equal(template_array, seen) for seen in templates):
+            template_key = tuple(token_ids)
+            if template_key in seen_token_ids:
                 raise ValueError(
                     f"Template {template!r} duplicates an earlier template "
                     "after tokenization."
                 )
+            seen_token_ids.add(template_key)
+            template_array = np.array(token_ids, dtype=np.int32)
             templates.append(template_array)
         self.templates = templates
+        self.template_trie = _build_template_trie(templates)
         self.max_template_len = max(len(t) for t in templates)
         logger.info(
             "TemplateProposer initialized with %d template(s) of token "
@@ -121,7 +149,9 @@ class TemplateProposer:
             max_tokens = min(
                 num_speculative_tokens, self.max_model_len - num_tokens - 1
             )
-            draft = _propose_template_remainder(response, self.templates, max_tokens)
+            draft = _propose_template_remainder(
+                response, self.template_trie, max_tokens
+            )
             draft_token_ids.append(draft)
         return draft_token_ids
 
@@ -132,22 +162,28 @@ class TemplateProposer:
 
 def _propose_template_remainder(
     response: np.ndarray,
-    templates: list[np.ndarray],
+    template_trie: _TemplateTrieNode,
     max_tokens: int,
 ) -> list[int]:
     """
-    Return the remainder of the first template whose prefix exactly equals
-    `response`, capped at `max_tokens` tokens. Returns an empty list when no
-    template matches (including when the response already equals a complete
-    template) or when `max_tokens` is not positive.
+    Return the remainder of the first continuing template at `response`.
+
+    The lookup takes O(len(response)) time. The result is capped at
+    `max_tokens`; an empty list is returned when no template continues from
+    the response or when `max_tokens` is not positive.
     """
     if max_tokens <= 0:
         return []
+    node = template_trie
+    for token_id in response:
+        child = node.children.get(int(token_id))
+        if child is None:
+            return []
+        node = child
+
+    template = node.template
+    if template is None:
+        return []
     num_response_tokens = response.shape[0]
-    for template in templates:
-        if num_response_tokens < template.shape[0] and np.array_equal(
-            template[:num_response_tokens], response
-        ):
-            remainder = template[num_response_tokens : num_response_tokens + max_tokens]
-            return remainder.tolist()
-    return []
+    remainder = template[num_response_tokens : num_response_tokens + max_tokens]
+    return remainder.tolist()
