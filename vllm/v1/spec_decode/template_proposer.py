@@ -5,6 +5,11 @@ import numpy as np
 from vllm.config import VllmConfig
 from vllm.logger import init_logger
 from vllm.sampling_params import tokenize_template_drafts
+from vllm.tokenizers import TokenizerLike
+from vllm.tokenizers.detokenizer_utils import (
+    convert_prompt_ids_to_tokens,
+    detokenize_incrementally,
+)
 from vllm.tokenizers.registry import get_tokenizer
 from vllm.utils.cache import LRUCache
 from vllm.v1.spec_decode.non_model_proposer import SpecDecodeNonModelProposer
@@ -40,14 +45,13 @@ def _build_template_trie(templates: list[np.ndarray]) -> _TemplateTrieNode:
 
 
 class _TemplateSet:
-    __slots__ = ("max_template_len", "templates", "trie")
+    __slots__ = ("templates", "trie")
 
     def __init__(self, template_token_ids: _TemplateTokenIds):
         self.templates = [
             np.array(token_ids, dtype=np.int32) for token_ids in template_token_ids
         ]
         self.trie = _build_template_trie(self.templates)
-        self.max_template_len = max(len(template) for template in self.templates)
 
 
 class TemplateProposer(SpecDecodeNonModelProposer[_TemplateTokenIds | None]):
@@ -66,13 +70,15 @@ class TemplateProposer(SpecDecodeNonModelProposer[_TemplateTokenIds | None]):
     Service-default templates are configured as plain strings
     (`template_drafts`) and tokenized with the target model's tokenizer at
     startup. Requests can inherit, disable, or override them. A draft is
-    proposed if and only if the tokens generated so far are an exact prefix
-    of one of the request's active templates; the proposal is that template's
-    remainder, capped at `num_speculative_tokens`. Consequently:
+        proposed while the generated output is a prefix of one of the request's
+        active templates. Exact token prefixes use a trie; if tokenization changes
+        at an intermediate character boundary, a fallback proposes the remainder
+        only after verifying that it reconstructs the same template text.
+        Consequently:
 
-    * Requests whose responses deviate from every template are never
-      speculated again (exact-prefix matching fails from the divergence point
-      onward), so mixed traffic pays no ongoing verification overhead.
+        * Requests whose rendered responses deviate from every template receive
+            no proposal. Ambiguous or unsupported token reconstructions also fail
+            closed without affecting target-model output.
     * When several templates share a prefix, the earliest one in
       `template_drafts` is proposed. If its decision token is rejected, the
       bonus token emitted by rejection sampling reveals the actual branch and
@@ -88,12 +94,15 @@ class TemplateProposer(SpecDecodeNonModelProposer[_TemplateTokenIds | None]):
         assert config is not None, "Speculative config must be set"
         assert config.template_drafts, "template_drafts must be set"
 
-        tokenizer = get_tokenizer(
+        self.tokenizer = get_tokenizer(
             vllm_config.model_config.tokenizer,
             trust_remote_code=vllm_config.model_config.trust_remote_code,
         )
         template_token_ids = tokenize_template_drafts(
-            config.template_drafts, tokenizer, config.template_append_eos
+            config.template_drafts, self.tokenizer, config.template_append_eos
+        )
+        self.template_eos_token_id = (
+            self.tokenizer.eos_token_id if config.template_append_eos else None
         )
         self.default_template_token_ids = template_token_ids
         self.default_template_set = _TemplateSet(template_token_ids)
@@ -103,7 +112,6 @@ class TemplateProposer(SpecDecodeNonModelProposer[_TemplateTokenIds | None]):
 
         self.templates = self.default_template_set.templates
         self.template_trie = self.default_template_set.trie
-        self.max_template_len = self.default_template_set.max_template_len
         logger.info(
             "TemplateProposer initialized with %d template(s) of token "
             "lengths %s (append_eos=%s).",
@@ -144,16 +152,25 @@ class TemplateProposer(SpecDecodeNonModelProposer[_TemplateTokenIds | None]):
         req_id = input_batch.req_ids[request_index]
         index = input_batch.req_id_to_index[req_id]
         num_prompt_tokens = input_batch.num_prompt_tokens[index]
-        num_output_tokens = num_tokens - num_prompt_tokens
-        if num_output_tokens > template_set.max_template_len:
-            # The response has outgrown every template.
-            return []
-
         response = input_batch.token_ids_cpu[
             request_index, num_prompt_tokens:num_tokens
         ]
-        return _propose_template_remainder(
+        draft = _propose_template_remainder(
             response, template_set.trie, max_proposal_tokens
+        )
+        if draft or max_proposal_tokens <= 0:
+            return draft
+
+        if not input_batch.is_token_ids[request_index, :num_prompt_tokens].all():
+            return []
+        prompt_token_ids = input_batch.token_ids_cpu[request_index, :num_prompt_tokens]
+        return _propose_character_template_remainder(
+            self.tokenizer,
+            prompt_token_ids,
+            response,
+            template_set.templates,
+            self.template_eos_token_id,
+            max_proposal_tokens,
         )
 
 
@@ -184,3 +201,91 @@ def _propose_template_remainder(
     num_response_tokens = response.shape[0]
     remainder = template[num_response_tokens : num_response_tokens + max_tokens]
     return remainder.tolist()
+
+
+def _detokenize_output(
+    tokenizer: TokenizerLike,
+    prompt_token_ids: np.ndarray,
+    output_token_ids: np.ndarray | list[int],
+) -> str | None:
+    prompt_ids = [int(token_id) for token_id in prompt_token_ids]
+    output_ids = [int(token_id) for token_id in output_token_ids]
+    all_input_ids = prompt_ids.copy()
+    try:
+        decoded = tokenizer.decode(
+            [*prompt_ids, *output_ids], skip_special_tokens=False
+        )
+        if "\ufffd" in decoded:
+            return None
+
+        tokens, prefix_offset, read_offset = convert_prompt_ids_to_tokens(
+            tokenizer, prompt_ids, skip_special_tokens=False
+        )
+        output_text = ""
+        for token_id in output_ids:
+            all_input_ids.append(token_id)
+            new_tokens, new_text, prefix_offset, read_offset = detokenize_incrementally(
+                tokenizer,
+                all_input_ids,
+                tokens,
+                prefix_offset,
+                read_offset,
+                skip_special_tokens=False,
+            )
+            tokens.extend(new_tokens)
+            output_text += new_text
+    except Exception:
+        return None
+
+    return output_text if "\ufffd" not in output_text else None
+
+
+def _propose_character_template_remainder(
+    tokenizer: TokenizerLike,
+    prompt_token_ids: np.ndarray,
+    response: np.ndarray,
+    templates: list[np.ndarray],
+    eos_token_id: int | None,
+    max_tokens: int,
+) -> list[int]:
+    """Return a verified continuation for a character-equivalent prefix."""
+    response_text = _detokenize_output(tokenizer, prompt_token_ids, response)
+    if response_text is None or (response.size and not response_text):
+        return []
+
+    response_ids = [int(token_id) for token_id in response]
+    for template in templates:
+        has_appended_eos = (
+            eos_token_id is not None
+            and template.size > 0
+            and int(template[-1]) == eos_token_id
+        )
+        content_token_ids = template[:-1] if has_appended_eos else template
+        template_text = _detokenize_output(
+            tokenizer, prompt_token_ids, content_token_ids
+        )
+        if template_text is None or not template_text.startswith(response_text):
+            continue
+
+        remaining_text = template_text[len(response_text) :]
+        try:
+            candidate_ids = (
+                tokenizer.encode(remaining_text, add_special_tokens=False)
+                if remaining_text
+                else []
+            )
+        except Exception:
+            continue
+
+        reconstructed_text = _detokenize_output(
+            tokenizer, prompt_token_ids, [*response_ids, *candidate_ids]
+        )
+        if reconstructed_text != template_text:
+            continue
+
+        if has_appended_eos:
+            assert eos_token_id is not None
+            candidate_ids.append(eos_token_id)
+        return candidate_ids[:max_tokens]
+
+    return []

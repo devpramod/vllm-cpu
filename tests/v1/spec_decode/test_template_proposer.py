@@ -123,6 +123,54 @@ class _FakeTokenizer:
         return {"yes": [10, 11, 12, 100, 20, 21], "no": [10, 11, 12, 200, 20, 21]}[text]
 
 
+class _PrefixSensitiveTokenizer:
+    eos_token_id = 0
+    is_fast = True
+
+    _TOKEN_TEXT = {
+        0: "",
+        1: "prompt:",
+        10: "hello",
+        11: "he" + "l",
+        12: "lo",
+        13: "h",
+        14: "e",
+        15: "l",
+        16: "p",
+        17: "help",
+        18: "no",
+        19: "he" + "l\ufffd",
+    }
+
+    def encode(self, text: str, add_special_tokens: bool = True) -> list[int]:
+        assert not add_special_tokens
+        return {"hello": [10], "help": [17], "lo": [12], "p": [16]}[text]
+
+    def convert_ids_to_tokens(
+        self, token_ids: list[int], skip_special_tokens: bool = False
+    ) -> list[str]:
+        return [self._TOKEN_TEXT[token_id] for token_id in token_ids]
+
+    def convert_tokens_to_string(self, tokens: list[str]) -> str:
+        return "".join(tokens)
+
+    def decode(self, token_ids: list[int], skip_special_tokens: bool = False) -> str:
+        return "".join(self._TOKEN_TEXT[token_id] for token_id in token_ids)
+
+    def get_added_vocab(self) -> dict[str, int]:
+        return {}
+
+    def __len__(self) -> int:
+        return 256
+
+
+class _InvalidContinuationTokenizer(_PrefixSensitiveTokenizer):
+    def encode(self, text: str, add_special_tokens: bool = True) -> list[int]:
+        if text == "lo":
+            return [18]
+        return super().encode(text, add_special_tokens)
+
+
 class _FakeInputBatch:
     def __init__(self, prompt_lens: list[int], token_rows: list[list[int]]):
         self.req_ids = [f"req-{i}" for i in range(len(token_rows))]
@@ -133,6 +181,7 @@ class _FakeInputBatch:
         )
         max_len = max(len(row) for row in token_rows) + 8
         self.token_ids_cpu = np.zeros((len(token_rows), max_len), dtype=np.int32)
+        self.is_token_ids = np.ones((len(token_rows), max_len), dtype=bool)
         for i, row in enumerate(token_rows):
             self.token_ids_cpu[i, : len(row)] = row
 
@@ -204,6 +253,133 @@ def test_proposer_uses_request_scoped_template_sets(proposer):
         custom_templates
     )
     assert len(proposer.template_set_cache) == 1
+
+
+def test_proposer_matches_character_prefix_with_alternate_tokenization(monkeypatch):
+    monkeypatch.setattr(
+        "vllm.v1.spec_decode.template_proposer.get_tokenizer",
+        lambda *args, **kwargs: _PrefixSensitiveTokenizer(),
+    )
+    proposer = TemplateProposer(
+        VllmConfig(
+            model_config=ModelConfig(model="facebook/opt-125m"),
+            speculative_config=SpeculativeConfig(
+                method="template",
+                template_drafts=["hello"],
+                num_speculative_tokens=8,
+            ),
+        )
+    )
+    batch = _FakeInputBatch(prompt_lens=[1], token_rows=[[1, 11]])
+
+    drafts = proposer.propose(8, batch, [[11]])
+
+    assert drafts == [[12, 0]]
+
+
+def test_character_fallback_allows_longer_alternate_tokenization(monkeypatch):
+    monkeypatch.setattr(
+        "vllm.v1.spec_decode.template_proposer.get_tokenizer",
+        lambda *args, **kwargs: _PrefixSensitiveTokenizer(),
+    )
+    proposer = TemplateProposer(
+        VllmConfig(
+            model_config=ModelConfig(model="facebook/opt-125m"),
+            speculative_config=SpeculativeConfig(
+                method="template",
+                template_drafts=["hello"],
+                num_speculative_tokens=8,
+            ),
+        )
+    )
+    batch = _FakeInputBatch(prompt_lens=[1], token_rows=[[1, 13, 14, 15]])
+
+    drafts = proposer.propose(8, batch, [[15]])
+
+    assert drafts == [[12, 0]]
+
+
+def test_character_fallback_preserves_template_order_and_caps(monkeypatch):
+    monkeypatch.setattr(
+        "vllm.v1.spec_decode.template_proposer.get_tokenizer",
+        lambda *args, **kwargs: _PrefixSensitiveTokenizer(),
+    )
+    proposer = TemplateProposer(
+        VllmConfig(
+            model_config=ModelConfig(model="facebook/opt-125m"),
+            speculative_config=SpeculativeConfig(
+                method="template",
+                template_drafts=["hello", "help"],
+                num_speculative_tokens=1,
+            ),
+        )
+    )
+    batch = _FakeInputBatch(prompt_lens=[1], token_rows=[[1, 11]])
+
+    drafts = proposer.propose(1, batch, [[11]])
+
+    assert drafts == [[12]]
+
+
+def test_character_fallback_uses_request_scoped_template_set(monkeypatch):
+    monkeypatch.setattr(
+        "vllm.v1.spec_decode.template_proposer.get_tokenizer",
+        lambda *args, **kwargs: _PrefixSensitiveTokenizer(),
+    )
+    proposer = TemplateProposer(
+        VllmConfig(
+            model_config=ModelConfig(model="facebook/opt-125m"),
+            speculative_config=SpeculativeConfig(
+                method="template",
+                template_drafts=["help"],
+                num_speculative_tokens=8,
+            ),
+        )
+    )
+    batch = _FakeInputBatch(prompt_lens=[1], token_rows=[[1, 11]])
+
+    drafts = proposer.propose(
+        8,
+        batch,
+        [[11]],
+        request_metadata=[((10, 0),)],
+    )
+
+    assert drafts == [[12, 0]]
+
+
+@pytest.mark.parametrize(
+    ("tokenizer", "response_token_id", "uses_prompt_embeddings"),
+    [
+        (_InvalidContinuationTokenizer(), 11, False),
+        (_PrefixSensitiveTokenizer(), 19, False),
+        (_PrefixSensitiveTokenizer(), 11, True),
+    ],
+)
+def test_character_fallback_fails_closed(
+    monkeypatch, tokenizer, response_token_id, uses_prompt_embeddings
+):
+    monkeypatch.setattr(
+        "vllm.v1.spec_decode.template_proposer.get_tokenizer",
+        lambda *args, **kwargs: tokenizer,
+    )
+    proposer = TemplateProposer(
+        VllmConfig(
+            model_config=ModelConfig(model="facebook/opt-125m"),
+            speculative_config=SpeculativeConfig(
+                method="template",
+                template_drafts=["hello"],
+                num_speculative_tokens=8,
+            ),
+        )
+    )
+    batch = _FakeInputBatch(prompt_lens=[1], token_rows=[[1, response_token_id]])
+    if uses_prompt_embeddings:
+        batch.is_token_ids[0, 0] = False
+
+    drafts = proposer.propose(8, batch, [[response_token_id]])
+
+    assert drafts == [[]]
 
 
 def test_proposer_skips_partial_prefills_and_long_responses(proposer):
