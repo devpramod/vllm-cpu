@@ -5051,7 +5051,7 @@ class GPUModelRunner(
                 num_spec_tokens_to_schedule,
                 self.input_batch,
                 sampled_token_ids,
-                request_template_token_ids=request_template_token_ids,
+                request_metadata=request_template_token_ids,
                 slot_mappings=slot_mappings,
             )
         elif spec_config.method == "medusa":

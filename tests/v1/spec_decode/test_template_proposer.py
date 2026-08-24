@@ -196,7 +196,7 @@ def test_proposer_uses_request_scoped_template_sets(proposer):
         8,
         batch,
         [[11], [11], [31]],
-        request_template_token_ids=[None, (), custom_templates],
+        request_metadata=[None, (), custom_templates],
     )
 
     assert drafts == [[12, 100, 20, 21, 0], [], [32, 33, 34, 35, 36, 37, 0]]

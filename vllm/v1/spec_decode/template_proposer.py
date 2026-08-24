@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import numpy as np
-import torch
 
 from vllm.config import VllmConfig
 from vllm.logger import init_logger
 from vllm.sampling_params import tokenize_template_drafts
 from vllm.tokenizers.registry import get_tokenizer
 from vllm.utils.cache import LRUCache
+from vllm.v1.spec_decode.non_model_proposer import SpecDecodeNonModelProposer
 from vllm.v1.worker.gpu_input_batch import InputBatch
 
 logger = init_logger(__name__)
@@ -50,7 +50,7 @@ class _TemplateSet:
         self.max_template_len = max(len(template) for template in self.templates)
 
 
-class TemplateProposer:
+class TemplateProposer(SpecDecodeNonModelProposer[_TemplateTokenIds | None]):
     """
     Speculative decoding proposer for template-shaped responses.
 
@@ -83,11 +83,10 @@ class TemplateProposer:
     """
 
     def __init__(self, vllm_config: VllmConfig):
+        super().__init__(vllm_config)
         config = vllm_config.speculative_config
         assert config is not None, "Speculative config must be set"
         assert config.template_drafts, "template_drafts must be set"
-        self.num_speculative_tokens = config.num_speculative_tokens
-        self.max_model_len = vllm_config.model_config.max_model_len
 
         tokenizer = get_tokenizer(
             vllm_config.model_config.tokenizer,
@@ -129,65 +128,33 @@ class TemplateProposer:
             self.template_set_cache[template_token_ids] = template_set
         return template_set
 
-    def propose(
+    def _propose_tokens(
         self,
-        num_speculative_tokens: int,
         input_batch: InputBatch,
-        sampled_token_ids: list[list[int]],
-        slot_mappings: dict[str, torch.Tensor]
-        | list[dict[str, torch.Tensor]]
-        | None = None,  # unused
-        request_template_token_ids: list[_TemplateTokenIds | None] | None = None,
-    ) -> list[list[int]]:
-        """
-        Propose the remainder of the matching template for each request whose
-        generated tokens so far are an exact prefix of one of the templates.
-        Entries may have different lengths; requests with no matching
-        template get an empty proposal.
-        """
-        draft_token_ids: list[list[int]] = []
-        for i, sampled_ids in enumerate(sampled_token_ids):
-            if not sampled_ids:
-                # Skip speculative decoding for partial prefills.
-                draft_token_ids.append([])
-                continue
+        request_index: int,
+        sampled_token_ids: list[int],
+        num_tokens: int,
+        max_proposal_tokens: int,
+        request_metadata: _TemplateTokenIds | None,
+    ) -> list[int]:
+        template_set = self._get_template_set(request_metadata)
+        if template_set is None:
+            return []
 
-            num_tokens = input_batch.num_tokens_no_spec[i]
-            if num_tokens >= self.max_model_len:
-                # Skip requests that have already reached the max model length.
-                draft_token_ids.append([])
-                continue
+        req_id = input_batch.req_ids[request_index]
+        index = input_batch.req_id_to_index[req_id]
+        num_prompt_tokens = input_batch.num_prompt_tokens[index]
+        num_output_tokens = num_tokens - num_prompt_tokens
+        if num_output_tokens > template_set.max_template_len:
+            # The response has outgrown every template.
+            return []
 
-            template_token_ids = (
-                request_template_token_ids[i]
-                if request_template_token_ids is not None
-                else None
-            )
-            template_set = self._get_template_set(template_token_ids)
-            if template_set is None:
-                draft_token_ids.append([])
-                continue
-
-            req_id = input_batch.req_ids[i]
-            index = input_batch.req_id_to_index[req_id]
-            num_prompt_tokens = input_batch.num_prompt_tokens[index]
-            num_output_tokens = num_tokens - num_prompt_tokens
-            if num_output_tokens > template_set.max_template_len:
-                # The response has outgrown every template.
-                draft_token_ids.append([])
-                continue
-
-            response = input_batch.token_ids_cpu[i, num_prompt_tokens:num_tokens]
-            max_tokens = min(
-                num_speculative_tokens, self.max_model_len - num_tokens - 1
-            )
-            draft = _propose_template_remainder(response, template_set.trie, max_tokens)
-            draft_token_ids.append(draft)
-        return draft_token_ids
-
-    def load_model(self, *args, **kwargs):
-        # No model to load.
-        pass
+        response = input_batch.token_ids_cpu[
+            request_index, num_prompt_tokens:num_tokens
+        ]
+        return _propose_template_remainder(
+            response, template_set.trie, max_proposal_tokens
+        )
 
 
 def _propose_template_remainder(
