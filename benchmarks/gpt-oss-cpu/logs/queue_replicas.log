@@ -253,3 +253,15 @@
 [15:35:54]   TP4_TP1x2 cache_aware multiturn conc=16
 [15:37:33]   -> ok in 99s
 [15:37:33]   TP4_TP1x2 cache_aware multiturn conc=32
+[15:39:59]   -> ok in 146s
+[15:40:00]   TP4_TP1x2 round_robin multiturn conc=1
+[15:42:50]   -> ok in 169s
+[15:42:50]   TP4_TP1x2 round_robin multiturn conc=2
+[15:44:22]   -> ok in 92s
+[15:44:22]   TP4_TP1x2 round_robin multiturn conc=4
+[15:45:31]   -> ok in 69s
+[15:45:31]   TP4_TP1x2 round_robin multiturn conc=8
+[15:47:00]   -> ok in 90s
+[15:47:00]   TP4_TP1x2 round_robin multiturn conc=16
+[15:48:57]   -> ok in 116s
+[15:48:57]   TP4_TP1x2 round_robin multiturn conc=32
