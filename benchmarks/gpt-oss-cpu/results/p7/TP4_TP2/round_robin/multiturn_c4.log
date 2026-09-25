@@ -26,3 +26,60 @@ num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
 25-09-2026 16:18:53 [INFO] - [96mStarted client 1: max_num_requests=8, max_active_conversations=2[0m
 25-09-2026 16:18:53 [INFO] - [96mStarted client 2: max_num_requests=8, max_active_conversations=2[0m
 25-09-2026 16:18:53 [INFO] - [96mStarted client 3: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:19:06 [INFO] - [93mClient 3 reached request limit[0m
+25-09-2026 16:19:06 [INFO] - [96mClient 3 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:19:06 [INFO] - [96m1 out of 4 clients finished[0m
+25-09-2026 16:19:19 [INFO] - [93mClient 0 reached request limit[0m
+25-09-2026 16:19:19 [INFO] - [96mClient 0 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:19:19 [INFO] - [96m2 out of 4 clients finished[0m
+25-09-2026 16:19:27 [INFO] - [96mFinished 3 out of 1000 conversations (0%), 2 out of 4 clients finished, collected 27 measurements, runtime 34.476 sec[0m
+25-09-2026 16:19:27 [INFO] - [96mEstimated req/sec 0.783, estimated runtime left N/A sec[0m
+25-09-2026 16:19:27 [INFO] - --------------------------------------------------
+25-09-2026 16:19:27 [INFO] - [moving_avg_ttft_ms       ] avg:    161.402 (27 samples)
+25-09-2026 16:19:27 [INFO] - [moving_avg_tpot_ms       ] avg:     18.489 (27 samples)
+25-09-2026 16:19:27 [INFO] - [ttft_ms                  ] avg:    161.402, min:    101.378, max:    303.773
+25-09-2026 16:19:27 [INFO] - [tpot_ms                  ] avg:     18.489, min:     11.967, max:     25.768
+25-09-2026 16:19:27 [INFO] - [latency_ms               ] avg:   3841.053, min:    427.892, max:  11824.509
+25-09-2026 16:19:27 [INFO] - [input_num_turns          ] avg:      3.148, min:      1.000, max:      7.000
+25-09-2026 16:19:27 [INFO] - [input_num_tokens         ] avg:    264.815, min:      8.000, max:    801.000
+25-09-2026 16:19:27 [INFO] - [output_num_tokens        ] avg:    220.481, min:     15.000, max:    762.000
+25-09-2026 16:19:27 [INFO] - --------------------------------------------------
+25-09-2026 16:19:28 [INFO] - [93mClient 2 reached request limit[0m
+25-09-2026 16:19:28 [INFO] - [96mClient 2 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:19:28 [INFO] - [96m3 out of 4 clients finished[0m
+25-09-2026 16:19:41 [INFO] - [93mClient 1 reached request limit[0m
+25-09-2026 16:19:41 [INFO] - [96mClient 1 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:19:41 [INFO] - [96m4 out of 4 clients finished[0m
+25-09-2026 16:19:41 [INFO] - [96mAll 4 clients finished[0m
+25-09-2026 16:19:41 [INFO] - Collected 32 samples from all the clients
+25-09-2026 16:19:41 [INFO] - [96mWaiting for client client_0 (is alive: False)[0m
+25-09-2026 16:19:41 [INFO] - [96mWaiting for client client_1 (is alive: True)[0m
+25-09-2026 16:19:41 [INFO] - [96mWaiting for client client_2 (is alive: False)[0m
+25-09-2026 16:19:41 [INFO] - [96mWaiting for client client_3 (is alive: False)[0m
+25-09-2026 16:19:41 [INFO] - All 4 clients exited (successfully finished 4 out of 1000 conversations)
+25-09-2026 16:19:41 [INFO] - [92mAll clients finished, benchmark runtime: 48.483 sec (48482.595 ms), requests per second: 0.660[0m
+25-09-2026 16:19:41 [INFO] - Processing 32 samples...
+25-09-2026 16:19:41 [INFO] - [92mWriting per-request stats JSON: /home/sysadmin/pramod/bench/results/p7/TP4_TP2/round_robin/multiturn_c4.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+num_clients=4
+num_conversations=1000
+active_conversations=8
+seed=0
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 48.344
+requests_per_sec = 0.662
+----------------------------------------------------------------------------------------------------
+                   count     mean      std  ...      75%      90%       max
+ttft_ms             32.0   164.42    47.95  ...   178.85   215.15    303.77
+tpot_ms             32.0    17.87     3.83  ...    20.72    22.76     25.77
+latency_ms          32.0  3811.34  2940.27  ...  5342.91  7978.72  11824.51
+input_num_turns     32.0     3.25     2.14  ...     5.00     6.80      7.00
+input_num_tokens    32.0   326.25   353.14  ...   485.25   793.30   1462.00
+output_num_tokens   32.0   222.12   187.52  ...   368.75   460.50    762.00
+output_num_chunks   32.0   221.06   187.50  ...   367.75   459.50    761.00
+
+[7 rows x 9 columns]
+----------------------------------------------------------------------------------------------------
