@@ -911,3 +911,8 @@ WARNING 09-25 10:08:20 [vllm.py:709] Model Runner V2 requires Triton; using the 
 (APIServer pid=432543) INFO:     127.0.0.1:36860 - "POST /v1/chat/completions HTTP/1.1" 200 OK
 (APIServer pid=432543) INFO:     127.0.0.1:36876 - "POST /v1/chat/completions HTTP/1.1" 200 OK
 (APIServer pid=432543) INFO 09-25 10:24:45 [loggers.py:315] Engine 000: Avg prompt throughput: 205.0 tokens/s, Avg generation throughput: 80.0 tokens/s, Running: 8 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=432543) INFO 09-25 10:24:55 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 341.5 tokens/s, Running: 8 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=432543) INFO:     127.0.0.1:36830 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=432543) INFO:     127.0.0.1:36844 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=432543) INFO:     127.0.0.1:36824 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=432543) INFO:     127.0.0.1:36860 - "POST /v1/chat/completions HTTP/1.1" 200 OK
