@@ -1,0 +1,13 @@
+[12:39:20] start layout TP1x6
+[12:39:20]   replica 0: TP1 on nodes [0], port 8200
+[12:39:20]   replica 1: TP1 on nodes [1], port 8201
+[12:39:20]   replica 2: TP1 on nodes [2], port 8202
+[12:39:20]   replica 3: TP1 on nodes [3], port 8203
+[12:39:20]   replica 4: TP1 on nodes [4], port 8204
+[12:39:20]   replica 5: TP1 on nodes [5], port 8205
+[12:40:30] TP1x6: 6 replicas ready
+[12:40:31]   TP1x6 cache_aware rand_128_1k conc=1
+[12:43:47]   -> ok in 196s
+[12:43:47]   TP1x6 cache_aware rand_128_1k conc=2
+[12:46:02]   -> ok in 135s
+[12:46:02]   TP1x6 cache_aware rand_128_1k conc=4
