@@ -62,3 +62,13 @@
 [13:25:26]   TP2x3 cache_aware rand_128_1k conc=1
 [13:27:43]   -> ok in 137s
 [13:27:43]   TP2x3 cache_aware rand_128_1k conc=2
+[13:29:15]   -> ok in 92s
+[13:29:15]   TP2x3 cache_aware rand_128_1k conc=4
+[13:31:01]   -> ok in 106s
+[13:31:01]   TP2x3 cache_aware rand_128_1k conc=8
+[13:33:01]   -> ok in 120s
+[13:33:01]   TP2x3 cache_aware rand_128_1k conc=16
+[13:35:18]   -> ok in 138s
+[13:35:18]   TP2x3 cache_aware rand_128_1k conc=32
+[13:38:08]   -> ok in 170s
+[13:38:08]   TP2x3 cache_aware rand_1k_128 conc=1
