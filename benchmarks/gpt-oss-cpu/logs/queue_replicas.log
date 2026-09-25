@@ -37,3 +37,13 @@
 [13:05:50]   TP1x6 cache_aware multiturn conc=4
 [13:07:00]   -> ok in 70s
 [13:07:00]   TP1x6 cache_aware multiturn conc=8
+[13:08:18]   -> ok in 78s
+[13:08:18]   TP1x6 cache_aware multiturn conc=16
+[13:10:13]   -> ok in 115s
+[13:10:13]   TP1x6 cache_aware multiturn conc=32
+[13:12:32]   -> ok in 139s
+[13:12:33]   TP1x6 round_robin multiturn conc=1
+[13:15:50]   -> ok in 197s
+[13:15:50]   TP1x6 round_robin multiturn conc=2
+[13:17:30]   -> ok in 100s
+[13:17:30]   TP1x6 round_robin multiturn conc=4
