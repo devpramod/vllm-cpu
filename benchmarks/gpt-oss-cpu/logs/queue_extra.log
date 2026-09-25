@@ -54,3 +54,17 @@
 [17:28:49]   TP2x2 cache_aware rand_1k_128 conc=64
 [17:29:21]   -> ok in 31s
 [17:29:21]   TP2x2 cache_aware rand_1k_128 conc=128
+[17:30:15]   -> ok in 55s
+[17:30:15]   TP2x2 cache_aware multiturn conc=64
+[17:31:45]   -> ok in 89s
+[17:31:45]   TP2x2 cache_aware multiturn conc=128
+[17:34:08]   -> ok in 144s
+[17:34:09]   TP2x2 round_robin multiturn conc=64
+[17:35:45]   -> ok in 95s
+[17:35:45]   TP2x2 round_robin multiturn conc=128
+[17:38:14]   -> ok in 149s
+[17:38:25] start layout TP2x2_TP1x2
+[17:38:25]   replica 0: TP2 on nodes [0, 1], port 8200
+[17:38:25]   replica 1: TP2 on nodes [3, 4], port 8201
+[17:38:25]   replica 2: TP1 on nodes [2], port 8202
+[17:38:25]   replica 3: TP1 on nodes [5], port 8203
