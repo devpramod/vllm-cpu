@@ -1015,3 +1015,43 @@ WARNING 09-25 17:06:37 [vllm.py:709] Model Runner V2 requires Triton; using the 
 (APIServer pid=1076330) INFO:     127.0.0.1:49352 - "POST /v1/chat/completions HTTP/1.1" 200 OK
 (APIServer pid=1076330) INFO:     127.0.0.1:49516 - "POST /v1/chat/completions HTTP/1.1" 200 OK
 (APIServer pid=1076330) INFO:     127.0.0.1:49244 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49310 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49604 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:57568 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO 09-25 17:19:21 [loggers.py:315] Engine 000: Avg prompt throughput: 638.2 tokens/s, Avg generation throughput: 475.2 tokens/s, Running: 25 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.7%, Prefix cache hit rate: 1.1%
+(APIServer pid=1076330) INFO:     127.0.0.1:49560 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49338 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49388 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49576 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49366 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49406 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49292 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO 09-25 17:19:31 [loggers.py:315] Engine 000: Avg prompt throughput: 296.7 tokens/s, Avg generation throughput: 423.0 tokens/s, Running: 19 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.6%, Prefix cache hit rate: 1.0%
+(APIServer pid=1076330) INFO:     127.0.0.1:49576 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49442 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49324 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49532 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49604 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49516 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49388 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO 09-25 17:19:41 [loggers.py:315] Engine 000: Avg prompt throughput: 410.7 tokens/s, Avg generation throughput: 308.2 tokens/s, Running: 12 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.4%, Prefix cache hit rate: 0.9%
+(APIServer pid=1076330) INFO:     127.0.0.1:57568 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49376 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO:     127.0.0.1:49560 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO 09-25 17:19:51 [loggers.py:315] Engine 000: Avg prompt throughput: 118.9 tokens/s, Avg generation throughput: 223.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.9%
+(APIServer pid=1076330) INFO:     127.0.0.1:51038 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=1076330) INFO 09-25 17:20:01 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 15.3 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.9%
+(APIServer pid=1076330) INFO 09-25 17:20:11 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.9%
+(APIServer pid=1076330) INFO 09-25 17:21:02 [launcher.py:129] [shutdown] API server: shutdown triggered
+(EngineCore pid=1076998) INFO 09-25 17:21:02 [core.py:1342] [shutdown] EngineCore: trigger received signal=SIGTERM
+(APIServer pid=1076330) INFO 09-25 17:21:02 [launcher.py:145] [shutdown] API server: stopping engine client mode=abort timeout=0s
+(EngineCore pid=1076998) INFO 09-25 17:21:02 [core.py:1493] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=1076998) INFO 09-25 17:21:02 [core.py:1524] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=1076998) INFO 09-25 17:21:02 [core.py:1355] [shutdown] EngineCore: exiting busy loop
+(EngineCore pid=1076998) INFO 09-25 17:21:02 [multiproc_executor.py:472] [shutdown] Executor: waiting for worker exit count=2
+(APIServer pid=1076330) INFO 09-25 17:21:02 [core_client.py:744] [shutdown] MPClient: start timeout=0s
+(APIServer pid=1076330) INFO 09-25 17:21:02 [core_client.py:746] [shutdown] MPClient: stopping engine manager
+(APIServer pid=1076330) INFO 09-25 17:21:02 [utils.py:632] [shutdown] Process manager: send sigterm to process EngineCore
+(APIServer pid=1076330) WARNING 09-25 17:21:02 [utils.py:652] [shutdown] Process manager: force killing remaining processes count=1
+(APIServer pid=1076330) WARNING 09-25 17:21:02 [utils.py:657] [shutdown] Process manager: force killing remaining process EngineCore pid 1076998
+(Worker_TP0 pid=1077537) INFO 09-25 17:21:02 [multiproc_executor.py:836] Parent process exited, terminating worker queues

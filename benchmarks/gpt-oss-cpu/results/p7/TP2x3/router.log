@@ -96,3 +96,5 @@ DEBUG: AppContext created
 [2m2026-09-25 23:16:52[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1008:[0m Router ready | workers: ["http://127.0.0.1:8200", "http://127.0.0.1:8202", "http://127.0.0.1:8201"]
 [2m2026-09-25 23:16:52[0m [32m INFO[0m [2mvllm_router_rs::middleware[0m[2m:[0m [2msrc/middleware.rs[0m[2m:[0m[2m421:[0m Starting concurrency queue processor
 [2m2026-09-25 23:16:52[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1037:[0m Starting server on 127.0.0.1:8100
+[2m2026-09-25 23:20:01[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1070:[0m Received terminate signal, starting graceful shutdown
+[2m2026-09-25 23:20:01[0m [33m WARN[0m [2mvllm_router_rs::middleware[0m[2m:[0m [2msrc/middleware.rs[0m[2m:[0m[2m461:[0m Concurrency queue processor shutting down
