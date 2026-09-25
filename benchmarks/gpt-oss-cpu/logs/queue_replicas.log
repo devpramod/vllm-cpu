@@ -223,3 +223,15 @@
 [15:17:35]   TP4_TP1x2 cache_aware rand_128_1k conc=2
 [15:18:44]   -> ok in 69s
 [15:18:44]   TP4_TP1x2 cache_aware rand_128_1k conc=4
+[15:20:19]   -> ok in 95s
+[15:20:19]   TP4_TP1x2 cache_aware rand_128_1k conc=8
+[15:22:23]   -> ok in 124s
+[15:22:23]   TP4_TP1x2 cache_aware rand_128_1k conc=16
+[15:24:58]   -> ok in 155s
+[15:24:58]   TP4_TP1x2 cache_aware rand_128_1k conc=32
+[15:28:06]   -> ok in 189s
+[15:28:06]   TP4_TP1x2 cache_aware rand_1k_128 conc=1
+[15:28:27]   -> ok in 21s
+[15:28:27]   TP4_TP1x2 cache_aware rand_1k_128 conc=2
+[15:28:43]   -> ok in 16s
+[15:28:43]   TP4_TP1x2 cache_aware rand_1k_128 conc=4
