@@ -177,3 +177,17 @@
 [10:55:09]   TP4_DFLASH_HYB_K7 humaneval conc=1 prompts=16
 [10:57:36]   -> ok in 147s
 [10:57:36]   TP4_DFLASH_HYB_K7 humaneval conc=2 prompts=16
+[10:58:58]   -> ok in 82s
+[10:58:58]   TP4_DFLASH_HYB_K7 humaneval conc=4 prompts=16
+[10:59:53]   -> ok in 55s
+[10:59:53]   TP4_DFLASH_HYB_K7 humaneval conc=8 prompts=32
+[11:01:15]   -> ok in 82s
+[11:01:15]   TP4_DFLASH_HYB_K7 humaneval conc=16 prompts=64
+[11:02:59]   -> ok in 104s
+[11:02:59]   TP4_DFLASH_HYB_K7 humaneval conc=32 prompts=128
+[11:05:23]   -> ok in 144s
+[11:05:23]   TP4_DFLASH_HYB_K7 mtbench conc=1 prompts=16
+[11:08:13]   -> ok in 170s
+[11:08:13]   TP4_DFLASH_HYB_K7 mtbench conc=2 prompts=16
+[11:09:57]   -> ok in 104s
+[11:09:57]   TP4_DFLASH_HYB_K7 mtbench conc=4 prompts=16
