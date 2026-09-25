@@ -30,3 +30,15 @@
 [17:07:23]   TP2x3 cache_aware rand_128_1k conc=64
 [17:09:06]   -> ok in 103s
 [17:09:06]   TP2x3 cache_aware rand_128_1k conc=128
+[17:12:33]   -> ok in 207s
+[17:12:33]   TP2x3 cache_aware rand_1k_128 conc=64
+[17:12:59]   -> ok in 26s
+[17:12:59]   TP2x3 cache_aware rand_1k_128 conc=128
+[17:13:41]   -> ok in 42s
+[17:13:41]   TP2x3 cache_aware multiturn conc=64
+[17:15:00]   -> ok in 79s
+[17:15:00]   TP2x3 cache_aware multiturn conc=128
+[17:16:51]   -> ok in 111s
+[17:16:53]   TP2x3 round_robin multiturn conc=64
+[17:18:14]   -> ok in 81s
+[17:18:14]   TP2x3 round_robin multiturn conc=128
