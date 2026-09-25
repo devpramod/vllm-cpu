@@ -35,3 +35,48 @@ num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
 25-09-2026 16:08:47 [INFO] - [input_num_tokens         ] avg:    424.067, min:     12.000, max:   1282.000
 25-09-2026 16:08:47 [INFO] - [output_num_tokens        ] avg:    274.467, min:     22.000, max:    762.000
 25-09-2026 16:08:47 [INFO] - --------------------------------------------------
+25-09-2026 16:09:27 [INFO] - [96mFinished 6 out of 1000 conversations (1%), 0 out of 1 clients finished, collected 25 measurements, runtime 91.950 sec[0m
+25-09-2026 16:09:27 [INFO] - [96mEstimated req/sec 0.272, estimated runtime left N/A sec[0m
+25-09-2026 16:09:27 [INFO] - --------------------------------------------------
+25-09-2026 16:09:27 [INFO] - [moving_avg_ttft_ms       ] avg:    142.542 (15 samples)
+25-09-2026 16:09:27 [INFO] - [moving_avg_tpot_ms       ] avg:     12.285 (15 samples)
+25-09-2026 16:09:27 [INFO] - [ttft_ms                  ] avg:    139.715, min:     85.314, max:    280.031
+25-09-2026 16:09:27 [INFO] - [tpot_ms                  ] avg:     12.224, min:     11.826, max:     13.275
+25-09-2026 16:09:27 [INFO] - [latency_ms               ] avg:   3666.504, min:    274.338, max:   9204.867
+25-09-2026 16:09:27 [INFO] - [input_num_turns          ] avg:      3.880, min:      1.000, max:      7.000
+25-09-2026 16:09:27 [INFO] - [input_num_tokens         ] avg:    480.240, min:      9.000, max:   1462.000
+25-09-2026 16:09:27 [INFO] - [output_num_tokens        ] avg:    288.880, min:     15.000, max:    762.000
+25-09-2026 16:09:27 [INFO] - --------------------------------------------------
+25-09-2026 16:09:34 [INFO] - [93mClient 0 reached request limit[0m
+25-09-2026 16:09:34 [INFO] - [96mClient 0 is done (num_successes=32, num_failures=0)[0m
+25-09-2026 16:09:34 [INFO] - [96m1 out of 1 clients finished[0m
+25-09-2026 16:09:34 [INFO] - [96mAll 1 clients finished[0m
+25-09-2026 16:09:34 [INFO] - Collected 32 samples from all the clients
+25-09-2026 16:09:34 [INFO] - [96mWaiting for client client_0 (is alive: True)[0m
+25-09-2026 16:09:34 [INFO] - All 1 clients exited (successfully finished 7 out of 1000 conversations)
+25-09-2026 16:09:34 [INFO] - [92mAll clients finished, benchmark runtime: 99.266 sec (99266.162 ms), requests per second: 0.322[0m
+25-09-2026 16:09:34 [INFO] - Processing 32 samples...
+25-09-2026 16:09:34 [INFO] - [92mWriting per-request stats JSON: /home/sysadmin/pramod/bench/results/p7/TP4_TP2/cache_aware/multiturn_c1.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+num_clients=1
+num_conversations=1000
+active_conversations=2
+seed=0
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 99.142
+requests_per_sec = 0.323
+----------------------------------------------------------------------------------------------------
+                   count     mean      std  ...      75%      90%      max
+ttft_ms             32.0   132.55    37.51  ...   152.39   170.12   280.03
+tpot_ms             32.0    12.30     0.39  ...    12.42    12.71    13.31
+latency_ms          32.0  3090.52  2465.53  ...  5632.23  6078.46  9204.87
+input_num_turns     32.0     3.81     2.26  ...     5.00     7.00     7.00
+input_num_tokens    32.0   405.25   411.94  ...   681.25   891.00  1462.00
+output_num_tokens   32.0   242.34   201.42  ...   425.00   479.40   762.00
+output_num_chunks   32.0   241.56   201.66  ...   426.25   478.90   761.00
+
+[7 rows x 9 columns]
+----------------------------------------------------------------------------------------------------
