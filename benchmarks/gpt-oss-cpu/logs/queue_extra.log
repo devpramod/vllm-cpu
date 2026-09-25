@@ -1,0 +1,7 @@
+[16:48:10] start layout TP1x6
+[16:48:10]   replica 0: TP1 on nodes [0], port 8200
+[16:48:10]   replica 1: TP1 on nodes [1], port 8201
+[16:48:10]   replica 2: TP1 on nodes [2], port 8202
+[16:48:10]   replica 3: TP1 on nodes [3], port 8203
+[16:48:10]   replica 4: TP1 on nodes [4], port 8204
+[16:48:10]   replica 5: TP1 on nodes [5], port 8205

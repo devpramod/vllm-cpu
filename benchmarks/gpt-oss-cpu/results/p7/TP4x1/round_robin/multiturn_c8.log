@@ -1,0 +1,129 @@
+/home/sysadmin/pramod/bench/.venv/bin/python benchmark_serving_multi_turn.py -i /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json -m /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b -u http://localhost:8100 -p 8 -k 16 -n 64 --seed 0 --request-timeout-sec 900 --no-early-stop --stats-json-output /home/sysadmin/pramod/bench/results/p7/TP4x1/round_robin/multiturn_c8.json
+25-09-2026 16:43:16 [INFO] - Namespace(input_file='/home/sysadmin/pramod/bench/data/sharegpt_multiturn.json', output_file=None, seed=0, model='/home/sysadmin/pramod/bench/models/gpt-oss-20b', served_model_name='gpt-oss-20b', url='http://localhost:8100', api_key=None, header=None, num_clients=8, max_active_conversations=16, max_num_requests=64, warmup_step=False, max_turns=None, no_early_stop=True, limit_max_tokens=0, limit_min_tokens=0, request_rate=0, max_retries=0, conversation_sampling=<ConversationSampling.ROUND_ROBIN: 'round_robin'>, verify_output=False, request_timeout_sec=900, no_stream=False, send_conversation_id=False, excel_output=False, stats_json_output='/home/sysadmin/pramod/bench/results/p7/TP4x1/round_robin/multiturn_c8.json', verbose=False, print_content=False, warmup_percentages='0%', trust_remote_code=False)
+25-09-2026 16:43:16 [INFO] - [92mInput parameters:[0m
+25-09-2026 16:43:16 [INFO] - url=http://localhost:8100
+25-09-2026 16:43:16 [INFO] - model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+25-09-2026 16:43:16 [INFO] - num_clients=8
+25-09-2026 16:43:16 [INFO] - Warmup percentages (percentage of samples): [0.0]
+25-09-2026 16:43:16 [INFO] - Loading tokenizer
+25-09-2026 16:43:17 [INFO] - [94mCollecting information from server: http://localhost:8100[0m
+25-09-2026 16:43:17 [INFO] - [94mServer version: {"version":"0.30.0"}[0m
+25-09-2026 16:43:17 [INFO] - [94mModels:[0m
+25-09-2026 16:43:17 [INFO] - [94m	model_id='gpt-oss-20b', max_model_len=4096[0m
+25-09-2026 16:43:17 [INFO] - Reading input file: /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json
+25-09-2026 16:43:17 [INFO] - Found 1000 items in the input file
+25-09-2026 16:43:17 [INFO] - Using 1000 unique conversations (IDs)
+25-09-2026 16:43:17 [INFO] - [92mStarting 8 clients[0m
+----------------------------------------------------------------------------------------------------
+[93mConversations statistics:[0m
+----------------------------------------------------------------------------------------------------
+            count  mean       std  min  25%  ...  90%  99%  99.9%  99.99%  max
+num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
+
+[1 rows x 12 columns]
+----------------------------------------------------------------------------------------------------
+25-09-2026 16:43:17 [INFO] - [96mStarted client 0: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:17 [INFO] - [96mStarted client 1: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:17 [INFO] - [96mStarted client 2: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:17 [INFO] - [96mStarted client 3: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:17 [INFO] - [96mStarted client 4: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:17 [INFO] - [96mStarted client 5: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:17 [INFO] - [96mStarted client 6: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:17 [INFO] - [96mStarted client 7: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 16:43:40 [INFO] - [96mFinished 3 out of 1000 conversations (0%), 0 out of 8 clients finished, collected 34 measurements, runtime 23.253 sec[0m
+25-09-2026 16:43:40 [INFO] - [96mEstimated req/sec N/A, estimated runtime left N/A sec[0m
+25-09-2026 16:43:40 [INFO] - --------------------------------------------------
+25-09-2026 16:43:40 [INFO] - [moving_avg_ttft_ms       ] avg:    194.027 (34 samples)
+25-09-2026 16:43:40 [INFO] - [moving_avg_tpot_ms       ] avg:     25.528 (34 samples)
+25-09-2026 16:43:40 [INFO] - [ttft_ms                  ] avg:    194.027, min:    126.903, max:    298.053
+25-09-2026 16:43:40 [INFO] - [tpot_ms                  ] avg:     25.528, min:     22.602, max:     30.399
+25-09-2026 16:43:40 [INFO] - [latency_ms               ] avg:   4451.576, min:    549.370, max:  11687.492
+25-09-2026 16:43:40 [INFO] - [input_num_turns          ] avg:      2.765, min:      1.000, max:      7.000
+25-09-2026 16:43:40 [INFO] - [input_num_tokens         ] avg:    201.000, min:      8.000, max:    742.000
+25-09-2026 16:43:40 [INFO] - [output_num_tokens        ] avg:    166.147, min:     15.000, max:    449.000
+25-09-2026 16:43:40 [INFO] - --------------------------------------------------
+25-09-2026 16:43:44 [INFO] - [93mClient 0 reached request limit[0m
+25-09-2026 16:43:44 [INFO] - [96mClient 0 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:43:44 [INFO] - [96m1 out of 8 clients finished[0m
+25-09-2026 16:43:47 [INFO] - [93mClient 5 reached request limit[0m
+25-09-2026 16:43:47 [INFO] - [96mClient 5 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:43:47 [INFO] - [96m2 out of 8 clients finished[0m
+25-09-2026 16:43:50 [INFO] - [93mClient 4 reached request limit[0m
+25-09-2026 16:43:50 [INFO] - [96mClient 4 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:43:50 [INFO] - [96m3 out of 8 clients finished[0m
+25-09-2026 16:43:54 [INFO] - [93mClient 2 reached request limit[0m
+25-09-2026 16:43:54 [INFO] - [96mClient 2 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:43:54 [INFO] - [96m4 out of 8 clients finished[0m
+25-09-2026 16:43:54 [INFO] - [96mFinished 6 out of 1000 conversations (1%), 4 out of 8 clients finished, collected 49 measurements, runtime 36.880 sec[0m
+25-09-2026 16:43:54 [INFO] - [96mEstimated req/sec 1.329, estimated runtime left N/A sec[0m
+25-09-2026 16:43:54 [INFO] - --------------------------------------------------
+25-09-2026 16:43:54 [INFO] - [moving_avg_ttft_ms       ] avg:    191.470 (49 samples)
+25-09-2026 16:43:54 [INFO] - [moving_avg_tpot_ms       ] avg:     25.196 (49 samples)
+25-09-2026 16:43:54 [INFO] - [ttft_ms                  ] avg:    191.470, min:    122.075, max:    298.053
+25-09-2026 16:43:54 [INFO] - [tpot_ms                  ] avg:     25.196, min:     20.959, max:     30.399
+25-09-2026 16:43:54 [INFO] - [latency_ms               ] avg:   5327.081, min:    549.370, max:  12845.109
+25-09-2026 16:43:54 [INFO] - [input_num_turns          ] avg:      2.918, min:      1.000, max:      7.000
+25-09-2026 16:43:54 [INFO] - [input_num_tokens         ] avg:    285.796, min:      4.000, max:   1889.000
+25-09-2026 16:43:54 [INFO] - [output_num_tokens        ] avg:    204.755, min:     15.000, max:    491.000
+25-09-2026 16:43:54 [INFO] - --------------------------------------------------
+25-09-2026 16:44:01 [INFO] - [93mClient 7 reached request limit[0m
+25-09-2026 16:44:01 [INFO] - [96mClient 7 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:44:01 [INFO] - [96m5 out of 8 clients finished[0m
+25-09-2026 16:44:12 [INFO] - [93mClient 1 reached request limit[0m
+25-09-2026 16:44:12 [INFO] - [96mClient 1 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:44:12 [INFO] - [96m6 out of 8 clients finished[0m
+25-09-2026 16:44:12 [INFO] - [93mClient 6 reached request limit[0m
+25-09-2026 16:44:12 [INFO] - [96mFinished 9 out of 1000 conversations (1%), 6 out of 8 clients finished, collected 62 measurements, runtime 55.034 sec[0m
+25-09-2026 16:44:12 [INFO] - [96mClient 6 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:44:12 [INFO] - [96mEstimated req/sec 1.127, estimated runtime left N/A sec[0m
+25-09-2026 16:44:12 [INFO] - --------------------------------------------------
+25-09-2026 16:44:12 [INFO] - [moving_avg_ttft_ms       ] avg:    186.183 (62 samples)
+25-09-2026 16:44:12 [INFO] - [moving_avg_tpot_ms       ] avg:     23.971 (62 samples)
+25-09-2026 16:44:12 [INFO] - [ttft_ms                  ] avg:    186.183, min:    111.272, max:    298.053
+25-09-2026 16:44:12 [INFO] - [tpot_ms                  ] avg:     23.971, min:     17.355, max:     30.399
+25-09-2026 16:44:12 [INFO] - [latency_ms               ] avg:   5361.329, min:    549.370, max:  12845.109
+25-09-2026 16:44:12 [INFO] - [input_num_turns          ] avg:      3.161, min:      1.000, max:      7.000
+25-09-2026 16:44:12 [INFO] - [input_num_tokens         ] avg:    357.177, min:      4.000, max:   1889.000
+25-09-2026 16:44:12 [INFO] - [output_num_tokens        ] avg:    220.968, min:     15.000, max:    577.000
+25-09-2026 16:44:12 [INFO] - --------------------------------------------------
+25-09-2026 16:44:12 [INFO] - [96m7 out of 8 clients finished[0m
+25-09-2026 16:44:19 [INFO] - [93mClient 3 reached request limit[0m
+25-09-2026 16:44:19 [INFO] - [96mClient 3 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 16:44:19 [INFO] - [96m8 out of 8 clients finished[0m
+25-09-2026 16:44:19 [INFO] - [96mAll 8 clients finished[0m
+25-09-2026 16:44:19 [INFO] - Collected 64 samples from all the clients
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_0 (is alive: False)[0m
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_1 (is alive: False)[0m
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_2 (is alive: False)[0m
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_3 (is alive: True)[0m
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_4 (is alive: False)[0m
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_5 (is alive: False)[0m
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_6 (is alive: False)[0m
+25-09-2026 16:44:19 [INFO] - [96mWaiting for client client_7 (is alive: False)[0m
+25-09-2026 16:44:19 [INFO] - All 8 clients exited (successfully finished 10 out of 1000 conversations)
+25-09-2026 16:44:19 [INFO] - [92mAll clients finished, benchmark runtime: 62.330 sec (62329.515 ms), requests per second: 1.027[0m
+25-09-2026 16:44:19 [INFO] - Processing 64 samples...
+25-09-2026 16:44:19 [INFO] - [92mWriting per-request stats JSON: /home/sysadmin/pramod/bench/results/p7/TP4x1/round_robin/multiturn_c8.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+num_clients=8
+num_conversations=1000
+active_conversations=16
+seed=0
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 62.193
+requests_per_sec = 1.029
+----------------------------------------------------------------------------------------------------
+                   count     mean      std  ...      75%      90%       max
+ttft_ms             64.0   184.90    54.81  ...   198.02   292.15    298.05
+tpot_ms             64.0    23.62     3.53  ...    25.83    26.63     30.40
+latency_ms          64.0  5347.23  3395.37  ...  7819.87  9982.58  12845.11
+input_num_turns     64.0     3.19     2.07  ...     5.00     6.40      7.00
+input_num_tokens    64.0   366.67   439.31  ...   495.00   885.70   1889.00
+output_num_tokens   64.0   225.61   151.20  ...   350.50   444.80    577.00
+output_num_chunks   64.0   224.59   151.15  ...   349.50   444.50    575.00
+
+[7 rows x 9 columns]
+----------------------------------------------------------------------------------------------------

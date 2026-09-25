@@ -344,3 +344,17 @@
 [16:38:26]   TP4x1 round_robin rand_1k_128 conc=16
 [16:38:55]   -> ok in 29s
 [16:38:55]   TP4x1 round_robin rand_1k_128 conc=32
+[16:39:35]   -> ok in 40s
+[16:39:35]   TP4x1 round_robin multiturn conc=1
+[16:41:18]   -> ok in 102s
+[16:41:18]   TP4x1 round_robin multiturn conc=2
+[16:42:22]   -> ok in 65s
+[16:42:22]   TP4x1 round_robin multiturn conc=4
+[16:43:13]   -> ok in 50s
+[16:43:13]   TP4x1 round_robin multiturn conc=8
+[16:44:20]   -> ok in 67s
+[16:44:20]   TP4x1 round_robin multiturn conc=16
+[16:45:41]   -> ok in 81s
+[16:45:41]   TP4x1 round_robin multiturn conc=32
+[16:47:33]   -> ok in 112s
+QUEUE DONE 16:47:43
