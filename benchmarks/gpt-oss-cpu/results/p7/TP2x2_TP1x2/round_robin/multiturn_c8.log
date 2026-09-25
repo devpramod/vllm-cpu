@@ -66,3 +66,52 @@ num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
 25-09-2026 15:08:47 [INFO] - [93mClient 3 reached request limit[0m
 25-09-2026 15:08:47 [INFO] - [96mClient 3 is done (num_successes=8, num_failures=0)[0m
 25-09-2026 15:08:47 [INFO] - [96m4 out of 8 clients finished[0m
+25-09-2026 15:08:55 [INFO] - [93mClient 7 reached request limit[0m
+25-09-2026 15:08:55 [INFO] - [96mClient 7 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 15:08:55 [INFO] - [96m5 out of 8 clients finished[0m
+25-09-2026 15:09:01 [INFO] - [93mClient 6 reached request limit[0m
+25-09-2026 15:09:01 [INFO] - [96mClient 6 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 15:09:01 [INFO] - [96m6 out of 8 clients finished[0m
+25-09-2026 15:09:02 [INFO] - [93mClient 4 reached request limit[0m
+25-09-2026 15:09:02 [INFO] - [96mClient 4 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 15:09:02 [INFO] - [96m7 out of 8 clients finished[0m
+25-09-2026 15:09:05 [INFO] - [93mClient 2 reached request limit[0m
+25-09-2026 15:09:05 [INFO] - [96mClient 2 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 15:09:05 [INFO] - [96m8 out of 8 clients finished[0m
+25-09-2026 15:09:05 [INFO] - [96mAll 8 clients finished[0m
+25-09-2026 15:09:05 [INFO] - Collected 64 samples from all the clients
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_0 (is alive: False)[0m
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_1 (is alive: False)[0m
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_2 (is alive: True)[0m
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_3 (is alive: False)[0m
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_4 (is alive: False)[0m
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_5 (is alive: False)[0m
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_6 (is alive: False)[0m
+25-09-2026 15:09:05 [INFO] - [96mWaiting for client client_7 (is alive: False)[0m
+25-09-2026 15:09:05 [INFO] - All 8 clients exited (successfully finished 8 out of 1000 conversations)
+25-09-2026 15:09:05 [INFO] - [92mAll clients finished, benchmark runtime: 66.024 sec (66023.795 ms), requests per second: 0.969[0m
+25-09-2026 15:09:05 [INFO] - Processing 64 samples...
+25-09-2026 15:09:05 [INFO] - [92mWriting per-request stats JSON: /home/sysadmin/pramod/bench/results/p7/TP2x2_TP1x2/round_robin/multiturn_c8.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+num_clients=8
+num_conversations=1000
+active_conversations=16
+seed=0
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 65.881
+requests_per_sec = 0.971
+----------------------------------------------------------------------------------------------------
+                   count     mean      std  ...      75%       90%       max
+ttft_ms             64.0   280.87   109.76  ...   373.10    436.74    561.96
+tpot_ms             64.0    27.75    10.64  ...    37.45     44.43     48.14
+latency_ms          64.0  6560.44  5153.39  ...  7751.39  15144.36  21884.45
+input_num_turns     64.0     3.06     1.95  ...     5.00      5.00      7.00
+input_num_tokens    64.0   347.12   410.01  ...   485.25    798.90   1889.00
+output_num_tokens   64.0   227.31   145.85  ...   350.50    445.50    491.00
+output_num_chunks   64.0   226.41   145.75  ...   349.50    444.50    490.00
+
+[7 rows x 9 columns]
+----------------------------------------------------------------------------------------------------
