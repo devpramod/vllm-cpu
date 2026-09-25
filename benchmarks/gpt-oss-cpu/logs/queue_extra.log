@@ -68,3 +68,15 @@
 [17:38:25]   replica 1: TP2 on nodes [3, 4], port 8201
 [17:38:25]   replica 2: TP1 on nodes [2], port 8202
 [17:38:25]   replica 3: TP1 on nodes [5], port 8203
+[17:39:31] TP2x2_TP1x2: 4 replicas ready
+[17:39:32]   TP2x2_TP1x2 cache_aware rand_128_1k conc=64
+[17:42:03]   -> ok in 151s
+[17:42:03]   TP2x2_TP1x2 cache_aware rand_128_1k conc=128
+[17:45:15]   -> ok in 192s
+[17:45:15]   TP2x2_TP1x2 cache_aware rand_1k_128 conc=64
+[17:45:46]   -> ok in 31s
+[17:45:46]   TP2x2_TP1x2 cache_aware rand_1k_128 conc=128
+[17:46:29]   -> ok in 43s
+[17:46:29]   TP2x2_TP1x2 cache_aware multiturn conc=64
+[17:48:12]   -> ok in 102s
+[17:48:12]   TP2x2_TP1x2 cache_aware multiturn conc=128
