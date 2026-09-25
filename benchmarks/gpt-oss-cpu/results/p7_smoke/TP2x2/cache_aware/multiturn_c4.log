@@ -1,0 +1,59 @@
+/home/sysadmin/pramod/bench/.venv/bin/python benchmark_serving_multi_turn.py -i /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json -m /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b -u http://localhost:8100 -p 4 -k 8 -n 32 --seed 0 --request-timeout-sec 900 --stats-json-output /home/sysadmin/pramod/bench/results/p7_smoke/TP2x2/cache_aware/multiturn_c4.json
+25-09-2026 11:49:40 [INFO] - Namespace(input_file='/home/sysadmin/pramod/bench/data/sharegpt_multiturn.json', output_file=None, seed=0, model='/home/sysadmin/pramod/bench/models/gpt-oss-20b', served_model_name='gpt-oss-20b', url='http://localhost:8100', api_key=None, header=None, num_clients=4, max_active_conversations=8, max_num_requests=32, warmup_step=False, max_turns=None, no_early_stop=False, limit_max_tokens=0, limit_min_tokens=0, request_rate=0, max_retries=0, conversation_sampling=<ConversationSampling.ROUND_ROBIN: 'round_robin'>, verify_output=False, request_timeout_sec=900, no_stream=False, send_conversation_id=False, excel_output=False, stats_json_output='/home/sysadmin/pramod/bench/results/p7_smoke/TP2x2/cache_aware/multiturn_c4.json', verbose=False, print_content=False, warmup_percentages='0%', trust_remote_code=False)
+25-09-2026 11:49:40 [INFO] - [92mInput parameters:[0m
+25-09-2026 11:49:40 [INFO] - url=http://localhost:8100
+25-09-2026 11:49:40 [INFO] - model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+25-09-2026 11:49:40 [INFO] - num_clients=4
+25-09-2026 11:49:40 [INFO] - Warmup percentages (percentage of samples): [0.0]
+25-09-2026 11:49:40 [INFO] - Loading tokenizer
+25-09-2026 11:49:41 [INFO] - [94mCollecting information from server: http://localhost:8100[0m
+25-09-2026 11:49:41 [INFO] - [94mServer version: {"version":"0.30.0"}[0m
+25-09-2026 11:49:41 [INFO] - [94mModels:[0m
+25-09-2026 11:49:41 [INFO] - [94m	model_id='gpt-oss-20b', max_model_len=4096[0m
+25-09-2026 11:49:41 [INFO] - Reading input file: /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json
+25-09-2026 11:49:41 [INFO] - Found 1000 items in the input file
+25-09-2026 11:49:41 [INFO] - Using 1000 unique conversations (IDs)
+25-09-2026 11:49:41 [INFO] - [92mStarting 4 clients[0m
+----------------------------------------------------------------------------------------------------
+[93mConversations statistics:[0m
+----------------------------------------------------------------------------------------------------
+            count  mean       std  min  25%  ...  90%  99%  99.9%  99.99%  max
+num_turns  1000.0  7.43  0.802336  6.0  7.0  ...  8.0  8.0    8.0     8.0  8.0
+
+[1 rows x 12 columns]
+----------------------------------------------------------------------------------------------------
+25-09-2026 11:49:41 [INFO] - [96mStarted client 0: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 11:49:41 [INFO] - [96mStarted client 1: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 11:49:41 [INFO] - [96mStarted client 2: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 11:49:41 [INFO] - [96mStarted client 3: max_num_requests=8, max_active_conversations=2[0m
+Process client_1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/sysadmin/pramod/bench/multi_turn/benchmark_serving_multi_turn.py", line 835, in worker_function
+    asyncio.run(
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/sysadmin/pramod/bench/multi_turn/benchmark_serving_multi_turn.py", line 715, in client_main
+    assert current_turn < len(messages), (
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Turn number 7 is invalid for conversation ID SQGOTSp that has only 7 messages
+25-09-2026 11:50:00 [INFO] - [93mClient 2 reached request limit[0m
+25-09-2026 11:50:00 [INFO] - [96mClient 2 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 11:50:00 [INFO] - [96m1 out of 4 clients finished[0m
+25-09-2026 11:50:00 [INFO] - [93mSending termination signal to clients[0m
+25-09-2026 11:50:01 [INFO] - [93mClient 3 received a termination signal[0m
+25-09-2026 11:50:01 [INFO] - [96mClient 3 is done (num_successes=6, num_failures=0)[0m
+25-09-2026 11:50:01 [INFO] - [96m2 out of 4 clients finished[0m
+25-09-2026 11:50:01 [INFO] - [93mClient 0 received a termination signal[0m
+25-09-2026 11:50:01 [INFO] - [96mClient 0 is done (num_successes=6, num_failures=0)[0m
+25-09-2026 11:50:01 [INFO] - [96m3 out of 4 clients finished[0m

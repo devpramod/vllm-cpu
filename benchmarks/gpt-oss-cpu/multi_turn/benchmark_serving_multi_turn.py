@@ -111,6 +111,7 @@ class ServerResponse(NamedTuple):
     first_chunk: str  # first chunk of the content
     content: str  # includes the first_chunk
     num_chunks: int
+    output_text: str = ""  # reasoning + content, for token counting
 
     def __str__(self) -> str:
         return f"ttft_ms {self.ttft_ms:.2f}, tpot_ms {self.tpot_ms:.2f}, latency_ms {self.latency_ms:.2f}"  # noqa: E501
@@ -261,8 +262,8 @@ async def send_request(
         payload["stream"] = True
         payload["stream_options"] = {"include_usage": False}
 
-    # if min_tokens is not None:
-    #     payload["min_tokens"] = min_tokens
+    if min_tokens is not None:
+        payload["min_tokens"] = min_tokens
 
     if max_tokens is not None:
         payload["max_tokens"] = max_tokens
@@ -292,6 +293,7 @@ async def send_request(
     latency: float | None = None
     first_chunk = ""
     generated_text = ""
+    output_text = ""
 
     start_time: int = time.perf_counter_ns()
     most_recent_timestamp: int = start_time
@@ -321,17 +323,25 @@ async def send_request(
 
                     # Delta is the new content/text/data
                     delta = data["choices"][0]["delta"]
-                    if delta.get("content", None):
+                    # Reasoning models stream their reasoning separately
+                    # from the final answer; both count as output tokens.
+                    text = (
+                        delta.get("reasoning")
+                        or delta.get("reasoning_content")
+                        or ""
+                    ) + (delta.get("content") or "")
+                    if text:
                         if ttft is None:
                             # First token
                             first_token_time = time.perf_counter_ns()
                             ttft = first_token_time - start_time
-                            first_chunk = delta["content"]
+                            first_chunk = text
                         else:
                             # Decoding phase
                             chunk_delay.append(timestamp - most_recent_timestamp)
 
-                        generated_text += delta["content"]
+                        generated_text += delta.get("content") or ""
+                        output_text += text
 
                     most_recent_timestamp = timestamp
         else:
@@ -367,6 +377,7 @@ async def send_request(
         first_chunk=first_chunk,
         content=generated_text,
         num_chunks=num_chunks,
+        output_text=output_text or generated_text,
     )
     return sr
 
@@ -479,7 +490,7 @@ async def send_turn(
     first_chunk_tokens = get_token_count(tokenizer, response.first_chunk)
 
     output_content = response.content
-    output_num_tokens = get_token_count(tokenizer, output_content)
+    output_num_tokens = get_token_count(tokenizer, response.output_text)
 
     # Prefix caching approximated cached percent
     approx_cached_percent = (
