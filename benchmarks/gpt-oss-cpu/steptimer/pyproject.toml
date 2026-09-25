@@ -1,0 +1,6 @@
+[project]
+name = "steptimer"
+version = "0.1"
+
+[project.entry-points."vllm.general_plugins"]
+steptimer = "steptimer:register"
