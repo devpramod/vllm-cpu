@@ -1,0 +1,62 @@
+{
+ "342933": {
+  "target_forward": {
+   "calls": 483,
+   "total_s": 29.519209788064472
+  },
+  "target_logits": {
+   "calls": 483,
+   "total_s": 1.9389983410947025
+  },
+  "execute_model": {
+   "calls": 483,
+   "total_s": 31.953595440019853
+  },
+  "sample": {
+   "calls": 483,
+   "total_s": 1.6840809121495113
+  },
+  "drafter_logits": {
+   "calls": 483,
+   "total_s": 1.92894036823418
+  },
+  "drafter_total": {
+   "calls": 483,
+   "total_s": 10.076439212309197
+  },
+  "sample_tokens": {
+   "calls": 483,
+   "total_s": 11.930114335613325
+  }
+ },
+ "342932": {
+  "target_forward": {
+   "calls": 483,
+   "total_s": 29.51826455583796
+  },
+  "target_logits": {
+   "calls": 483,
+   "total_s": 1.9669554132269695
+  },
+  "execute_model": {
+   "calls": 483,
+   "total_s": 31.981687852879986
+  },
+  "sample": {
+   "calls": 483,
+   "total_s": 1.7440961602842435
+  },
+  "drafter_logits": {
+   "calls": 483,
+   "total_s": 1.9711800473742187
+  },
+  "drafter_total": {
+   "calls": 483,
+   "total_s": 10.047784329392016
+  },
+  "sample_tokens": {
+   "calls": 483,
+   "total_s": 11.95563387835864
+  }
+ }
+}

@@ -1,0 +1,122 @@
+{
+ "350362": {
+  "target_forward": {
+   "calls": 1087,
+   "total_s": 20.00375547283329
+  },
+  "target_logits": {
+   "calls": 1087,
+   "total_s": 1.590413163532503
+  },
+  "execute_model": {
+   "calls": 1094,
+   "total_s": 22.463615818996914
+  },
+  "sample": {
+   "calls": 1087,
+   "total_s": 1.1627671787282452
+  },
+  "drafter_logits": {
+   "calls": 1087,
+   "total_s": 1.3715431110467762
+  },
+  "drafter_total": {
+   "calls": 1087,
+   "total_s": 8.053668101201765
+  },
+  "sample_tokens": {
+   "calls": 1087,
+   "total_s": 9.455298520042561
+  }
+ },
+ "350363": {
+  "target_forward": {
+   "calls": 1087,
+   "total_s": 20.015809823642485
+  },
+  "target_logits": {
+   "calls": 1087,
+   "total_s": 1.5814983189338818
+  },
+  "execute_model": {
+   "calls": 1094,
+   "total_s": 22.424169017118402
+  },
+  "sample": {
+   "calls": 1087,
+   "total_s": 1.1563800550065935
+  },
+  "drafter_logits": {
+   "calls": 1087,
+   "total_s": 1.3692293220665306
+  },
+  "drafter_total": {
+   "calls": 1087,
+   "total_s": 8.072048860951327
+  },
+  "sample_tokens": {
+   "calls": 1087,
+   "total_s": 9.459731876966543
+  }
+ },
+ "350364": {
+  "target_forward": {
+   "calls": 1087,
+   "total_s": 20.006294877268374
+  },
+  "target_logits": {
+   "calls": 1087,
+   "total_s": 1.5657524756388739
+  },
+  "execute_model": {
+   "calls": 1094,
+   "total_s": 22.41690833552275
+  },
+  "sample": {
+   "calls": 1087,
+   "total_s": 1.1832690151641145
+  },
+  "drafter_logits": {
+   "calls": 1087,
+   "total_s": 1.3726792947854847
+  },
+  "drafter_total": {
+   "calls": 1087,
+   "total_s": 8.070309908711351
+  },
+  "sample_tokens": {
+   "calls": 1087,
+   "total_s": 9.483620152343065
+  }
+ },
+ "350365": {
+  "target_forward": {
+   "calls": 1087,
+   "total_s": 20.01631173642818
+  },
+  "target_logits": {
+   "calls": 1087,
+   "total_s": 1.5725441658869386
+  },
+  "execute_model": {
+   "calls": 1094,
+   "total_s": 22.436056723585352
+  },
+  "sample": {
+   "calls": 1087,
+   "total_s": 1.1513921451987699
+  },
+  "drafter_logits": {
+   "calls": 1087,
+   "total_s": 1.3756174150621518
+  },
+  "drafter_total": {
+   "calls": 1087,
+   "total_s": 8.087781319161877
+  },
+  "sample_tokens": {
+   "calls": 1087,
+   "total_s": 9.4728297063848
+  }
+ }
+}

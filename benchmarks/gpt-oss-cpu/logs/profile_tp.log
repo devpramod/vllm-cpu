@@ -1,0 +1,24 @@
+[18:33:49] TP1: ready
+[18:35:27] TP1: c=1 done
+[18:37:27] TP1: c=16 done
+[18:37:49] TP1: trace written
+[18:39:20] TP1_DFLASH_HYB_K7: ready
+[18:40:57] TP1_DFLASH_HYB_K7: c=1 done
+[18:42:28] TP1_DFLASH_HYB_K7: c=16 done
+[18:42:52] TP1_DFLASH_HYB_K7: trace written
+[18:43:58] TP2: ready
+[18:45:07] TP2: c=1 done
+[18:46:22] TP2: c=16 done
+[18:46:41] TP2: trace written
+[18:48:11] TP2_DFLASH_HYB_K7: ready
+[18:49:13] TP2_DFLASH_HYB_K7: c=1 done
+[18:50:07] TP2_DFLASH_HYB_K7: c=16 done
+[18:50:28] TP2_DFLASH_HYB_K7: trace written
+[18:51:33] TP4: ready
+[18:52:25] TP4: c=1 done
+[18:53:21] TP4: c=16 done
+[18:53:38] TP4: trace written
+[18:55:54] TP4_DFLASH_HYB_K7: ready
+[18:56:48] TP4_DFLASH_HYB_K7: c=1 done
+[18:57:29] TP4_DFLASH_HYB_K7: c=16 done
+[18:57:48] TP4_DFLASH_HYB_K7: trace written

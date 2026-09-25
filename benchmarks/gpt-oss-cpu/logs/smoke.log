@@ -1,0 +1,11 @@
+[09:08:33] start TP4_DFLASH_HYB_K7: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 7}
+[09:09:38] TP4_DFLASH_HYB_K7: ready
+[09:09:56]   TP4_DFLASH_HYB_K7 GSM8K accuracy check
+[09:11:33]   TP4_DFLASH_HYB_K7 gsm8k conc=1 prompts=8
+[09:12:08]   -> ok in 36s
+[09:12:09] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4
+[09:13:04] TP4: ready
+[09:13:16]   TP4 rand_pfx512_1k_128 conc=8 prompts=32
+[09:13:37]   -> ok in 21s
+[09:13:37]   TP4 sgpt_2k_128 conc=8 prompts=32
+[09:14:05]   -> ok in 28s

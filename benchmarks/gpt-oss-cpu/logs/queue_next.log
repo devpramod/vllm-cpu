@@ -1,0 +1,12 @@
+[15:47:33] k sweep
+[16:17:56] step timer k=3
+[16:19:54] step timer k=4
+[16:21:58] step timer k=5
+[16:24:57] step timer k=7
+[16:27:55] p2 TP2_PP3
+[17:11:15] p3 mnbt1024
+[17:25:44] p3 mnbt2048
+[17:39:17] p3 mnbt8192
+[17:53:14] p3 mns8
+[18:15:33] p3 mns16
+[18:32:26] all done

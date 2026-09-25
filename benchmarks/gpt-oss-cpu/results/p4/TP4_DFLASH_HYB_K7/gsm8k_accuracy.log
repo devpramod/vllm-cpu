@@ -1,0 +1,2 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+{"num": 250, "accuracy": 0.932, "truncated": 5, "mean_completion_tokens": 277.988, "wall_s": 99.4025616645813}

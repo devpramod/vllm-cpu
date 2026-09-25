@@ -1,0 +1,22 @@
+{
+ "target_forward": {
+  "calls": 2415,
+  "total_s": 61.609385255374946
+ },
+ "target_logits": {
+  "calls": 2415,
+  "total_s": 6.630717860534787
+ },
+ "execute_model": {
+  "calls": 2417,
+  "total_s": 69.89649143931456
+ },
+ "sample": {
+  "calls": 2415,
+  "total_s": 1.1173895956017077
+ },
+ "sample_tokens": {
+  "calls": 2415,
+  "total_s": 1.4394296071259305
+ }
+}

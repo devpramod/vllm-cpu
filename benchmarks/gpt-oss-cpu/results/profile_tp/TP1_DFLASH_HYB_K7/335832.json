@@ -1,0 +1,30 @@
+{
+ "target_forward": {
+  "calls": 776,
+  "total_s": 65.25883455795702
+ },
+ "target_logits": {
+  "calls": 776,
+  "total_s": 4.438941696891561
+ },
+ "execute_model": {
+  "calls": 778,
+  "total_s": 70.47897859720979
+ },
+ "sample": {
+  "calls": 776,
+  "total_s": 2.165595496771857
+ },
+ "drafter_logits": {
+  "calls": 776,
+  "total_s": 4.433772531803697
+ },
+ "drafter_total": {
+  "calls": 776,
+  "total_s": 19.09259122912772
+ },
+ "sample_tokens": {
+  "calls": 776,
+  "total_s": 21.5016597538488
+ }
+}

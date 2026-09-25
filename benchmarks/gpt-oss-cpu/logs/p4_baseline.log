@@ -1,0 +1,53 @@
+[12:50:08] start TP4_DFLASH: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 7}
+[12:51:28] TP4_DFLASH: server exited with 1 during startup
+[12:51:28] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4
+[12:52:23] TP4: ready
+[12:52:35]   TP4 GSM8K accuracy check
+[12:54:05]   TP4 gsm8k conc=1 prompts=8
+[12:54:45]   -> ok in 40s
+[12:54:45]   TP4 gsm8k conc=2 prompts=8
+[12:55:16]   -> ok in 30s
+[12:55:16]   TP4 gsm8k conc=4 prompts=16
+[12:56:09]   -> ok in 53s
+[12:56:09]   TP4 gsm8k conc=8 prompts=32
+[12:57:05]   -> ok in 57s
+[12:57:05]   TP4 gsm8k conc=16 prompts=64
+[12:58:01]   -> ok in 56s
+[12:58:01]   TP4 gsm8k conc=32 prompts=128
+[12:59:08]   -> ok in 67s
+[12:59:08]   TP4 humaneval conc=1 prompts=8
+[13:00:32]   -> ok in 84s
+[13:00:32]   TP4 humaneval conc=2 prompts=8
+[13:01:34]   -> ok in 61s
+[13:01:34]   TP4 humaneval conc=4 prompts=16
+[13:03:04]   -> ok in 90s
+[13:03:04]   TP4 humaneval conc=8 prompts=32
+[13:04:50]   -> ok in 106s
+[13:04:50]   TP4 humaneval conc=16 prompts=64
+[13:06:58]   -> ok in 129s
+[13:06:58]   TP4 humaneval conc=32 prompts=128
+[13:09:33]   -> ok in 154s
+[13:09:33]   TP4 mtbench conc=1 prompts=8
+[13:11:10]   -> ok in 97s
+[13:11:10]   TP4 mtbench conc=2 prompts=8
+[13:12:13]   -> ok in 63s
+[13:12:13]   TP4 mtbench conc=4 prompts=16
+[13:13:44]   -> ok in 92s
+[13:13:44]   TP4 mtbench conc=8 prompts=32
+[13:16:00]   -> ok in 136s
+[13:16:00]   TP4 mtbench conc=16 prompts=64
+[13:18:45]   -> ok in 164s
+[13:18:45]   TP4 mtbench conc=32 prompts=128
+[13:21:38]   -> ok in 173s
+[13:21:38]   TP4 sharegpt_chat conc=1 prompts=8
+[13:22:14]   -> ok in 36s
+[13:22:14]   TP4 sharegpt_chat conc=2 prompts=8
+[13:22:43]   -> ok in 29s
+[13:22:43]   TP4 sharegpt_chat conc=4 prompts=16
+[13:23:10]   -> ok in 27s
+[13:23:10]   TP4 sharegpt_chat conc=8 prompts=32
+[13:23:46]   -> ok in 36s
+[13:23:46]   TP4 sharegpt_chat conc=16 prompts=64
+[13:24:28]   -> ok in 42s
+[13:24:28]   TP4 sharegpt_chat conc=32 prompts=128
+[13:25:18]   -> ok in 50s

@@ -1,0 +1,90 @@
+{
+ "346603": {
+  "target_forward": {
+   "calls": 2048,
+   "total_s": 39.232944181072526
+  },
+  "target_logits": {
+   "calls": 2048,
+   "total_s": 3.4306688285432756
+  },
+  "execute_model": {
+   "calls": 2048,
+   "total_s": 44.01335997588467
+  },
+  "sample": {
+   "calls": 2048,
+   "total_s": 0.9303459953516722
+  },
+  "sample_tokens": {
+   "calls": 2048,
+   "total_s": 1.2052540929289535
+  }
+ },
+ "346602": {
+  "target_forward": {
+   "calls": 2048,
+   "total_s": 39.22662162850611
+  },
+  "target_logits": {
+   "calls": 2048,
+   "total_s": 3.416315558948554
+  },
+  "execute_model": {
+   "calls": 2048,
+   "total_s": 44.02978687302675
+  },
+  "sample": {
+   "calls": 2048,
+   "total_s": 0.9756764504127204
+  },
+  "sample_tokens": {
+   "calls": 2048,
+   "total_s": 1.2628466750029474
+  }
+ },
+ "346605": {
+  "target_forward": {
+   "calls": 2048,
+   "total_s": 39.2352943503065
+  },
+  "target_logits": {
+   "calls": 2048,
+   "total_s": 3.3973139356821775
+  },
+  "execute_model": {
+   "calls": 2048,
+   "total_s": 43.976673966040835
+  },
+  "sample": {
+   "calls": 2048,
+   "total_s": 0.972212313208729
+  },
+  "sample_tokens": {
+   "calls": 2048,
+   "total_s": 1.2379351540002972
+  }
+ },
+ "346604": {
+  "target_forward": {
+   "calls": 2048,
+   "total_s": 39.19709579332266
+  },
+  "target_logits": {
+   "calls": 2048,
+   "total_s": 3.4317426702473313
+  },
+  "execute_model": {
+   "calls": 2048,
+   "total_s": 44.004651808412746
+  },
+  "sample": {
+   "calls": 2048,
+   "total_s": 0.9939799167914316
+  },
+  "sample_tokens": {
+   "calls": 2048,
+   "total_s": 1.2608446717495099
+  }
+ }
+}

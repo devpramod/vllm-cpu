@@ -1,0 +1,333 @@
+WARNING 09-24 18:50:42 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-24 18:50:42 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-24 18:50:42 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-24 18:50:43 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+(APIServer pid=346193) INFO 09-24 18:50:43 [api_utils.py:347] 
+(APIServer pid=346193) INFO 09-24 18:50:43 [api_utils.py:347]        █     █     █▄   ▄█
+(APIServer pid=346193) INFO 09-24 18:50:43 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.30.0
+(APIServer pid=346193) INFO 09-24 18:50:43 [api_utils.py:347]   █▄█▀ █     █     █     █  model   /home/sysadmin/pramod/bench/models/gpt-oss-20b
+(APIServer pid=346193) INFO 09-24 18:50:43 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=346193) INFO 09-24 18:50:43 [api_utils.py:347] 
+(APIServer pid=346193) INFO 09-24 18:50:43 [api_utils.py:286] non-default args: {'model_tag': '/home/sysadmin/pramod/bench/models/gpt-oss-20b', 'port': 8100, 'model': '/home/sysadmin/pramod/bench/models/gpt-oss-20b', 'dtype': 'bfloat16', 'max_model_len': 4096, 'served_model_name': ['gpt-oss-20b'], 'tensor_parallel_size': 4, 'enable_prefix_caching': False, 'max_num_batched_tokens': 4096, 'max_num_seqs': 32, 'profiler_config': ProfilerConfig(profiler='torch', torch_profiler_dir='/home/sysadmin/pramod/bench/results/profile_tp/TP4/trace', proton_profiler_dir='', proton_context='shadow', proton_data='tree', proton_backend=None, proton_mode=None, proton_hook=None, proton_output_format=None, proton_graph_attribution=False, torch_profiler_with_stack=False, torch_profiler_with_flops=False, torch_profiler_use_gzip=False, torch_profiler_dump_cuda_time_total=True, torch_profiler_record_shapes=True, torch_profiler_with_memory=False, capture_torch_profiler=False, detailed_trace_annotation=False, ignore_frontend=True, delay_iterations=5, max_iterations=60, warmup_iterations=0, active_iterations=5, wait_iterations=0)}
+(APIServer pid=346193) INFO 09-24 18:50:43 [model.py:692] Resolved architecture: GptOssForCausalLM
+(APIServer pid=346193) INFO 09-24 18:50:43 [model.py:2030] Using max model len 4096
+(APIServer pid=346193) INFO 09-24 18:50:44 [scheduler.py:288] Chunked prefill is enabled with max_num_batched_tokens=4096.
+(APIServer pid=346193) INFO 09-24 18:50:44 [config.py:420] Overriding max cuda graph capture size to 1024 for performance.
+(APIServer pid=346193) INFO 09-24 18:50:44 [kernel.py:416] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native'])
+(APIServer pid=346193) WARNING 09-24 18:50:44 [cpu.py:293] Reset SSM cache type to float32 for accelerated GDN mamba backend 'none'.
+(APIServer pid=346193) WARNING 09-24 18:50:44 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+WARNING 09-24 18:50:49 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-24 18:50:49 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-24 18:50:49 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+(EngineCore pid=346401) WARNING 09-24 18:50:50 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+(EngineCore pid=346401) INFO 09-24 18:50:50 [core.py:123] Initializing a V1 LLM engine (v0.30.0) with config: model='/home/sysadmin/pramod/bench/models/gpt-oss-20b', speculative_config=None, tokenizer='/home/sysadmin/pramod/bench/models/gpt-oss-20b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=gpt_oss_mxfp4, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cpu, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='openai_gptoss', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=gpt-oss-20b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.DYNAMO_TRACE_ONCE: 2>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': None, 'compile_ranges_endpoints': [4096], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'dce': True, 'size_asserts': False, 'nan_asserts': False, 'epilogue_fusion': True, 'cpp.dynamic_threads': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 1024, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native']), enable_flashinfer_autotune=True, enable_cutedsl_warmup=True, enable_jit_warmup=True, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None)
+(EngineCore pid=346401) INFO 09-24 18:50:50 [multiproc_executor.py:153] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=10.14.8.164 (local), world_size=4, local_world_size=4
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] OpenMP thread binding info: 
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] 	VLLM_CPU_OMP_THREADS_BIND='auto', auto_setup=True, skip_setup=False
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] 	local_world_size=4, reserve_cpu_num=1
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] 	local_rank=0, core ids=[192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223]
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] 	local_rank=1, core ids=[224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] 	local_rank=2, core ids=[256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287]
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] 	local_rank=3, core ids=[288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318]
+(EngineCore pid=346401) INFO 09-24 18:50:50 [ompmultiprocessing.py:185] 	reserved_cpus=[319]
+WARNING 09-24 18:50:54 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-24 18:50:54 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-24 18:50:54 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-24 18:50:54 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-24 18:50:54 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-24 18:50:54 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-24 18:50:54 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-24 18:50:54 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-24 18:50:54 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-24 18:50:54 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-24 18:50:54 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-24 18:50:54 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-24 18:50:55 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+WARNING 09-24 18:50:55 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+WARNING 09-24 18:50:55 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+WARNING 09-24 18:50:55 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+[W924 18:50:56.007388999 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (1). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-24 18:50:56 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+INFO 09-24 18:50:56 [wrapper.py:34] GPU profiling will start 5 steps after start_profile.
+INFO 09-24 18:50:56 [wrapper.py:41] GPU profiling will stop after 60 worker steps, or when stop_profile is received.
+(Worker pid=346603) INFO 09-24 18:50:56 [parallel_state.py:1827] world_size=4 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_c301c46e00f44fb3978df725d75cd77c backend=gloo
+[W924 18:50:56.009788473 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (2). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-24 18:50:56 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+INFO 09-24 18:50:56 [wrapper.py:34] GPU profiling will start 5 steps after start_profile.
+INFO 09-24 18:50:56 [wrapper.py:41] GPU profiling will stop after 60 worker steps, or when stop_profile is received.
+(Worker pid=346604) INFO 09-24 18:50:56 [parallel_state.py:1827] world_size=4 rank=2 local_rank=2 distributed_init_method=file:///tmp/vllm_dist_c301c46e00f44fb3978df725d75cd77c backend=gloo
+[W924 18:50:56.056637081 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (3). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-24 18:50:56 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+INFO 09-24 18:50:56 [wrapper.py:34] GPU profiling will start 5 steps after start_profile.
+INFO 09-24 18:50:56 [wrapper.py:41] GPU profiling will stop after 60 worker steps, or when stop_profile is received.
+(Worker pid=346605) INFO 09-24 18:50:56 [parallel_state.py:1827] world_size=4 rank=3 local_rank=3 distributed_init_method=file:///tmp/vllm_dist_c301c46e00f44fb3978df725d75cd77c backend=gloo
+[W924 18:50:56.063527531 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (0). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-24 18:50:56 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+INFO 09-24 18:50:56 [wrapper.py:34] GPU profiling will start 5 steps after start_profile.
+INFO 09-24 18:50:56 [wrapper.py:41] GPU profiling will stop after 60 worker steps, or when stop_profile is received.
+INFO 09-24 18:50:56 [wrapper.py:202] Torch profiling enabled. Traces will be saved to: /home/sysadmin/pramod/bench/results/profile_tp/TP4/trace
+(Worker pid=346602) INFO 09-24 18:50:56 [parallel_state.py:1827] world_size=4 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_c301c46e00f44fb3978df725d75cd77c backend=gloo
+(Worker pid=346602) INFO 09-24 18:50:56 [parallel_state.py:2267] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, ETP rank 0, EP rank 0, EPLB rank N/A
+(Worker_TP1 pid=346603) INFO 09-24 18:50:56 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP0 pid=346602) INFO 09-24 18:50:56 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP2 pid=346604) INFO 09-24 18:50:56 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP3 pid=346605) INFO 09-24 18:50:56 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP0 pid=346602) INFO 09-24 18:50:56 [mxfp4.py:616] Using 'CPU' Mxfp4 MoE backend.
+(Worker_TP0 pid=346602) INFO 09-24 18:50:57 [weight_utils.py:895] Filesystem type for checkpoints: EXT4. Checkpoint size: 12.82 GiB. Available RAM: 1472.85 GiB.
+(Worker_TP0 pid=346602) INFO 09-24 18:50:57 [weight_utils.py:918] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP0 pid=346602) Loading safetensors checkpoint shards:   0% Completed | 0/3 [00:00<?, ?it/s]
+(Worker_TP0 pid=346602) Loading safetensors checkpoint shards:  67% Completed | 2/3 [00:00<00:00, 17.60it/s]
+(Worker_TP0 pid=346602) Loading safetensors checkpoint shards: 100% Completed | 3/3 [00:00<00:00, 15.08it/s]
+(Worker_TP0 pid=346602) 
+(Worker_TP0 pid=346602) INFO 09-24 18:50:57 [default_loader.py:430] Loading weights took 0.22 seconds
+(Worker_TP0 pid=346602) INFO 09-24 18:50:57 [mxfp4.py:1996] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0 pid=346602) INFO 09-24 18:50:57 [mxfp4.py:1997] Using CPUExpertsMxfp4
+(EngineCore pid=346401) INFO 09-24 18:50:57 [torch_utils.py:287] Reducing Torch threads from 192 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=346401) INFO 09-24 18:50:57 [utils.py:320] Using LBHNC KV cache layout.
+(Worker_TP3 pid=346605) INFO 09-24 18:50:57 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP1 pid=346603) INFO 09-24 18:50:57 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP2 pid=346604) INFO 09-24 18:50:57 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP0 pid=346602) INFO 09-24 18:50:57 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP3 pid=346605) WARNING 09-24 18:50:58 [decorators.py:323] Compiling model again due to a load failure from /home/sysadmin/.cache/vllm/torch_compile_cache/torch_aot_compile/32ccd092ba8043eef8be60d9e851137dfd27ee98a966452e560ff5a9a7eb8a02/rank_3_0/model, reason: 'function' object has no attribute 'finalize_loading'
+(Worker_TP2 pid=346604) WARNING 09-24 18:50:59 [decorators.py:323] Compiling model again due to a load failure from /home/sysadmin/.cache/vllm/torch_compile_cache/torch_aot_compile/32ccd092ba8043eef8be60d9e851137dfd27ee98a966452e560ff5a9a7eb8a02/rank_2_0/model, reason: 'function' object has no attribute 'finalize_loading'
+(Worker_TP1 pid=346603) WARNING 09-24 18:50:59 [decorators.py:323] Compiling model again due to a load failure from /home/sysadmin/.cache/vllm/torch_compile_cache/torch_aot_compile/32ccd092ba8043eef8be60d9e851137dfd27ee98a966452e560ff5a9a7eb8a02/rank_1_0/model, reason: 'function' object has no attribute 'finalize_loading'
+(Worker_TP0 pid=346602) WARNING 09-24 18:50:59 [decorators.py:323] Compiling model again due to a load failure from /home/sysadmin/.cache/vllm/torch_compile_cache/torch_aot_compile/32ccd092ba8043eef8be60d9e851137dfd27ee98a966452e560ff5a9a7eb8a02/rank_0_0/model, reason: 'function' object has no attribute 'finalize_loading'
+(Worker_TP0 pid=346602) INFO 09-24 18:51:24 [decorators.py:719] saved AOT compiled function to /home/sysadmin/.cache/vllm/torch_compile_cache/torch_aot_compile/32ccd092ba8043eef8be60d9e851137dfd27ee98a966452e560ff5a9a7eb8a02/rank_0_0/model
+(Worker_TP0 pid=346602) INFO 09-24 18:51:24 [monitor.py:81] Initial profiling/warmup run took 0.56 s
+(Worker_TP0 pid=346602) INFO 09-24 18:51:25 [cpu_model_runner.py:144] Warming up done.
+(Worker_TP0 pid=346602) INFO 09-24 18:51:25 [cpu_worker.py:271] Explicitly set (40.0/251.63) GiB for KV cache on node 0.
+(Worker_TP2 pid=346604) INFO 09-24 18:51:25 [cpu_model_runner.py:144] Warming up done.
+(Worker_TP1 pid=346603) INFO 09-24 18:51:25 [cpu_model_runner.py:144] Warming up done.
+(Worker_TP3 pid=346605) INFO 09-24 18:51:25 [cpu_model_runner.py:144] Warming up done.
+(Worker_TP2 pid=346604) INFO 09-24 18:51:26 [cpu_worker.py:271] Explicitly set (40.0/251.94) GiB for KV cache on node 2.
+(Worker_TP3 pid=346605) INFO 09-24 18:51:26 [cpu_worker.py:271] Explicitly set (40.0/251.98) GiB for KV cache on node 3.
+(Worker_TP1 pid=346603) INFO 09-24 18:51:26 [cpu_worker.py:271] Explicitly set (40.0/251.98) GiB for KV cache on node 1.
+(EngineCore pid=346401) INFO 09-24 18:51:26 [kv_cache_utils.py:2399] CPU KV cache size: 3,441,459 tokens, Maximum concurrency for 4,096 tokens per request: 840.20x
+(EngineCore pid=346401) INFO 09-24 18:51:29 [core.py:379] init engine (profile, create kv cache, warmup model) took 31.94 s
+(EngineCore pid=346401) INFO 09-24 18:51:30 [kv_cache_utils.py:748] kv cache group sizes [128, 128]
+(EngineCore pid=346401) INFO 09-24 18:51:30 [kv_cache_utils.py:749] kv lcm block sizes 128
+(EngineCore pid=346401) WARNING 09-24 18:51:30 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+(EngineCore pid=346401) WARNING 09-24 18:51:30 [vllm.py:1570] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(EngineCore pid=346401) INFO 09-24 18:51:30 [kernel.py:416] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native'])
+(APIServer pid=346193) INFO 09-24 18:51:30 [entry.py:135] Supported tasks: ['generate']
+(APIServer pid=346193) WARNING 09-24 18:51:30 [api_router.py:41] Profiler with mode 'torch' is enabled in the API server. This should ONLY be used for local development!
+(APIServer pid=346193) INFO 09-24 18:51:30 [factories.py:76] Scale-out endpoints are disabled. Set --enable-scale-out to enable them.
+(APIServer pid=346193) INFO 09-24 18:51:31 [hf.py:642] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=346193) WARNING 09-24 18:51:31 [serving.py:163] For gpt-oss, we ignore --enable-auto-tool-choice and always enable tool use.
+(APIServer pid=346193) INFO 09-24 18:51:31 [entry.py:139] Starting vLLM server on http://0.0.0.0:8100
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:61] Available routes are:
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /openapi.json, Methods: GET, HEAD
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /docs, Methods: GET, HEAD
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /docs/oauth2-redirect, Methods: GET, HEAD
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /redoc, Methods: GET, HEAD
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /load, Methods: GET
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /version, Methods: GET
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /health, Methods: GET
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /metrics, Methods: GET
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /start_profile, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /stop_profile, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /tokenize, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /detokenize, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/models, Methods: GET
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /ping, Methods: GET
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /ping, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /invocations, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/responses, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/completions, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/messages, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /generative_scoring, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=346193) INFO 09-24 18:51:31 [launcher.py:70] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=346193) INFO:     Started server process [346193]
+(APIServer pid=346193) INFO:     Waiting for application startup.
+(APIServer pid=346193) INFO:     Application startup complete.
+(APIServer pid=346193) INFO:     127.0.0.1:57222 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51500 - "POST /tokenize HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51504 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51504 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51504 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51508 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51514 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51526 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51504 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51514 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51508 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51526 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:51:42 [loggers.py:315] Engine 000: Avg prompt throughput: 56.8 tokens/s, Avg generation throughput: 22.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:51504 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:51514 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:51:52 [loggers.py:315] Engine 000: Avg prompt throughput: 50.8 tokens/s, Avg generation throughput: 37.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:52:02 [loggers.py:315] Engine 000: Avg prompt throughput: 44.2 tokens/s, Avg generation throughput: 81.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:52:12 [loggers.py:315] Engine 000: Avg prompt throughput: 25.1 tokens/s, Avg generation throughput: 81.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:52:22 [loggers.py:315] Engine 000: Avg prompt throughput: 11.6 tokens/s, Avg generation throughput: 82.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:57858 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:52:32 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 13.7 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:41888 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41888 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41888 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41894 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41896 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41906 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41920 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41936 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41950 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41954 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41988 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41992 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41994 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41998 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:42006 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:42014 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:42006 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41906 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41894 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41888 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41906 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:52:42 [loggers.py:315] Engine 000: Avg prompt throughput: 269.2 tokens/s, Avg generation throughput: 525.6 tokens/s, Running: 16 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:41896 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41936 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41998 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41992 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41994 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41896 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:42006 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41950 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41894 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41920 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41994 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41888 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41896 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41992 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:52:52 [loggers.py:315] Engine 000: Avg prompt throughput: 191.0 tokens/s, Avg generation throughput: 558.2 tokens/s, Running: 16 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:41950 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:42006 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41994 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41988 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41920 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41894 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:42006 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41968 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41950 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:41982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:53:02 [loggers.py:315] Engine 000: Avg prompt throughput: 132.2 tokens/s, Avg generation throughput: 568.3 tokens/s, Running: 15 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO 09-24 18:53:12 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 369.8 tokens/s, Running: 2 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:42006 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:42014 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:53:21 [api_router.py:23] Starting profiler...
+(APIServer pid=346193) INFO 09-24 18:53:21 [api_router.py:25] Profiler started.
+(APIServer pid=346193) INFO:     127.0.0.1:45120 - "POST /start_profile HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:53:22 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 76.3 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO:     127.0.0.1:45136 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:45136 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:45136 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(Worker_TP0 pid=346602) INFO 09-24 18:53:28 [wrapper.py:112] Starting profiler after delay...
+USDT:2026-09-24 18:53:28 346605:346605 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-09-24 18:53:28 346604:346604 SyncActivityProfilerHandler.cpp:52] profiler_startUSDT:2026-09-24 18:53:28 346603:346603 SyncActivityProfilerHandler.cpp:52] profiler_start
+
+USDT:2026-09-24 18:53:28 346602:346602 SyncActivityProfilerHandler.cpp:52] profiler_start
+(Worker_TP0 pid=346602) INFO 09-24 18:53:29 [wrapper.py:130] Max profiling iterations reached. Stopping profiler...
+USDT:2026-09-24 18:53:29 346603:346603 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-09-24 18:53:29 346605:346605 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-09-24 18:53:29 346602:346602 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-09-24 18:53:29 346604:346604 SyncActivityProfilerHandler.cpp:59] profiler_stop
+(APIServer pid=346193) INFO 09-24 18:53:32 [loggers.py:315] Engine 000: Avg prompt throughput: 12.4 tokens/s, Avg generation throughput: 6.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(Worker_TP0 pid=346602) ------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  
+(Worker_TP0 pid=346602)                                       Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg    # of Calls                                                                      Input Shapes  
+(Worker_TP0 pid=346602) ------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  
+(Worker_TP0 pid=346602)            ## Call CompiledFxGraph None ##        18.13%     141.191ms        76.25%     593.651ms       9.894ms            60                                                                                []  
+(Worker_TP0 pid=346602)                      _C::fused_experts_cpu        17.90%     139.333ms        18.16%     141.387ms      98.185us          1440  [[1, 2880], [1, 2880], [32, 1472, 1440], [32, 2880, 368], [1, 4], [1, 4], [], [3  
+(Worker_TP0 pid=346602)                          _C::shm_allreduce        10.37%      80.770ms        10.37%      80.770ms      27.473us          2940                                                                   [[], [1, 2880]]  
+(Worker_TP0 pid=346602)                              _C::onednn_mm         9.04%      70.353ms         9.05%      70.431ms       1.174ms            60                                                   [[1, 50272], [1, 2880], [], []]  
+(Worker_TP0 pid=346602)                              _C::onednn_mm         7.23%      56.314ms         7.37%      57.412ms      39.870us          1440                                                [[1, 1280], [1, 2880], [1280], []]  
+(Worker_TP0 pid=346602)                              _C::onednn_mm         5.25%      40.855ms         5.35%      41.638ms      28.915us          1440                                                [[1, 2880], [1, 1024], [2880], []]  
+(Worker_TP0 pid=346602)                          ST::execute_model         4.38%      34.073ms        95.21%     741.250ms      12.354ms            60                                                                                []  
+(Worker_TP0 pid=346602)        vllm::unified_attention_with_output         3.40%      26.483ms         7.07%      55.044ms      38.225us          1440               [[1, 16, 64], [1, 2, 64], [1, 2, 64], [1, 16, 64], [], [], [], [0]]  
+(Worker_TP0 pid=346602)              vllm::unified_kv_cache_update         3.31%      25.769ms         6.37%      49.587ms      34.435us          1440                                                      [[1, 2, 64], [1, 2, 64], []]  
+(Worker_TP0 pid=346602)                   _C::weight_packed_linear         2.59%      20.164ms         2.59%      20.164ms      14.003us          1440                                        [[1, 32], [1, 2880], [32, 2880], [32], []]  
+(Worker_TP0 pid=346602)                               aten::argmax         2.51%      19.548ms         2.52%      19.601ms     326.676us            60                                                             [[1, 201088], [], []]  
+(Worker_TP0 pid=346602)                         ST::target_forward         1.43%      11.135ms        78.70%     612.757ms      10.213ms            60                                                                                []  
+(Worker_TP0 pid=346602)            _C::cpu_attention_with_kv_cache         1.37%      10.630ms         1.37%      10.630ms       9.525us          1116  [[1, 16, 64], [54613, 2, 128, 64], [54613, 2, 128, 64], [1, 16, 64], [2], [1], [  
+(Worker_TP0 pid=346602)                          ST::target_logits         1.05%       8.185ms        10.69%      83.253ms       1.388ms            60                                                                                []  
+(Worker_TP0 pid=346602)                          Pregraph bytecode         0.99%       7.705ms         0.99%       7.705ms     128.415us            60                                                                                []  
+(Worker_TP0 pid=346602)                                aten::slice         0.91%       7.114ms         1.25%       9.757ms       1.694us          5760                                             [[54613, 2, 256, 64], [], [], [], []]  
+(Worker_TP0 pid=346602)                                 aten::topk         0.83%       6.458ms         0.83%       6.458ms       4.485us          1440                                                         [[1, 32], [], [], [], []]  
+(Worker_TP0 pid=346602)                          ST::sample_tokens         0.81%       6.332ms         4.62%      35.951ms     599.181us            60                                                                                []  
+(Worker_TP0 pid=346602)             _C::cpu_attn_reshape_and_cache         0.78%       6.043ms         0.78%       6.043ms       4.196us          1440  [[1, 2, 64], [1, 2, 64], [54613, 2, 128, 64], [54613, 2, 128, 64], [1], [], [],   
+(Worker_TP0 pid=346602)                                aten::copy_         0.73%       5.692ms         0.73%       5.692ms      94.860us            60                                                    [[1, 201088], [1, 201088], []]  
+(Worker_TP0 pid=346602)                               aten::narrow         0.72%       5.636ms         1.98%      15.393ms       2.672us          5760                                                 [[54613, 2, 256, 64], [], [], []]  
+(Worker_TP0 pid=346602)            _C::cpu_attention_with_kv_cache         0.56%       4.355ms         0.56%       4.355ms      13.441us           324  [[1, 16, 64], [54613, 2, 128, 64], [54613, 2, 128, 64], [1, 16, 64], [2], [1], [  
+(Worker_TP0 pid=346602)                                aten::chunk         0.51%       4.002ms         3.00%      23.363ms       8.112us          2880                                                     [[54613, 2, 256, 64], [], []]  
+(Worker_TP0 pid=346602)                                aten::split         0.51%       3.968ms         2.49%      19.361ms       6.723us          2880                                                     [[54613, 2, 256, 64], [], []]  
+(Worker_TP0 pid=346602)                         _C::shm_all_gather         0.45%       3.532ms         0.45%       3.532ms      58.871us            60                                                      [[], [1, 50272], [4, 50272]]  
+(Worker_TP0 pid=346602)                                 aten::view         0.45%       3.468ms         0.45%       3.468ms       1.204us          2880                                                        [[54613, 2, 128, 128], []]  
+(Worker_TP0 pid=346602)                                 ST::sample         0.37%       2.899ms         3.78%      29.411ms     490.188us            60                                                                                []  
+(Worker_TP0 pid=346602)                                aten::empty         0.37%       2.866ms         0.37%       2.866ms       0.628us          4560                                                          [[], [], [], [], [], []]  
+(Worker_TP0 pid=346602)                           aten::as_strided         0.34%       2.643ms         0.34%       2.643ms       0.459us          5760                                                 [[54613, 2, 256, 64], [], [], []]  
+(Worker_TP0 pid=346602)                                aten::slice         0.26%       2.057ms         0.35%       2.711ms       0.941us          2880                                                     [[1, 16, 64], [], [], [], []]  
+(Worker_TP0 pid=346602)                                 aten::item         0.21%       1.663ms         0.25%       1.960ms       0.667us          2940                                                                              [[]]  
+(Worker_TP0 pid=346602)       execute_context_0(0)_generation_1(1)         0.18%       1.380ms        95.38%     742.630ms      12.377ms            60                                                                                []  
+(Worker_TP0 pid=346602)                                aten::slice         0.14%       1.126ms         0.18%       1.382ms       1.279us          1080                                                            [[32], [], [], [], []]  
+(Worker_TP0 pid=346602)                                aten::slice         0.14%       1.078ms         0.17%       1.300ms       1.354us           960                                                          [[4096], [], [], [], []]  
+(Worker_TP0 pid=346602)                            aten::new_empty         0.14%       1.065ms         0.23%       1.810ms       1.257us          1440                                                  [[1, 2, 64], [], [], [], [], []]  
+(Worker_TP0 pid=346602)       _C::compute_slot_mapping_kernel_impl         0.10%     782.233us         0.10%     782.233us       6.519us           120                                                  [[2], [1], [32, 32], [4096], []]  
+(Worker_TP0 pid=346602)                                aten::index         0.10%     762.678us         0.21%       1.599ms      26.649us            60                                                                   [[1, 2880], []]  
+(Worker_TP0 pid=346602)                                aten::slice         0.10%     747.702us         0.12%     903.014us       2.508us           360                                                        [[32, 32], [], [], [], []]  
+(Worker_TP0 pid=346602)                                aten::copy_         0.09%     662.131us         0.09%     662.131us       1.003us           660                                                                    [[1], [1], []]  
+(Worker_TP0 pid=346602)                           aten::as_strided         0.08%     654.218us         0.08%     654.218us       0.227us          2880                                                         [[1, 16, 64], [], [], []]  
+(Worker_TP0 pid=346602)                             aten::_to_copy         0.08%     586.047us         0.16%       1.254ms       6.966us           180                                                     [[1], [], [], [], [], [], []]  
+(Worker_TP0 pid=346602)                                aten::index         0.07%     548.167us         0.09%     700.390us      11.673us            60                                                                        [[32], []]  
+(Worker_TP0 pid=346602)                 _C::get_scheduler_metadata         0.06%     487.764us         0.08%     588.949us       4.908us           120                            [[], [], [], [], [1], [], [2], [], [], [], [], [], []]  
+(Worker_TP0 pid=346602)                        aten::empty_strided         0.06%     486.181us         0.06%     486.181us       1.621us           300                                                          [[], [], [], [], [], []]  
+(Worker_TP0 pid=346602)                           aten::as_strided         0.04%     318.546us         0.04%     318.546us       0.279us          1140                                                                [[32], [], [], []]  
+(Worker_TP0 pid=346602)                  aten::_local_scalar_dense         0.04%     297.053us         0.04%     297.053us       0.101us          2940                                                                              [[]]  
+(Worker_TP0 pid=346602)                             aten::_to_copy         0.04%     285.914us         0.80%       6.208ms     103.474us            60                                             [[1, 201088], [], [], [], [], [], []]  
+(Worker_TP0 pid=346602)                                aten::copy_         0.04%     282.448us         0.04%     282.448us       2.354us           120                                                            [[1, 32], [1, 32], []]  
+(Worker_TP0 pid=346602)                                   aten::to         0.04%     277.612us         0.04%     277.612us       0.193us          1440                                                          [[1, 4], [], [], [], []]  
+(Worker_TP0 pid=346602)                              aten::movedim         0.03%     265.894us         0.06%     462.935us       7.716us            60                                                           [[4, 1, 50272], [], []]  
+(Worker_TP0 pid=346602) ------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  --------------------------------------------------------------------------------  
+(Worker_TP0 pid=346602) Self CPU time total: 778.581ms
+(Worker_TP0 pid=346602) 
+(Worker_TP0 pid=346602) INFO 09-24 18:53:33 [wrapper.py:82] Profiler stopped successfully.
+(APIServer pid=346193) INFO:     127.0.0.1:45136 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:45136 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO:     127.0.0.1:45136 - "GET /metrics HTTP/1.1" 200 OK
+(APIServer pid=346193) INFO 09-24 18:53:38 [api_router.py:31] Stopping profiler...
+(APIServer pid=346193) INFO 09-24 18:53:38 [api_router.py:33] Profiler stopped.
+(APIServer pid=346193) INFO:     127.0.0.1:39004 - "POST /stop_profile HTTP/1.1" 200 OK
+(Worker_TP0 pid=346602) INFO 09-24 18:53:38 [wrapper.py:160] Shutting down profiler
+(EngineCore pid=346401) INFO 09-24 18:53:38 [core.py:1342] [shutdown] EngineCore: trigger received signal=SIGTERM
+(EngineCore pid=346401) INFO 09-24 18:53:38 [core.py:1493] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=346401) INFO 09-24 18:53:38 [core.py:1524] [shutdown] EngineCore: request processing complete; starting resource teardown
+(APIServer pid=346193) INFO 09-24 18:53:38 [launcher.py:129] [shutdown] API server: shutdown triggered
+(EngineCore pid=346401) INFO 09-24 18:53:38 [core.py:1355] [shutdown] EngineCore: exiting busy loop
+(APIServer pid=346193) INFO 09-24 18:53:38 [launcher.py:145] [shutdown] API server: stopping engine client mode=abort timeout=0s
+(EngineCore pid=346401) INFO 09-24 18:53:38 [multiproc_executor.py:472] [shutdown] Executor: waiting for worker exit count=4
+(APIServer pid=346193) INFO 09-24 18:53:38 [core_client.py:744] [shutdown] MPClient: start timeout=0s
+(APIServer pid=346193) INFO 09-24 18:53:38 [core_client.py:746] [shutdown] MPClient: stopping engine manager
+(APIServer pid=346193) INFO 09-24 18:53:38 [utils.py:632] [shutdown] Process manager: send sigterm to process EngineCore
+(APIServer pid=346193) WARNING 09-24 18:53:38 [utils.py:652] [shutdown] Process manager: force killing remaining processes count=1
+(APIServer pid=346193) WARNING 09-24 18:53:38 [utils.py:657] [shutdown] Process manager: force killing remaining process EngineCore pid 346401
+(Worker_TP0 pid=346602) INFO 09-24 18:53:39 [multiproc_executor.py:836] Parent process exited, terminating worker queues
+(APIServer pid=346193) INFO 09-24 18:53:42 [loggers.py:315] Engine 000: Avg prompt throughput: 11.1 tokens/s, Avg generation throughput: 40.9 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=346193) INFO 09-24 18:53:52 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%

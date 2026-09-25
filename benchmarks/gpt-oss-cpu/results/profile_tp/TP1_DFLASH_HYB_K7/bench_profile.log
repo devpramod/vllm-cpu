@@ -1,0 +1,66 @@
+/home/sysadmin/pramod/bench/.venv/bin/vllm bench serve --backend vllm --model gpt-oss-20b --tokenizer /home/sysadmin/pramod/bench/models/gpt-oss-20b --port 8100 --seed 0 --disable-tqdm --save-result --result-dir /home/sysadmin/pramod/bench/results/profile_tp/TP1_DFLASH_HYB_K7 --result-filename bench_profile.json --percentile-metrics ttft,tpot,itl,e2el --metric-percentiles 50,90,99 --backend openai-chat --endpoint /v1/chat/completions --skip-chat-template --temperature 0 --dataset-name hf --dataset-path openai/gsm8k --hf-split test --hf-output-len 2048 --hf-subset main --max-concurrency 1 --num-prompts 2 --hf-output-len 256
+WARNING 09-24 18:42:32 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-24 18:42:32 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-24 18:42:32 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-24 18:42:33 [argparse_utils.py:441] Found duplicate keys --hf-output-len, --backend
+Using the latest cached version of the dataset since openai/gsm8k couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'main' at /home/sysadmin/.cache/huggingface/datasets/openai___gsm8k/main/0.0.0/740312add88f781978c0658806c59bc2815b9866 (last modified on Thu Sep 24 09:35:30 2026).
+Namespace(subparser='bench', bench_type='serve', dispatch_function=<function BenchmarkServingSubcommand.cmd at 0x72ab0032c180>, trust_remote_code=False, seed=0, num_prompts=2, dataset_name='hf', no_stream=False, dataset_path='openai/gsm8k', no_oversample=False, skip_chat_template=True, enable_multimodal_chat=False, disable_shuffle=False, custom_output_len=256, custom_ensure_client_side_data=False, spec_bench_output_len=256, spec_bench_category=None, sonnet_input_len=550, sonnet_output_len=150, sonnet_prefix_len=200, sharegpt_output_len=None, timed_trace_chunk_hash_size=16, timed_trace_sec_multiplier=1, timed_trace_label_timestamp='timestamp', timed_trace_label_input_length='input_length', timed_trace_label_output_length='output_length', timed_trace_label_hash_ids='hash_ids', blazedit_min_distance=0.0, blazedit_max_distance=1.0, asr_max_audio_len_sec=inf, asr_min_audio_len_sec=0.0, random_input_len=1024, random_output_len=128, random_range_ratio='0.0', random_prefix_len=0, random_batch_size=1, no_reranker=False, random_mm_base_items_per_request=1, random_mm_num_mm_items_range_ratio=0.0, random_mm_limit_mm_per_prompt={'image': 255, 'video': 1}, random_mm_bucket_config={(256, 256, 1): 0.5, (720, 1280, 1): 0.5, (720, 1280, 16): 0.0}, hf_subset='main', hf_split='test', hf_name=None, hf_output_len=256, bfcl_categories=None, prefix_repetition_prefix_len=256, prefix_repetition_suffix_len=256, prefix_repetition_num_prefixes=10, prefix_repetition_output_len=128, speed_bench_dataset_subset='qualitative', speed_bench_output_len=4096, speed_bench_category=None, label=None, backend='openai-chat', base_url=None, host='127.0.0.1', port=8100, endpoint='/v1/chat/completions', header=None, max_concurrency=1, model='gpt-oss-20b', input_len=None, output_len=None, tokenizer='/home/sysadmin/pramod/bench/models/gpt-oss-20b', tokenizer_mode='auto', use_beam_search=False, logprobs=None, request_rate=inf, burstiness=1.0, probe_request_rate=0.0, disable_tqdm=True, num_warmups=0, profile=False, save_result=True, save_detailed=False, append_result=False, metadata=None, result_dir='/home/sysadmin/pramod/bench/results/profile_tp/TP1_DFLASH_HYB_K7', result_filename='bench_profile.json', ignore_eos=False, self_timed=None, percentile_metrics='ttft,tpot,itl,e2el', metric_percentiles='50,90,99', goodput=None, request_id_prefix='bench-f6856f87-', top_p=None, top_k=None, min_p=None, temperature=0.0, frequency_penalty=None, presence_penalty=None, repetition_penalty=None, served_model_name=None, lora_modules=None, lora_assignment='random', ramp_up_strategy=None, ramp_up_start_rps=None, ramp_up_end_rps=None, ready_check_timeout_sec=0, chat_template_kwargs=None, extra_body=None, skip_tokenizer_init=False, insecure=False, plot_timeline=False, timeline_itl_thresholds='25,50', plot_dataset_stats=False)
+Starting initial single prompt test run...
+Skipping endpoint ready check.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+tip: install termplotlib and gnuplot to plot the metrics
+============ Serving Benchmark Result ============
+Successful requests:                     2         
+Failed requests:                         0         
+Maximum request concurrency:             1         
+Benchmark duration (s):                  17.37     
+Total input tokens:                      235       
+Total generated tokens:                  473       
+Request throughput (req/s):              0.12      
+Output token throughput (tok/s):         27.23     
+Peak output token throughput (tok/s):    16.00     
+Peak concurrent requests:                2.00      
+Total token throughput (tok/s):          40.75     
+---------------Time to First Token----------------
+Mean TTFT (ms):                          158.15    
+Median TTFT (ms):                        158.15    
+P50 TTFT (ms):                           158.15    
+P90 TTFT (ms):                           159.97    
+P99 TTFT (ms):                           160.38    
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          35.23     
+Median TPOT (ms):                        35.23     
+P50 TPOT (ms):                           35.23     
+P90 TPOT (ms):                           44.72     
+P99 TPOT (ms):                           46.85     
+---------------Inter-token Latency----------------
+Mean ITL (ms):                           102.75    
+Median ITL (ms):                         65.31     
+P50 ITL (ms):                            65.31     
+P90 ITL (ms):                            68.51     
+P99 ITL (ms):                            73.46     
+----------------End-to-end Latency----------------
+Mean E2EL (ms):                          8686.29   
+Median E2EL (ms):                        8686.29   
+P50 E2EL (ms):                           8686.29   
+P90 E2EL (ms):                           11468.19  
+P99 E2EL (ms):                           12094.12  
+---------------Speculative Decoding---------------
+Acceptance rate (%):                     26.33     
+Acceptance length:                       2.84      
+Drafts:                                  166       
+Draft tokens:                            1162      
+Accepted tokens:                         306       
+Per-position acceptance (%):
+  Position 0:                            71.08     
+  Position 1:                            45.78     
+  Position 2:                            27.11     
+  Position 3:                            15.66     
+  Position 4:                            11.45     
+  Position 5:                            8.43      
+  Position 6:                            4.82      
+==================================================

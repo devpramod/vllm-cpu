@@ -1,0 +1,15 @@
+[14:27:55] start TP4_NOHYBRID: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --disable-hybrid-kv-cache-manager
+[14:28:50] TP4_NOHYBRID: ready
+[14:29:02]   TP4_NOHYBRID GSM8K accuracy check
+[14:32:29]   TP4_NOHYBRID gsm8k conc=1 prompts=8
+[14:35:27]   -> ok in 178s
+[14:35:27]   TP4_NOHYBRID gsm8k conc=8 prompts=32
+[14:37:46]   -> ok in 139s
+[14:37:46]   TP4_NOHYBRID gsm8k conc=32 prompts=128
+[14:40:34]   -> ok in 168s
+[14:40:34]   TP4_NOHYBRID sharegpt_chat conc=1 prompts=8
+[14:41:03]   -> ok in 29s
+[14:41:03]   TP4_NOHYBRID sharegpt_chat conc=8 prompts=32
+[14:41:39]   -> ok in 36s
+[14:41:39]   TP4_NOHYBRID sharegpt_chat conc=32 prompts=128
+[14:42:30]   -> ok in 51s

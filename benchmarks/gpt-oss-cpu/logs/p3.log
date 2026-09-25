@@ -1,0 +1,100 @@
+[17:11:15] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --max-num-batched-tokens 1024
+[17:12:20] TP4: ready
+[17:12:32]   TP4 rand_1k_1k conc=8 prompts=24
+[17:13:58]   -> ok in 86s
+[17:13:58]   TP4 rand_1k_1k conc=32 prompts=96
+[17:16:08]   -> ok in 130s
+[17:16:08]   TP4 sharegpt conc=8 prompts=24
+[17:16:39]   -> ok in 30s
+[17:16:39]   TP4 sharegpt conc=32 prompts=96
+[17:17:21]   -> ok in 42s
+[17:17:21] start TP2_PP3: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 2 -pp 3 --max-num-batched-tokens 1024
+[17:18:11] TP2_PP3: ready
+[17:18:26]   TP2_PP3 rand_1k_1k conc=8 prompts=24
+[17:20:18]   -> ok in 112s
+[17:20:18]   TP2_PP3 rand_1k_1k conc=32 prompts=96
+[17:23:10]   -> ok in 172s
+[17:23:10]   TP2_PP3 sharegpt conc=8 prompts=24
+[17:23:48]   -> ok in 39s
+[17:23:48]   TP2_PP3 sharegpt conc=32 prompts=96
+[17:24:44]   -> ok in 55s
+[17:25:44] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --max-num-batched-tokens 2048
+[17:26:49] TP4: ready
+[17:27:02]   TP4 rand_1k_1k conc=8 prompts=24
+[17:28:27]   -> ok in 85s
+[17:28:27]   TP4 rand_1k_1k conc=32 prompts=96
+[17:30:37]   -> ok in 129s
+[17:30:37]   TP4 sharegpt conc=8 prompts=24
+[17:31:07]   -> ok in 30s
+[17:31:07]   TP4 sharegpt conc=32 prompts=96
+[17:31:49]   -> ok in 43s
+[17:31:50] start TP2_PP3: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 2 -pp 3 --max-num-batched-tokens 2048
+[17:32:40] TP2_PP3: ready
+[17:32:55]   TP2_PP3 rand_1k_1k conc=8 prompts=24
+[17:34:46]   -> ok in 111s
+[17:34:46]   TP2_PP3 rand_1k_1k conc=32 prompts=96
+[17:37:38]   -> ok in 172s
+[17:37:38]   TP2_PP3 sharegpt conc=8 prompts=24
+[17:38:20]   -> ok in 43s
+[17:38:20]   TP2_PP3 sharegpt conc=32 prompts=96
+[17:39:16]   -> ok in 55s
+[17:39:17] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --max-num-batched-tokens 8192
+[17:40:22] TP4: ready
+[17:40:35]   TP4 rand_1k_1k conc=8 prompts=24
+[17:42:00]   -> ok in 85s
+[17:42:00]   TP4 rand_1k_1k conc=32 prompts=96
+[17:44:08]   -> ok in 129s
+[17:44:08]   TP4 sharegpt conc=8 prompts=24
+[17:44:39]   -> ok in 30s
+[17:44:39]   TP4 sharegpt conc=32 prompts=96
+[17:45:21]   -> ok in 42s
+[17:45:21] start TP2_PP3: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 2 -pp 3 --max-num-batched-tokens 8192
+[17:46:11] TP2_PP3: ready
+[17:46:27]   TP2_PP3 rand_1k_1k conc=8 prompts=24
+[17:48:40]   -> ok in 133s
+[17:48:40]   TP2_PP3 rand_1k_1k conc=32 prompts=96
+[17:51:34]   -> ok in 175s
+[17:51:34]   TP2_PP3 sharegpt conc=8 prompts=24
+[17:52:16]   -> ok in 42s
+[17:52:16]   TP2_PP3 sharegpt conc=32 prompts=96
+[17:53:14]   -> ok in 58s
+[17:53:15] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --max-num-seqs 8
+[17:54:20] TP4: ready
+[17:54:33]   TP4 rand_1k_1k conc=8 prompts=24
+[17:55:57]   -> ok in 85s
+[17:55:57]   TP4 rand_1k_1k conc=32 prompts=96
+[18:01:13]   -> ok in 315s
+[18:01:13]   TP4 sharegpt conc=8 prompts=24
+[18:01:43]   -> ok in 31s
+[18:01:43]   TP4 sharegpt conc=32 prompts=96
+[18:03:01]   -> ok in 78s
+[18:03:02] start TP2_PP3: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 2 -pp 3 --max-num-seqs 8
+[18:03:52] TP2_PP3: ready
+[18:04:08]   TP2_PP3 rand_1k_1k conc=8 prompts=24
+[18:05:57]   -> ok in 109s
+[18:05:57]   TP2_PP3 rand_1k_1k conc=32 prompts=96
+[18:12:52]   -> ok in 415s
+[18:12:52]   TP2_PP3 sharegpt conc=8 prompts=24
+[18:13:31]   -> ok in 39s
+[18:13:31]   TP2_PP3 sharegpt conc=32 prompts=96
+[18:15:32]   -> ok in 121s
+[18:15:33] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --max-num-seqs 16
+[18:16:38] TP4: ready
+[18:16:51]   TP4 rand_1k_1k conc=8 prompts=24
+[18:18:16]   -> ok in 85s
+[18:18:16]   TP4 rand_1k_1k conc=32 prompts=96
+[18:21:37]   -> ok in 201s
+[18:21:37]   TP4 sharegpt conc=8 prompts=24
+[18:22:07]   -> ok in 30s
+[18:22:07]   TP4 sharegpt conc=32 prompts=96
+[18:23:02]   -> ok in 54s
+[18:23:02] start TP2_PP3: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 2 -pp 3 --max-num-seqs 16
+[18:23:52] TP2_PP3: ready
+[18:24:08]   TP2_PP3 rand_1k_1k conc=8 prompts=24
+[18:25:56]   -> ok in 108s
+[18:25:56]   TP2_PP3 rand_1k_1k conc=32 prompts=96
+[18:30:20]   -> ok in 264s
+[18:30:20]   TP2_PP3 sharegpt conc=8 prompts=24
+[18:30:59]   -> ok in 39s
+[18:30:59]   TP2_PP3 sharegpt conc=32 prompts=96
+[18:32:25]   -> ok in 86s

@@ -1,0 +1,70 @@
+[15:47:33] start TP4_DFLASH_HYB_K3: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 3}
+[15:48:38] TP4_DFLASH_HYB_K3: ready
+[15:48:59]   TP4_DFLASH_HYB_K3 gsm8k conc=1 prompts=8
+[15:49:41]   -> ok in 43s
+[15:49:41]   TP4_DFLASH_HYB_K3 gsm8k conc=4 prompts=16
+[15:50:20]   -> ok in 39s
+[15:50:20]   TP4_DFLASH_HYB_K3 gsm8k conc=16 prompts=64
+[15:51:15]   -> ok in 55s
+[15:51:15]   TP4_DFLASH_HYB_K3 gsm8k conc=32 prompts=128
+[15:52:19]   -> ok in 64s
+[15:52:19]   TP4_DFLASH_HYB_K3 sharegpt_chat conc=1 prompts=8
+[15:52:54]   -> ok in 34s
+[15:52:54]   TP4_DFLASH_HYB_K3 sharegpt_chat conc=4 prompts=16
+[15:53:20]   -> ok in 26s
+[15:53:20]   TP4_DFLASH_HYB_K3 sharegpt_chat conc=16 prompts=64
+[15:53:57]   -> ok in 37s
+[15:53:57]   TP4_DFLASH_HYB_K3 sharegpt_chat conc=32 prompts=128
+[15:54:48]   -> ok in 51s
+[15:55:48] start TP4_DFLASH_HYB_K4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 4}
+[15:56:54] TP4_DFLASH_HYB_K4: ready
+[15:57:10]   TP4_DFLASH_HYB_K4 gsm8k conc=1 prompts=8
+[15:57:46]   -> ok in 36s
+[15:57:46]   TP4_DFLASH_HYB_K4 gsm8k conc=4 prompts=16
+[15:58:19]   -> ok in 33s
+[15:58:19]   TP4_DFLASH_HYB_K4 gsm8k conc=16 prompts=64
+[15:59:02]   -> ok in 43s
+[15:59:02]   TP4_DFLASH_HYB_K4 gsm8k conc=32 prompts=128
+[16:00:10]   -> ok in 68s
+[16:00:10]   TP4_DFLASH_HYB_K4 sharegpt_chat conc=1 prompts=8
+[16:00:43]   -> ok in 33s
+[16:00:43]   TP4_DFLASH_HYB_K4 sharegpt_chat conc=4 prompts=16
+[16:01:08]   -> ok in 25s
+[16:01:08]   TP4_DFLASH_HYB_K4 sharegpt_chat conc=16 prompts=64
+[16:01:46]   -> ok in 38s
+[16:01:46]   TP4_DFLASH_HYB_K4 sharegpt_chat conc=32 prompts=128
+[16:02:40]   -> ok in 54s
+[16:03:40] start TP4_DFLASH_HYB_K5: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 5}
+[16:04:45] TP4_DFLASH_HYB_K5: ready
+[16:05:02]   TP4_DFLASH_HYB_K5 gsm8k conc=1 prompts=8
+[16:05:42]   -> ok in 41s
+[16:05:42]   TP4_DFLASH_HYB_K5 gsm8k conc=4 prompts=16
+[16:06:22]   -> ok in 39s
+[16:06:22]   TP4_DFLASH_HYB_K5 gsm8k conc=16 prompts=64
+[16:07:19]   -> ok in 58s
+[16:07:19]   TP4_DFLASH_HYB_K5 gsm8k conc=32 prompts=128
+[16:08:27]   -> ok in 68s
+[16:08:27]   TP4_DFLASH_HYB_K5 sharegpt_chat conc=1 prompts=8
+[16:09:02]   -> ok in 34s
+[16:09:02]   TP4_DFLASH_HYB_K5 sharegpt_chat conc=4 prompts=16
+[16:09:27]   -> ok in 25s
+[16:09:27]   TP4_DFLASH_HYB_K5 sharegpt_chat conc=16 prompts=64
+[16:10:06]   -> ok in 39s
+[16:10:06]   TP4_DFLASH_HYB_K5 sharegpt_chat conc=32 prompts=128
+[16:11:03]   -> ok in 57s
+[16:11:03] start TP4_DFLASH_HYB_K7: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 --no-enable-prefix-caching -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 7}
+[16:12:08] TP4_DFLASH_HYB_K7: ready
+[16:12:25]   TP4_DFLASH_HYB_K7 gsm8k conc=4 prompts=16
+[16:13:00]   -> ok in 36s
+[16:13:00]   TP4_DFLASH_HYB_K7 gsm8k conc=16 prompts=64
+[16:13:58]   -> ok in 58s
+[16:13:58]   TP4_DFLASH_HYB_K7 gsm8k conc=32 prompts=128
+[16:15:12]   -> ok in 74s
+[16:15:12]   TP4_DFLASH_HYB_K7 sharegpt_chat conc=1 prompts=8
+[16:15:45]   -> ok in 33s
+[16:15:45]   TP4_DFLASH_HYB_K7 sharegpt_chat conc=4 prompts=16
+[16:16:11]   -> ok in 26s
+[16:16:11]   TP4_DFLASH_HYB_K7 sharegpt_chat conc=16 prompts=64
+[16:16:53]   -> ok in 42s
+[16:16:53]   TP4_DFLASH_HYB_K7 sharegpt_chat conc=32 prompts=128
+[16:17:55]   -> ok in 62s
