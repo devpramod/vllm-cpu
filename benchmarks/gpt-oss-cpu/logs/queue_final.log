@@ -142,3 +142,9 @@
 [10:23:03]   TP4 humaneval conc=4 prompts=16
 [10:24:36]   -> ok in 93s
 [10:24:36]   TP4 humaneval conc=8 prompts=32
+[10:26:30]   -> ok in 114s
+[10:26:30]   TP4 humaneval conc=16 prompts=64
+[10:28:46]   -> ok in 137s
+[10:28:46]   TP4 humaneval conc=32 prompts=128
+[10:31:20]   -> ok in 154s
+[10:31:20]   TP4 mtbench conc=1 prompts=16
