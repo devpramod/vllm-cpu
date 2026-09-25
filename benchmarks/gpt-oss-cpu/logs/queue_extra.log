@@ -17,3 +17,16 @@
 [16:55:43]   TP1x6 cache_aware multiturn conc=64
 [16:57:35]   -> ok in 112s
 [16:57:35]   TP1x6 cache_aware multiturn conc=128
+[17:00:00]   -> ok in 145s
+[17:00:01]   TP1x6 round_robin multiturn conc=64
+[17:01:41]   -> ok in 100s
+[17:01:41]   TP1x6 round_robin multiturn conc=128
+[17:04:06]   -> ok in 145s
+[17:06:18] start layout TP2x3
+[17:06:18]   replica 0: TP2 on nodes [0, 1], port 8200
+[17:06:18]   replica 1: TP2 on nodes [3, 4], port 8201
+[17:06:18]   replica 2: TP2 on nodes [2, 5], port 8202
+[17:07:22] TP2x3: 3 replicas ready
+[17:07:23]   TP2x3 cache_aware rand_128_1k conc=64
+[17:09:06]   -> ok in 103s
+[17:09:06]   TP2x3 cache_aware rand_128_1k conc=128
