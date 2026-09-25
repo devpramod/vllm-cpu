@@ -1,0 +1,82 @@
+/home/sysadmin/pramod/bench/.venv/bin/python benchmark_serving_multi_turn.py -i /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json -m /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b -u http://localhost:8100 -p 1 -k 2 -n 32 --seed 0 --request-timeout-sec 900 --no-early-stop --stats-json-output /home/sysadmin/pramod/bench/results/p7/TP1x6/cache_aware/multiturn_c1.json
+25-09-2026 13:01:01 [INFO] - Namespace(input_file='/home/sysadmin/pramod/bench/data/sharegpt_multiturn.json', output_file=None, seed=0, model='/home/sysadmin/pramod/bench/models/gpt-oss-20b', served_model_name='gpt-oss-20b', url='http://localhost:8100', api_key=None, header=None, num_clients=1, max_active_conversations=2, max_num_requests=32, warmup_step=False, max_turns=None, no_early_stop=True, limit_max_tokens=0, limit_min_tokens=0, request_rate=0, max_retries=0, conversation_sampling=<ConversationSampling.ROUND_ROBIN: 'round_robin'>, verify_output=False, request_timeout_sec=900, no_stream=False, send_conversation_id=False, excel_output=False, stats_json_output='/home/sysadmin/pramod/bench/results/p7/TP1x6/cache_aware/multiturn_c1.json', verbose=False, print_content=False, warmup_percentages='0%', trust_remote_code=False)
+25-09-2026 13:01:01 [INFO] - [92mInput parameters:[0m
+25-09-2026 13:01:01 [INFO] - url=http://localhost:8100
+25-09-2026 13:01:01 [INFO] - model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+25-09-2026 13:01:01 [INFO] - num_clients=1
+25-09-2026 13:01:01 [INFO] - Warmup percentages (percentage of samples): [0.0]
+25-09-2026 13:01:01 [INFO] - Loading tokenizer
+25-09-2026 13:01:03 [INFO] - [94mCollecting information from server: http://localhost:8100[0m
+25-09-2026 13:01:03 [INFO] - [94mServer version: {"version":"0.30.0"}[0m
+25-09-2026 13:01:03 [INFO] - [94mModels:[0m
+25-09-2026 13:01:03 [INFO] - [94m	model_id='gpt-oss-20b', max_model_len=4096[0m
+25-09-2026 13:01:03 [INFO] - Reading input file: /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json
+25-09-2026 13:01:03 [INFO] - Found 1000 items in the input file
+25-09-2026 13:01:03 [INFO] - Using 1000 unique conversations (IDs)
+25-09-2026 13:01:03 [INFO] - [92mStarting 1 clients[0m
+----------------------------------------------------------------------------------------------------
+[93mConversations statistics:[0m
+----------------------------------------------------------------------------------------------------
+            count  mean       std  min  25%  ...  90%  99%  99.9%  99.99%  max
+num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
+
+[1 rows x 12 columns]
+----------------------------------------------------------------------------------------------------
+25-09-2026 13:01:03 [INFO] - [96mStarted client 0: max_num_requests=32, max_active_conversations=2[0m
+25-09-2026 13:02:43 [INFO] - [96mFinished 3 out of 1000 conversations (0%), 0 out of 1 clients finished, collected 15 measurements, runtime 100.006 sec[0m
+25-09-2026 13:02:43 [INFO] - [96mEstimated req/sec 0.15, estimated runtime left N/A sec[0m
+25-09-2026 13:02:43 [INFO] - --------------------------------------------------
+25-09-2026 13:02:43 [INFO] - [moving_avg_ttft_ms       ] avg:    286.207 (15 samples)
+25-09-2026 13:02:43 [INFO] - [moving_avg_tpot_ms       ] avg:     23.072 (15 samples)
+25-09-2026 13:02:43 [INFO] - [ttft_ms                  ] avg:    286.207, min:    189.184, max:    419.978
+25-09-2026 13:02:43 [INFO] - [tpot_ms                  ] avg:     23.072, min:     22.864, max:     23.548
+25-09-2026 13:02:43 [INFO] - [latency_ms               ] avg:   6652.932, min:    746.125, max:  17693.815
+25-09-2026 13:02:43 [INFO] - [input_num_turns          ] avg:      3.800, min:      1.000, max:      7.000
+25-09-2026 13:02:43 [INFO] - [input_num_tokens         ] avg:    424.067, min:     12.000, max:   1282.000
+25-09-2026 13:02:43 [INFO] - [output_num_tokens        ] avg:    276.533, min:     22.000, max:    762.000
+25-09-2026 13:02:43 [INFO] - --------------------------------------------------
+25-09-2026 13:03:57 [INFO] - [96mFinished 6 out of 1000 conversations (1%), 0 out of 1 clients finished, collected 25 measurements, runtime 174.698 sec[0m
+25-09-2026 13:03:57 [INFO] - [96mEstimated req/sec 0.143, estimated runtime left N/A sec[0m
+25-09-2026 13:03:57 [INFO] - --------------------------------------------------
+25-09-2026 13:03:57 [INFO] - [moving_avg_ttft_ms       ] avg:    312.431 (15 samples)
+25-09-2026 13:03:57 [INFO] - [moving_avg_tpot_ms       ] avg:     23.137 (15 samples)
+25-09-2026 13:03:57 [INFO] - [ttft_ms                  ] avg:    288.370, min:    180.981, max:    419.978
+25-09-2026 13:03:57 [INFO] - [tpot_ms                  ] avg:     23.092, min:     22.848, max:     23.707
+25-09-2026 13:03:57 [INFO] - [latency_ms               ] avg:   6976.169, min:    504.882, max:  17693.815
+25-09-2026 13:03:57 [INFO] - [input_num_turns          ] avg:      3.880, min:      1.000, max:      7.000
+25-09-2026 13:03:57 [INFO] - [input_num_tokens         ] avg:    480.240, min:      9.000, max:   1462.000
+25-09-2026 13:03:57 [INFO] - [output_num_tokens        ] avg:    290.120, min:     15.000, max:    762.000
+25-09-2026 13:03:57 [INFO] - --------------------------------------------------
+25-09-2026 13:04:11 [INFO] - [93mClient 0 reached request limit[0m
+25-09-2026 13:04:11 [INFO] - [96mClient 0 is done (num_successes=32, num_failures=0)[0m
+25-09-2026 13:04:11 [INFO] - [96m1 out of 1 clients finished[0m
+25-09-2026 13:04:11 [INFO] - [96mAll 1 clients finished[0m
+25-09-2026 13:04:11 [INFO] - Collected 32 samples from all the clients
+25-09-2026 13:04:11 [INFO] - [96mWaiting for client client_0 (is alive: True)[0m
+25-09-2026 13:04:11 [INFO] - All 1 clients exited (successfully finished 7 out of 1000 conversations)
+25-09-2026 13:04:11 [INFO] - [92mAll clients finished, benchmark runtime: 188.463 sec (188463.103 ms), requests per second: 0.170[0m
+25-09-2026 13:04:11 [INFO] - Processing 32 samples...
+25-09-2026 13:04:11 [INFO] - [92mWriting per-request stats JSON: /home/sysadmin/pramod/bench/results/p7/TP1x6/cache_aware/multiturn_c1.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+num_clients=1
+num_conversations=1000
+active_conversations=2
+seed=0
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 188.366
+requests_per_sec = 0.170
+----------------------------------------------------------------------------------------------------
+                   count     mean      std  ...       75%       90%       max
+ttft_ms             32.0   272.38    77.24  ...    339.53    383.93    419.98
+tpot_ms             32.0    23.07     0.22  ...     23.16     23.34     23.71
+latency_ms          32.0  5878.63  4705.19  ...  10623.97  11537.13  17693.81
+input_num_turns     32.0     3.81     2.26  ...      5.00      7.00      7.00
+input_num_tokens    32.0   405.25   411.94  ...    681.25    891.00   1462.00
+output_num_tokens   32.0   243.47   202.26  ...    444.50    485.30    762.00
+output_num_chunks   32.0   242.22   201.97  ...    444.25    484.30    761.00
+
+[7 rows x 9 columns]
+----------------------------------------------------------------------------------------------------
