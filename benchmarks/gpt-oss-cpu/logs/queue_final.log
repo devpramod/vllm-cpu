@@ -191,3 +191,11 @@
 [11:08:13]   TP4_DFLASH_HYB_K7 mtbench conc=2 prompts=16
 [11:09:57]   -> ok in 104s
 [11:09:57]   TP4_DFLASH_HYB_K7 mtbench conc=4 prompts=16
+[11:11:08]   -> ok in 70s
+[11:11:08]   TP4_DFLASH_HYB_K7 mtbench conc=8 prompts=32
+[11:12:38]   -> ok in 91s
+[11:12:38]   TP4_DFLASH_HYB_K7 mtbench conc=16 prompts=64
+[11:14:49]   -> ok in 130s
+[11:14:49]   TP4_DFLASH_HYB_K7 mtbench conc=32 prompts=80
+[11:16:57]   -> ok in 128s
+QUEUE DONE 11:16:57
