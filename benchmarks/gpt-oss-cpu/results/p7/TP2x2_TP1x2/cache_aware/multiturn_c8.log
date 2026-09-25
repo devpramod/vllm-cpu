@@ -75,3 +75,55 @@ num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
 25-09-2026 14:58:40 [INFO] - [93mClient 2 reached request limit[0m
 25-09-2026 14:58:40 [INFO] - [96mClient 2 is done (num_successes=8, num_failures=0)[0m
 25-09-2026 14:58:40 [INFO] - [96m7 out of 8 clients finished[0m
+25-09-2026 14:58:48 [INFO] - [93mClient 6 reached request limit[0m
+25-09-2026 14:58:48 [INFO] - [96mFinished 9 out of 1000 conversations (1%), 7 out of 8 clients finished, collected 63 measurements, runtime 68.240 sec[0m
+25-09-2026 14:58:48 [INFO] - [96mEstimated req/sec 0.923, estimated runtime left N/A sec[0m
+25-09-2026 14:58:48 [INFO] - --------------------------------------------------
+25-09-2026 14:58:48 [INFO] - [moving_avg_ttft_ms       ] avg:    242.392 (63 samples)
+25-09-2026 14:58:48 [INFO] - [moving_avg_tpot_ms       ] avg:     23.084 (63 samples)
+25-09-2026 14:58:48 [INFO] - [ttft_ms                  ] avg:    242.392, min:    128.218, max:    621.100
+25-09-2026 14:58:48 [INFO] - [tpot_ms                  ] avg:     23.084, min:     15.327, max:     34.372
+25-09-2026 14:58:48 [INFO] - [latency_ms               ] avg:   5331.946, min:    476.267, max:  13685.730
+25-09-2026 14:58:48 [INFO] - [input_num_turns          ] avg:      3.063, min:      1.000, max:      7.000
+25-09-2026 14:58:48 [INFO] - [input_num_tokens         ] avg:    339.587, min:      4.000, max:   1889.000
+25-09-2026 14:58:48 [INFO] - [output_num_tokens        ] avg:    222.937, min:     15.000, max:    497.000
+25-09-2026 14:58:48 [INFO] - --------------------------------------------------
+25-09-2026 14:58:48 [INFO] - [96mClient 6 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 14:58:48 [INFO] - [96m8 out of 8 clients finished[0m
+25-09-2026 14:58:48 [INFO] - [96mAll 8 clients finished[0m
+25-09-2026 14:58:48 [INFO] - Collected 64 samples from all the clients
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_0 (is alive: False)[0m
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_1 (is alive: False)[0m
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_2 (is alive: False)[0m
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_3 (is alive: False)[0m
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_4 (is alive: False)[0m
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_5 (is alive: False)[0m
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_6 (is alive: True)[0m
+25-09-2026 14:58:48 [INFO] - [96mWaiting for client client_7 (is alive: False)[0m
+25-09-2026 14:58:48 [INFO] - All 8 clients exited (successfully finished 9 out of 1000 conversations)
+25-09-2026 14:58:48 [INFO] - [92mAll clients finished, benchmark runtime: 68.270 sec (68269.703 ms), requests per second: 0.937[0m
+25-09-2026 14:58:48 [INFO] - Processing 64 samples...
+25-09-2026 14:58:48 [INFO] - [92mWriting per-request stats JSON: /home/sysadmin/pramod/bench/results/p7/TP2x2_TP1x2/cache_aware/multiturn_c8.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+num_clients=8
+num_conversations=1000
+active_conversations=16
+seed=0
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 68.137
+requests_per_sec = 0.939
+----------------------------------------------------------------------------------------------------
+                   count     mean      std  ...      75%       90%       max
+ttft_ms             64.0   245.78   109.93  ...   274.29    399.78    621.10
+tpot_ms             64.0    22.99     5.74  ...    24.16     33.23     34.37
+latency_ms          64.0  5272.42  3646.81  ...  7481.38  11178.86  13685.73
+input_num_turns     64.0     3.12     2.01  ...     5.00      5.00      7.00
+input_num_tokens    64.0   361.08   433.47  ...   495.00    835.30   1889.00
+output_num_tokens   64.0   220.44   144.21  ...   340.50    433.50    497.00
+output_num_chunks   64.0   219.58   144.29  ...   339.50    432.50    496.00
+
+[7 rows x 9 columns]
+----------------------------------------------------------------------------------------------------

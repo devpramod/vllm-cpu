@@ -196,3 +196,15 @@
 [14:56:37]   TP2x2_TP1x2 cache_aware multiturn conc=4
 [14:57:35]   -> ok in 58s
 [14:57:35]   TP2x2_TP1x2 cache_aware multiturn conc=8
+[14:58:49]   -> ok in 73s
+[14:58:49]   TP2x2_TP1x2 cache_aware multiturn conc=16
+[15:00:28]   -> ok in 99s
+[15:00:28]   TP2x2_TP1x2 cache_aware multiturn conc=32
+[15:02:40]   -> ok in 132s
+[15:02:41]   TP2x2_TP1x2 round_robin multiturn conc=1
+[15:05:24]   -> ok in 163s
+[15:05:24]   TP2x2_TP1x2 round_robin multiturn conc=2
+[15:06:48]   -> ok in 84s
+[15:06:48]   TP2x2_TP1x2 round_robin multiturn conc=4
+[15:07:54]   -> ok in 66s
+[15:07:54]   TP2x2_TP1x2 round_robin multiturn conc=8
