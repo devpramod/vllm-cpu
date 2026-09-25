@@ -11,3 +11,11 @@
 [12:43:47]   TP1x6 cache_aware rand_128_1k conc=2
 [12:46:02]   -> ok in 135s
 [12:46:02]   TP1x6 cache_aware rand_128_1k conc=4
+[12:48:21]   -> ok in 139s
+[12:48:21]   TP1x6 cache_aware rand_128_1k conc=8
+[12:51:09]   -> ok in 168s
+[12:51:09]   TP1x6 cache_aware rand_128_1k conc=16
+[12:54:10]   -> ok in 181s
+[12:54:10]   TP1x6 cache_aware rand_128_1k conc=32
+[12:57:44]   -> ok in 214s
+[12:57:44]   TP1x6 cache_aware rand_1k_128 conc=1
