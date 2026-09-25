@@ -150,3 +150,19 @@
 [14:25:22]   TP2x2 round_robin multiturn conc=1
 [14:27:35]   -> ok in 133s
 [14:27:35]   TP2x2 round_robin multiturn conc=2
+[14:28:48]   -> ok in 73s
+[14:28:48]   TP2x2 round_robin multiturn conc=4
+[14:29:44]   -> ok in 56s
+[14:29:44]   TP2x2 round_robin multiturn conc=8
+[14:30:53]   -> ok in 69s
+[14:30:53]   TP2x2 round_robin multiturn conc=16
+[14:32:27]   -> ok in 94s
+[14:32:28]   TP2x2 round_robin multiturn conc=32
+[14:34:33]   -> ok in 126s
+[14:35:44] start layout TP2x2_TP1x2
+[14:35:44]   replica 0: TP2 on nodes [0, 1], port 8200
+[14:35:44]   replica 1: TP2 on nodes [3, 4], port 8201
+[14:35:44]   replica 2: TP1 on nodes [2], port 8202
+[14:35:44]   replica 3: TP1 on nodes [5], port 8203
+[14:36:50] TP2x2_TP1x2: 4 replicas ready
+[14:36:51]   TP2x2_TP1x2 cache_aware rand_128_1k conc=1

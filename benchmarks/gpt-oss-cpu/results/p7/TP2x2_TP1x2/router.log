@@ -1,0 +1,28 @@
+/home/sysadmin/pramod/bench/.venv/bin/vllm-router --host 127.0.0.1 --port 8100 --policy cache_aware --worker-urls http://127.0.0.1:8200 http://127.0.0.1:8201 http://127.0.0.1:8202 http://127.0.0.1:8203
+DEBUG: Server startup function called
+DEBUG: Initializing logging
+DEBUG: Logging initialized
+DEBUG: Initializing Prometheus metrics
+DEBUG: Prometheus metrics initialized
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m847:[0m Starting router on 127.0.0.1:8100 | mode: Regular { worker_urls: ["http://127.0.0.1:8200", "http://127.0.0.1:8201", "http://127.0.0.1:8202", "http://127.0.0.1:8203"] } | policy: CacheAware { cache_threshold: 0.3, balance_abs_threshold: 64, balance_rel_threshold: 1.5, eviction_interval_secs: 120, max_tree_size: 67108864 } | kv_connector: Nixl | max_payload: 512MB
+DEBUG: Creating HTTP client
+DEBUG: HTTP client created
+DEBUG: Creating AppContext
+DEBUG: AppContext created
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m945:[0m Single router mode (enable_igw=false)
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::routers::http::router[0m[2m:[0m [2msrc/routers/http/router.rs[0m[2m:[0m[2m251:[0m Waiting for 4 unique hosts (representing 4 workers) to become healthy (timeout: 600s)
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::routers::http::router[0m[2m:[0m [2msrc/routers/http/router.rs[0m[2m:[0m[2m321:[0m 4 out of 4 unique hosts are healthy (representing 4 workers)
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::registry[0m[2m:[0m [2msrc/policies/registry.rs[0m[2m:[0m[2m83:[0m Assigning policy cache_aware to new model unknown
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m423:[0m Initializing workers for cache-aware policy: http://127.0.0.1:8200
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m442:[0m Creating tree for model key: 'default' with 1 workers
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m423:[0m Initializing workers for cache-aware policy: http://127.0.0.1:8201
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m442:[0m Creating tree for model key: 'default' with 1 workers
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m423:[0m Initializing workers for cache-aware policy: http://127.0.0.1:8202
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m442:[0m Creating tree for model key: 'default' with 1 workers
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m423:[0m Initializing workers for cache-aware policy: http://127.0.0.1:8203
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::policies::cache_aware[0m[2m:[0m [2msrc/policies/cache_aware.rs[0m[2m:[0m[2m442:[0m Creating tree for model key: 'default' with 1 workers
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m957:[0m Started health checker for workers with 60s interval
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m972:[0m Started request queue with size: 100, timeout: 60s
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1008:[0m Router ready | workers: ["http://127.0.0.1:8201", "http://127.0.0.1:8200", "http://127.0.0.1:8203", "http://127.0.0.1:8202"]
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1037:[0m Starting server on 127.0.0.1:8100
+[2m2026-09-25 20:36:50[0m [32m INFO[0m [2mvllm_router_rs::middleware[0m[2m:[0m [2msrc/middleware.rs[0m[2m:[0m[2m421:[0m Starting concurrency queue processor

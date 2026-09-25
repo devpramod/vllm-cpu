@@ -36,3 +36,52 @@ num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
 25-09-2026 14:28:23 [INFO] - [input_num_tokens         ] avg:    380.389, min:     11.000, max:   1462.000
 25-09-2026 14:28:23 [INFO] - [output_num_tokens        ] avg:    268.000, min:     22.000, max:    762.000
 25-09-2026 14:28:23 [INFO] - --------------------------------------------------
+25-09-2026 14:28:44 [INFO] - [93mClient 1 reached request limit[0m
+25-09-2026 14:28:44 [INFO] - [96mClient 1 is done (num_successes=16, num_failures=0)[0m
+25-09-2026 14:28:44 [INFO] - [96m1 out of 2 clients finished[0m
+25-09-2026 14:28:45 [INFO] - [96mFinished 6 out of 1000 conversations (1%), 1 out of 2 clients finished, collected 31 measurements, runtime 65.615 sec[0m
+25-09-2026 14:28:45 [INFO] - [96mEstimated req/sec 0.472, estimated runtime left N/A sec[0m
+25-09-2026 14:28:45 [INFO] - --------------------------------------------------
+25-09-2026 14:28:45 [INFO] - [moving_avg_ttft_ms       ] avg:    191.559 (30 samples)
+25-09-2026 14:28:45 [INFO] - [moving_avg_tpot_ms       ] avg:     17.068 (30 samples)
+25-09-2026 14:28:45 [INFO] - [ttft_ms                  ] avg:    189.729, min:    114.960, max:    331.489
+25-09-2026 14:28:45 [INFO] - [tpot_ms                  ] avg:     17.028, min:     15.401, max:     23.228
+25-09-2026 14:28:45 [INFO] - [latency_ms               ] avg:   4184.037, min:    337.978, max:  13881.199
+25-09-2026 14:28:45 [INFO] - [input_num_turns          ] avg:      3.710, min:      1.000, max:      7.000
+25-09-2026 14:28:45 [INFO] - [input_num_tokens         ] avg:    392.710, min:      9.000, max:   1462.000
+25-09-2026 14:28:45 [INFO] - [output_num_tokens        ] avg:    236.871, min:     14.000, max:    762.000
+25-09-2026 14:28:45 [INFO] - --------------------------------------------------
+25-09-2026 14:28:47 [INFO] - [93mClient 0 reached request limit[0m
+25-09-2026 14:28:47 [INFO] - [96mClient 0 is done (num_successes=16, num_failures=0)[0m
+25-09-2026 14:28:47 [INFO] - [96m2 out of 2 clients finished[0m
+25-09-2026 14:28:47 [INFO] - [96mAll 2 clients finished[0m
+25-09-2026 14:28:47 [INFO] - Collected 32 samples from all the clients
+25-09-2026 14:28:47 [INFO] - [96mWaiting for client client_0 (is alive: True)[0m
+25-09-2026 14:28:47 [INFO] - [96mWaiting for client client_1 (is alive: False)[0m
+25-09-2026 14:28:47 [INFO] - All 2 clients exited (successfully finished 6 out of 1000 conversations)
+25-09-2026 14:28:47 [INFO] - [92mAll clients finished, benchmark runtime: 67.881 sec (67881.130 ms), requests per second: 0.471[0m
+25-09-2026 14:28:47 [INFO] - Processing 32 samples...
+25-09-2026 14:28:47 [INFO] - [92mWriting per-request stats JSON: /home/sysadmin/pramod/bench/results/p7/TP2x2/round_robin/multiturn_c2.json[0m
+----------------------------------------------------------------------------------------------------
+[93mParameters:[0m
+model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+num_clients=2
+num_conversations=1000
+active_conversations=4
+seed=0
+----------------------------------------------------------------------------------------------------
+[93mStatistics summary:[0m
+runtime_sec = 67.746
+requests_per_sec = 0.472
+----------------------------------------------------------------------------------------------------
+                   count     mean      std  ...      75%      90%       max
+ttft_ms             32.0   187.67    61.92  ...   235.47   281.14    331.49
+tpot_ms             32.0    17.01     1.99  ...    18.01    20.22     23.23
+latency_ms          32.0  4122.00  3490.49  ...  6955.37  8741.42  13881.20
+input_num_turns     32.0     3.62     2.24  ...     5.00     7.00      7.00
+input_num_tokens    32.0   380.69   411.44  ...   539.25   891.00   1462.00
+output_num_tokens   32.0   233.47   199.84  ...   397.25   479.30    762.00
+output_num_chunks   32.0   232.53   199.86  ...   396.50   478.30    761.00
+
+[7 rows x 9 columns]
+----------------------------------------------------------------------------------------------------
