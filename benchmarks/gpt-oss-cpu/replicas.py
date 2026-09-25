@@ -74,7 +74,13 @@ def killpg(proc) -> None:
         pass
 
 
-def start_replicas(layout: str, out: Path) -> list[tuple[subprocess.Popen, int]]:
+def num_prompts(c: int, per_user: int) -> int:
+    """Fewer prompts per user above 32 users to bound run time."""
+    return per_user * c if c <= 32 else per_user * c // 2
+
+
+def start_replicas(layout: str, out: Path,
+                   extra: list[str]) -> list[tuple[subprocess.Popen, int]]:
     reps = []
     for i, (tp, nodes) in enumerate(LAYOUTS[layout]):
         port = BASE_PORT + i
@@ -82,7 +88,7 @@ def start_replicas(layout: str, out: Path) -> list[tuple[subprocess.Popen, int]]
             raise RuntimeError(f"port {port} already in use")
         cmd = [S.VLLM, "serve", str(S.MODEL), "--served-model-name",
                S.SERVED_NAME, "--port", str(port), *S.BASE_SERVE_ARGS,
-               "-tp", str(tp)]
+               "-tp", str(tp), *extra]
         env = S.server_env(f"TP{tp}", len(nodes))
         env["CPU_VISIBLE_MEMORY_NODES"] = ",".join(map(str, nodes))
         logf = out / f"replica{i}_tp{tp}_n{'-'.join(map(str, nodes))}.log"
@@ -137,7 +143,7 @@ def warmup(ports: list[int]) -> None:
 
 
 def run_multiturn(c: int, out_json: Path, logf: Path, timeout: int) -> bool:
-    n = max(32, 8 * c)
+    n = max(32, num_prompts(c, 8))
     cmd = [str(S.VENV / "bin/python"), "benchmark_serving_multi_turn.py",
            "-i", str(MT_DATA), "-m", str(S.MODEL),
            "--served-model-name", S.SERVED_NAME,
@@ -167,6 +173,8 @@ def main() -> None:
     ap.add_argument("--workloads", nargs="*", default=list(PLAN))
     ap.add_argument("--concurrency", nargs="*", type=int, default=CONCS)
     ap.add_argument("--tag", default="")
+    ap.add_argument("--serve-args", default="",
+                    help="extra serve args appended to every replica")
     ap.add_argument("--point-timeout", type=int, default=2400)
     a = ap.parse_args()
     signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
@@ -191,7 +199,7 @@ def main() -> None:
         log(f"start layout {layout}")
         reps = []
         try:
-            reps = start_replicas(layout, ldir)
+            reps = start_replicas(layout, ldir, a.serve_args.split())
             ports = [p for _, p in reps]
             warmup(ports)
             log(f"{layout}: {len(ports)} replicas ready")
@@ -214,7 +222,7 @@ def main() -> None:
                                                  pdir / f"{w}_c{c}.log",
                                                  a.point_timeout)
                         else:
-                            n = max(8, 4 * c)
+                            n = max(8, num_prompts(c, 4))
                             done = S.run_bench(
                                 S.WORKLOADS[w] + [
                                     "--max-concurrency", str(c),
