@@ -143,7 +143,7 @@ def run_multiturn(c: int, out_json: Path, logf: Path, timeout: int) -> bool:
            "--served-model-name", S.SERVED_NAME,
            "-u", f"http://localhost:{S.PORT}", "-p", str(c),
            "-k", str(2 * c), "-n", str(n), "--seed", "0",
-           "--request-timeout-sec", "900",
+           "--request-timeout-sec", "900", "--no-early-stop",
            "--stats-json-output", str(out_json)]
     with open(logf, "w") as fh:
         fh.write(" ".join(cmd) + "\n")

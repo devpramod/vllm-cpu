@@ -559,8 +559,10 @@ async def send_turn(
             if orig_content != output_content:
                 raise ValueError(debug_info)
 
-        # Update the answer
-        conversation_messages[answer_index]["content"] = output_content
+        # Keep the dataset answer as context: gpt-oss replies under a short
+        # max_tokens are mostly reasoning, which the chat template drops.
+        if os.environ.get("MT_USE_SERVER_ANSWERS") == "1":
+            conversation_messages[answer_index]["content"] = output_content
     else:
         # A user prompt that has no answer, add the answer as a new message
         new_answer = {"role": "assistant", "content": output_content}
@@ -1104,14 +1106,11 @@ async def main_mp(
         # or if an error occurred in one of the clients.
         logger.debug(f"Discarding {unfinished_tasks} unfinished tasks")
 
-    task_queue.close()
-    task_queue.join_thread()
-
-    result_queue.close()
-    result_queue.join_thread()
-
-    conv_queue.close()
-    conv_queue.join_thread()
+    # join_thread() can block forever on items still buffered in the feeder
+    # thread when most conversations were never consumed.
+    for q in (task_queue, result_queue, conv_queue):
+        q.close()
+        q.cancel_join_thread()
 
     return output_conv, client_metrics
 
