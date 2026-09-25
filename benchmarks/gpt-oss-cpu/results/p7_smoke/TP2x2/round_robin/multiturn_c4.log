@@ -1,0 +1,48 @@
+/home/sysadmin/pramod/bench/.venv/bin/python benchmark_serving_multi_turn.py -i /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json -m /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b -u http://localhost:8100 -p 4 -k 8 -n 32 --seed 0 --request-timeout-sec 900 --stats-json-output /home/sysadmin/pramod/bench/results/p7_smoke/TP2x2/round_robin/multiturn_c4.json
+25-09-2026 12:18:21 [INFO] - Namespace(input_file='/home/sysadmin/pramod/bench/data/sharegpt_multiturn.json', output_file=None, seed=0, model='/home/sysadmin/pramod/bench/models/gpt-oss-20b', served_model_name='gpt-oss-20b', url='http://localhost:8100', api_key=None, header=None, num_clients=4, max_active_conversations=8, max_num_requests=32, warmup_step=False, max_turns=None, no_early_stop=False, limit_max_tokens=0, limit_min_tokens=0, request_rate=0, max_retries=0, conversation_sampling=<ConversationSampling.ROUND_ROBIN: 'round_robin'>, verify_output=False, request_timeout_sec=900, no_stream=False, send_conversation_id=False, excel_output=False, stats_json_output='/home/sysadmin/pramod/bench/results/p7_smoke/TP2x2/round_robin/multiturn_c4.json', verbose=False, print_content=False, warmup_percentages='0%', trust_remote_code=False)
+25-09-2026 12:18:21 [INFO] - [92mInput parameters:[0m
+25-09-2026 12:18:21 [INFO] - url=http://localhost:8100
+25-09-2026 12:18:21 [INFO] - model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+25-09-2026 12:18:21 [INFO] - num_clients=4
+25-09-2026 12:18:21 [INFO] - Warmup percentages (percentage of samples): [0.0]
+25-09-2026 12:18:21 [INFO] - Loading tokenizer
+25-09-2026 12:18:22 [INFO] - [94mCollecting information from server: http://localhost:8100[0m
+25-09-2026 12:18:22 [INFO] - [94mServer version: {"version":"0.30.0"}[0m
+25-09-2026 12:18:22 [INFO] - [94mModels:[0m
+25-09-2026 12:18:22 [INFO] - [94m	model_id='gpt-oss-20b', max_model_len=4096[0m
+25-09-2026 12:18:22 [INFO] - Reading input file: /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json
+25-09-2026 12:18:22 [INFO] - Found 1000 items in the input file
+25-09-2026 12:18:22 [INFO] - Using 1000 unique conversations (IDs)
+25-09-2026 12:18:22 [INFO] - [92mStarting 4 clients[0m
+----------------------------------------------------------------------------------------------------
+[93mConversations statistics:[0m
+----------------------------------------------------------------------------------------------------
+            count   mean       std  min  25%  ...  90%  99%  99.9%  99.99%  max
+num_turns  1000.0  7.258  0.966628  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
+
+[1 rows x 12 columns]
+----------------------------------------------------------------------------------------------------
+25-09-2026 12:18:22 [INFO] - [96mStarted client 0: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 12:18:22 [INFO] - [96mStarted client 1: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 12:18:22 [INFO] - [96mStarted client 2: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 12:18:22 [INFO] - [96mStarted client 3: max_num_requests=8, max_active_conversations=2[0m
+25-09-2026 12:18:32 [INFO] - [93mClient 2 reached request limit[0m
+25-09-2026 12:18:32 [INFO] - [96mClient 2 is done (num_successes=8, num_failures=0)[0m
+25-09-2026 12:18:32 [INFO] - [96m1 out of 4 clients finished[0m
+25-09-2026 12:18:32 [INFO] - [93mSending termination signal to clients[0m
+25-09-2026 12:18:33 [INFO] - [93mClient 1 received a termination signal[0m
+25-09-2026 12:18:33 [INFO] - [96mClient 1 is done (num_successes=5, num_failures=0)[0m
+25-09-2026 12:18:33 [INFO] - [96m2 out of 4 clients finished[0m
+25-09-2026 12:18:34 [INFO] - [93mClient 3 received a termination signal[0m
+25-09-2026 12:18:34 [INFO] - [96mClient 3 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 12:18:34 [INFO] - [96m3 out of 4 clients finished[0m
+25-09-2026 12:18:37 [INFO] - [93mClient 0 received a termination signal[0m
+25-09-2026 12:18:37 [INFO] - [96mClient 0 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 12:18:37 [INFO] - [96m4 out of 4 clients finished[0m
+25-09-2026 12:18:37 [INFO] - [96mAll 4 clients finished[0m
+25-09-2026 12:18:37 [INFO] - Collected 21 samples from all the clients
+25-09-2026 12:18:37 [INFO] - [96mWaiting for client client_0 (is alive: True)[0m
+25-09-2026 12:18:37 [INFO] - [96mWaiting for client client_1 (is alive: False)[0m
+25-09-2026 12:18:37 [INFO] - [96mWaiting for client client_2 (is alive: False)[0m
+25-09-2026 12:18:37 [INFO] - [96mWaiting for client client_3 (is alive: False)[0m
+25-09-2026 12:18:37 [INFO] - All 4 clients exited (successfully finished 2 out of 1000 conversations)
