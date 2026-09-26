@@ -299,6 +299,8 @@ def main() -> None:
     ap.add_argument("--tag", default="", help="suffix for the results dir")
     ap.add_argument("--point-timeout", type=int, default=2400)
     ap.add_argument("--no-accuracy", action="store_true")
+    ap.add_argument("--prompts-per-user", type=int,
+                    help="override the phase's prompts per user")
     a = ap.parse_args()
     signal.signal(signal.SIGTERM, lambda *_: sys.exit(143))
     if healthy():
@@ -341,7 +343,8 @@ def main() -> None:
                                    stdout=fh, stderr=subprocess.STDOUT,
                                    timeout=3600, check=False)
             for w, c in todo:
-                n = max(ph["min_prompts"], ph["prompts_per_user"] * c)
+                per_user = a.prompts_per_user or ph["prompts_per_user"]
+                n = max(ph["min_prompts"], per_user * c)
                 n = min(n, DATASET_SIZE.get(w, n))
                 if prefix_caching:
                     reset_prefix_cache()
