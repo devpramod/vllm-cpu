@@ -12,7 +12,7 @@ export GIT_COMMITTER_NAME=devpramod GIT_COMMITTER_EMAIL=pramod.pai@intel.com
 sync_once() {
     rsync -a --delete \
         --exclude .venv/ --exclude models/ --exclude __pycache__/ \
-        --exclude 'data/*' --exclude 'trace/' --exclude '*.pid' \
+        --exclude 'data/*' --exclude 'trace/' --exclude '*.pid' --exclude logs/sync.log \
         "$SRC" "$DEST"
     cd "$REPO" || return
     [ "$(git rev-parse --abbrev-ref HEAD)" = gpt-oss-bench ] || {
