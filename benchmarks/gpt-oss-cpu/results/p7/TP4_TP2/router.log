@@ -70,3 +70,25 @@ DEBUG: AppContext created
 [2m2026-09-26 00:18:46[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1008:[0m Router ready | workers: ["http://127.0.0.1:8201", "http://127.0.0.1:8200"]
 [2m2026-09-26 00:18:46[0m [32m INFO[0m [2mvllm_router_rs::middleware[0m[2m:[0m [2msrc/middleware.rs[0m[2m:[0m[2m421:[0m Starting concurrency queue processor
 [2m2026-09-26 00:18:46[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1037:[0m Starting server on 127.0.0.1:8100
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1070:[0m Received terminate signal, starting graceful shutdown
+[2m2026-09-26 00:29:35[0m [33m WARN[0m [2mvllm_router_rs::middleware[0m[2m:[0m [2msrc/middleware.rs[0m[2m:[0m[2m461:[0m Concurrency queue processor shutting down
+/home/sysadmin/pramod/bench/.venv/bin/vllm-router --host 127.0.0.1 --port 8100 --policy round_robin --worker-urls http://127.0.0.1:8200 http://127.0.0.1:8201
+DEBUG: Server startup function called
+DEBUG: Initializing logging
+DEBUG: Logging initialized
+DEBUG: Initializing Prometheus metrics
+DEBUG: Prometheus metrics initialized
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m847:[0m Starting router on 127.0.0.1:8100 | mode: Regular { worker_urls: ["http://127.0.0.1:8200", "http://127.0.0.1:8201"] } | policy: RoundRobin | kv_connector: Nixl | max_payload: 512MB
+DEBUG: Creating HTTP client
+DEBUG: HTTP client created
+DEBUG: Creating AppContext
+DEBUG: AppContext created
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m945:[0m Single router mode (enable_igw=false)
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::routers::http::router[0m[2m:[0m [2msrc/routers/http/router.rs[0m[2m:[0m[2m251:[0m Waiting for 2 unique hosts (representing 2 workers) to become healthy (timeout: 600s)
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::routers::http::router[0m[2m:[0m [2msrc/routers/http/router.rs[0m[2m:[0m[2m321:[0m 2 out of 2 unique hosts are healthy (representing 2 workers)
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::policies::registry[0m[2m:[0m [2msrc/policies/registry.rs[0m[2m:[0m[2m83:[0m Assigning policy round_robin to new model unknown
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m957:[0m Started health checker for workers with 60s interval
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m972:[0m Started request queue with size: 100, timeout: 60s
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1008:[0m Router ready | workers: ["http://127.0.0.1:8200", "http://127.0.0.1:8201"]
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::middleware[0m[2m:[0m [2msrc/middleware.rs[0m[2m:[0m[2m421:[0m Starting concurrency queue processor
+[2m2026-09-26 00:29:35[0m [32m INFO[0m [2mvllm_router_rs::server[0m[2m:[0m [2msrc/server.rs[0m[2m:[0m[2m1037:[0m Starting server on 127.0.0.1:8100
