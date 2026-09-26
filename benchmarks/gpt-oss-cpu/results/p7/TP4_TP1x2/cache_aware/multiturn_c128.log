@@ -1,0 +1,219 @@
+/home/sysadmin/pramod/bench/.venv/bin/python benchmark_serving_multi_turn.py -i /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json -m /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b -u http://localhost:8100 -p 128 -k 256 -n 512 --seed 0 --request-timeout-sec 900 --no-early-stop --stats-json-output /home/sysadmin/pramod/bench/results/p7/TP4_TP1x2/cache_aware/multiturn_c128.json
+25-09-2026 18:08:32 [INFO] - Namespace(input_file='/home/sysadmin/pramod/bench/data/sharegpt_multiturn.json', output_file=None, seed=0, model='/home/sysadmin/pramod/bench/models/gpt-oss-20b', served_model_name='gpt-oss-20b', url='http://localhost:8100', api_key=None, header=None, num_clients=128, max_active_conversations=256, max_num_requests=512, warmup_step=False, max_turns=None, no_early_stop=True, limit_max_tokens=0, limit_min_tokens=0, request_rate=0, max_retries=0, conversation_sampling=<ConversationSampling.ROUND_ROBIN: 'round_robin'>, verify_output=False, request_timeout_sec=900, no_stream=False, send_conversation_id=False, excel_output=False, stats_json_output='/home/sysadmin/pramod/bench/results/p7/TP4_TP1x2/cache_aware/multiturn_c128.json', verbose=False, print_content=False, warmup_percentages='0%', trust_remote_code=False)
+25-09-2026 18:08:32 [INFO] - [92mInput parameters:[0m
+25-09-2026 18:08:32 [INFO] - url=http://localhost:8100
+25-09-2026 18:08:32 [INFO] - model=/home/sysadmin/pramod/bench/models/gpt-oss-20b
+25-09-2026 18:08:32 [INFO] - num_clients=128
+25-09-2026 18:08:32 [INFO] - Warmup percentages (percentage of samples): [0.0]
+25-09-2026 18:08:32 [INFO] - Loading tokenizer
+25-09-2026 18:08:33 [INFO] - [94mCollecting information from server: http://localhost:8100[0m
+25-09-2026 18:08:33 [INFO] - [94mServer version: {"version":"0.30.0"}[0m
+25-09-2026 18:08:33 [INFO] - [94mModels:[0m
+25-09-2026 18:08:33 [INFO] - [94m	model_id='gpt-oss-20b', max_model_len=4096[0m
+25-09-2026 18:08:33 [INFO] - Reading input file: /home/sysadmin/pramod/bench/data/sharegpt_multiturn.json
+25-09-2026 18:08:33 [INFO] - Found 1000 items in the input file
+25-09-2026 18:08:33 [INFO] - Using 1000 unique conversations (IDs)
+25-09-2026 18:08:33 [INFO] - [92mStarting 128 clients[0m
+----------------------------------------------------------------------------------------------------
+[93mConversations statistics:[0m
+----------------------------------------------------------------------------------------------------
+            count  mean       std  min  25%  ...  90%  99%  99.9%  99.99%  max
+num_turns  1000.0   7.1  0.995485  6.0  6.0  ...  8.0  8.0    8.0     8.0  8.0
+
+[1 rows x 12 columns]
+----------------------------------------------------------------------------------------------------
+25-09-2026 18:08:33 [INFO] - [96mStarted client 0: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 1: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 2: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 3: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 4: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 5: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 6: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 7: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 8: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 9: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 10: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 11: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 12: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 13: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 14: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 15: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 16: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 17: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 18: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 19: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 20: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 21: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 22: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 23: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 24: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 25: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 26: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 27: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 28: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 29: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 30: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 31: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 32: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 33: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 34: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 35: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 36: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 37: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 38: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 39: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 40: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 41: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 42: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 43: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 44: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 45: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 46: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 47: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 48: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 49: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 50: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 51: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 52: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 53: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 54: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 55: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 56: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 57: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 58: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 59: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 60: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 61: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 62: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 63: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 64: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 65: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 66: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 67: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 68: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 69: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 70: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 71: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 72: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 73: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 74: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 75: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 76: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 77: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 78: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 79: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 80: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 81: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 82: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 83: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 84: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 85: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 86: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 87: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 88: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 89: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 90: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 91: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 92: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 93: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 94: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 95: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 96: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 97: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 98: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 99: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 100: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 101: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 102: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 103: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 104: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 105: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 106: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 107: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 108: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 109: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 110: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 111: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 112: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 113: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 114: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 115: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 116: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 117: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 118: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 119: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 120: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 121: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 122: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 123: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 124: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 125: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 126: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:34 [INFO] - [96mStarted client 127: max_num_requests=4, max_active_conversations=2[0m
+25-09-2026 18:08:52 [INFO] - [93mClient 51 reached request limit[0m
+25-09-2026 18:08:52 [INFO] - [96mClient 51 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:08:52 [INFO] - [96m1 out of 128 clients finished[0m
+25-09-2026 18:08:59 [WARNING] - [93mClient 40 - Request rejected during conversation ID IEvH3R0 (turn: 1)[0m
+25-09-2026 18:09:09 [INFO] - [93mClient 127 reached request limit[0m
+25-09-2026 18:09:09 [INFO] - [96mClient 127 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:09 [INFO] - [96m2 out of 128 clients finished[0m
+25-09-2026 18:09:10 [INFO] - [93mClient 68 reached request limit[0m
+25-09-2026 18:09:10 [INFO] - [96mClient 68 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:10 [INFO] - [96m3 out of 128 clients finished[0m
+25-09-2026 18:09:11 [INFO] - [93mClient 8 reached request limit[0m
+25-09-2026 18:09:11 [INFO] - [96mClient 8 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:11 [INFO] - [96m4 out of 128 clients finished[0m
+25-09-2026 18:09:12 [INFO] - [93mClient 30 reached request limit[0m
+25-09-2026 18:09:12 [INFO] - [96mClient 30 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:12 [INFO] - [96m5 out of 128 clients finished[0m
+25-09-2026 18:09:15 [INFO] - [93mClient 72 reached request limit[0m
+25-09-2026 18:09:15 [INFO] - [96mClient 72 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:15 [INFO] - [96m6 out of 128 clients finished[0m
+25-09-2026 18:09:16 [INFO] - [93mClient 77 reached request limit[0m
+25-09-2026 18:09:16 [INFO] - [96mClient 77 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:16 [INFO] - [96m7 out of 128 clients finished[0m
+25-09-2026 18:09:18 [INFO] - [93mClient 120 reached request limit[0m
+25-09-2026 18:09:18 [INFO] - [96mClient 120 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:18 [INFO] - [96m8 out of 128 clients finished[0m
+25-09-2026 18:09:20 [INFO] - [93mClient 81 reached request limit[0m
+25-09-2026 18:09:20 [INFO] - [96mClient 81 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:20 [INFO] - [96m9 out of 128 clients finished[0m
+25-09-2026 18:09:21 [INFO] - [93mClient 84 reached request limit[0m
+25-09-2026 18:09:21 [INFO] - [96mClient 84 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:21 [INFO] - [96m10 out of 128 clients finished[0m
+25-09-2026 18:09:22 [INFO] - [93mClient 25 reached request limit[0m
+25-09-2026 18:09:22 [INFO] - [96mClient 25 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:22 [INFO] - [96m11 out of 128 clients finished[0m
+25-09-2026 18:09:23 [INFO] - [93mClient 103 reached request limit[0m
+25-09-2026 18:09:23 [INFO] - [96mClient 103 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:23 [INFO] - [96m12 out of 128 clients finished[0m
+25-09-2026 18:09:23 [INFO] - [93mClient 91 reached request limit[0m
+25-09-2026 18:09:23 [INFO] - [96mClient 91 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:23 [INFO] - [96m13 out of 128 clients finished[0m
+25-09-2026 18:09:24 [INFO] - [93mClient 97 reached request limit[0m
+25-09-2026 18:09:24 [INFO] - [96mClient 97 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:24 [INFO] - [96m14 out of 128 clients finished[0m
+25-09-2026 18:09:24 [INFO] - [93mClient 61 reached request limit[0m
+25-09-2026 18:09:24 [INFO] - [96mClient 61 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:24 [INFO] - [96m15 out of 128 clients finished[0m
+25-09-2026 18:09:24 [INFO] - [93mClient 40 reached request limit[0m
+25-09-2026 18:09:24 [INFO] - [96mClient 40 is done (num_successes=3, num_failures=1)[0m
+25-09-2026 18:09:24 [INFO] - [96m16 out of 128 clients finished[0m
+25-09-2026 18:09:26 [INFO] - [93mClient 37 reached request limit[0m
+25-09-2026 18:09:26 [INFO] - [96mClient 37 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:26 [INFO] - [96m17 out of 128 clients finished[0m
+25-09-2026 18:09:26 [INFO] - [93mClient 38 reached request limit[0m
+25-09-2026 18:09:26 [INFO] - [96mClient 38 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:26 [INFO] - [96m18 out of 128 clients finished[0m
+25-09-2026 18:09:27 [INFO] - [93mClient 56 reached request limit[0m
+25-09-2026 18:09:27 [INFO] - [96mClient 56 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:27 [INFO] - [96m19 out of 128 clients finished[0m
+25-09-2026 18:09:28 [INFO] - [93mClient 62 reached request limit[0m
+25-09-2026 18:09:28 [INFO] - [96mClient 62 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:28 [INFO] - [96m20 out of 128 clients finished[0m
+25-09-2026 18:09:29 [INFO] - [93mClient 60 reached request limit[0m
+25-09-2026 18:09:29 [INFO] - [96mClient 60 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:29 [INFO] - [96m21 out of 128 clients finished[0m
+25-09-2026 18:09:30 [INFO] - [93mClient 0 reached request limit[0m
+25-09-2026 18:09:30 [INFO] - [96mClient 0 is done (num_successes=4, num_failures=0)[0m
+25-09-2026 18:09:30 [INFO] - [96m22 out of 128 clients finished[0m
