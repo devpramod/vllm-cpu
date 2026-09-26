@@ -1,0 +1,85 @@
+/home/sysadmin/pramod/bench/.venv/bin/vllm serve /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8200 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --max-num-seqs 128
+nodes=[0, 1, 2, 3]
+WARNING 09-25 18:48:46 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-25 18:48:46 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-25 18:48:46 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-25 18:48:47 [argparse_utils.py:441] Found duplicate keys --max-num-seqs
+(APIServer pid=1937768) INFO 09-25 18:48:47 [api_utils.py:347] 
+(APIServer pid=1937768) INFO 09-25 18:48:47 [api_utils.py:347]        █     █     █▄   ▄█
+(APIServer pid=1937768) INFO 09-25 18:48:47 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.30.0
+(APIServer pid=1937768) INFO 09-25 18:48:47 [api_utils.py:347]   █▄█▀ █     █     █     █  model   /home/sysadmin/pramod/bench/models/gpt-oss-20b
+(APIServer pid=1937768) INFO 09-25 18:48:47 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=1937768) INFO 09-25 18:48:47 [api_utils.py:347] 
+(APIServer pid=1937768) INFO 09-25 18:48:47 [api_utils.py:286] non-default args: {'model_tag': '/home/sysadmin/pramod/bench/models/gpt-oss-20b', 'port': 8200, 'model': '/home/sysadmin/pramod/bench/models/gpt-oss-20b', 'dtype': 'bfloat16', 'max_model_len': 4096, 'served_model_name': ['gpt-oss-20b'], 'tensor_parallel_size': 4, 'max_num_batched_tokens': 4096, 'max_num_seqs': 128}
+(APIServer pid=1937768) INFO 09-25 18:48:47 [model.py:692] Resolved architecture: GptOssForCausalLM
+(APIServer pid=1937768) INFO 09-25 18:48:47 [model.py:2030] Using max model len 4096
+(APIServer pid=1937768) WARNING 09-25 18:48:47 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+(APIServer pid=1937768) INFO 09-25 18:48:47 [scheduler.py:288] Chunked prefill is enabled with max_num_batched_tokens=4096.
+(APIServer pid=1937768) INFO 09-25 18:48:47 [config.py:420] Overriding max cuda graph capture size to 1024 for performance.
+(APIServer pid=1937768) INFO 09-25 18:48:47 [kernel.py:416] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native'])
+(APIServer pid=1937768) WARNING 09-25 18:48:47 [cpu.py:293] Reset SSM cache type to float32 for accelerated GDN mamba backend 'none'.
+(APIServer pid=1937768) WARNING 09-25 18:48:47 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+WARNING 09-25 18:48:53 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-25 18:48:53 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-25 18:48:53 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [core.py:123] Initializing a V1 LLM engine (v0.30.0) with config: model='/home/sysadmin/pramod/bench/models/gpt-oss-20b', speculative_config=None, tokenizer='/home/sysadmin/pramod/bench/models/gpt-oss-20b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=gpt_oss_mxfp4, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cpu, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='openai_gptoss', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=gpt-oss-20b, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.DYNAMO_TRACE_ONCE: 2>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': None, 'compile_ranges_endpoints': [4096], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'dce': True, 'size_asserts': False, 'nan_asserts': False, 'epilogue_fusion': True, 'cpp.dynamic_threads': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 1024, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['native']), enable_flashinfer_autotune=True, enable_cutedsl_warmup=True, enable_jit_warmup=True, moe_backend='auto', sparse_indexer_topk_backend='auto', linear_backend='auto', linear_backend_per_quant=None)
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [multiproc_executor.py:153] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=10.14.8.164 (local), world_size=4, local_world_size=4
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] OpenMP thread binding info: 
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] 	VLLM_CPU_OMP_THREADS_BIND='auto', auto_setup=True, skip_setup=False
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] 	local_world_size=4, reserve_cpu_num=1
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] 	local_rank=0, core ids=[192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223]
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] 	local_rank=1, core ids=[224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] 	local_rank=2, core ids=[256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287]
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] 	local_rank=3, core ids=[288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318]
+(EngineCore pid=1937973) INFO 09-25 18:48:54 [ompmultiprocessing.py:185] 	reserved_cpus=[319]
+WARNING 09-25 18:48:58 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-25 18:48:58 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-25 18:48:58 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-25 18:48:58 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-25 18:48:58 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-25 18:48:58 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-25 18:48:58 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-25 18:48:58 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-25 18:48:58 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-25 18:48:58 [importing.py:45] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 09-25 18:48:58 [importing.py:74] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+INFO 09-25 18:48:58 [importing.py:98] Triton not installed or not compatible; certain GPU-related functions will not be available.
+WARNING 09-25 18:48:59 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+WARNING 09-25 18:48:59 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+WARNING 09-25 18:48:59 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+WARNING 09-25 18:48:59 [indexer_topk.py:29] Failed to import the DeepSelect extension (vllm._deepselect_C): No module named 'vllm._deepselect_C'
+[W925 18:49:00.737513665 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (2). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-25 18:49:00 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+(Worker pid=1938177) INFO 09-25 18:49:00 [parallel_state.py:1827] world_size=4 rank=2 local_rank=2 distributed_init_method=file:///tmp/vllm_dist_8baae5883d934f37a62eaed85ad53737 backend=gloo
+[W925 18:49:00.739662258 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (1). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-25 18:49:00 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+(Worker pid=1938176) INFO 09-25 18:49:00 [parallel_state.py:1827] world_size=4 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_8baae5883d934f37a62eaed85ad53737 backend=gloo
+[W925 18:49:00.763231333 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (3). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-25 18:49:00 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+(Worker pid=1938178) INFO 09-25 18:49:00 [parallel_state.py:1827] world_size=4 rank=3 local_rank=3 distributed_init_method=file:///tmp/vllm_dist_8baae5883d934f37a62eaed85ad53737 backend=gloo
+[W925 18:49:00.771839873 utils.cpp:68] Warning: NUMA binding: Using MEMBIND policy for memory allocation on the NUMA nodes (0). Memory allocations will be strictly bound to these NUMA nodes. (function init_cpu_memory_env)
+WARNING 09-25 18:49:00 [vllm.py:709] Model Runner V2 requires Triton; using the V1 model runner instead.
+(Worker pid=1938175) INFO 09-25 18:49:00 [parallel_state.py:1827] world_size=4 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_8baae5883d934f37a62eaed85ad53737 backend=gloo
+(Worker pid=1938175) INFO 09-25 18:49:00 [parallel_state.py:2267] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, ETP rank 0, EP rank 0, EPLB rank N/A
+(Worker_TP2 pid=1938177) INFO 09-25 18:49:00 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP1 pid=1938176) INFO 09-25 18:49:00 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:00 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP3 pid=1938178) INFO 09-25 18:49:00 [cpu_model_runner.py:121] Starting to load model /home/sysadmin/pramod/bench/models/gpt-oss-20b...
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:00 [mxfp4.py:616] Using 'CPU' Mxfp4 MoE backend.
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:00 [weight_utils.py:895] Filesystem type for checkpoints: EXT4. Checkpoint size: 12.82 GiB. Available RAM: 1469.07 GiB.
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:00 [weight_utils.py:918] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP0 pid=1938175) Loading safetensors checkpoint shards:   0% Completed | 0/3 [00:00<?, ?it/s]
+(Worker_TP0 pid=1938175) Loading safetensors checkpoint shards:  67% Completed | 2/3 [00:00<00:00, 18.05it/s]
+(Worker_TP0 pid=1938175) Loading safetensors checkpoint shards: 100% Completed | 3/3 [00:00<00:00, 14.87it/s]
+(Worker_TP0 pid=1938175) 
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:00 [default_loader.py:430] Loading weights took 0.23 seconds
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:01 [mxfp4.py:1996] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:01 [mxfp4.py:1997] Using CPUExpertsMxfp4
+(EngineCore pid=1937973) INFO 09-25 18:49:01 [torch_utils.py:287] Reducing Torch threads from 192 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=1937973) INFO 09-25 18:49:01 [utils.py:320] Using LBHNC KV cache layout.
+(Worker_TP3 pid=1938178) INFO 09-25 18:49:01 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP1 pid=1938176) INFO 09-25 18:49:01 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP2 pid=1938177) INFO 09-25 18:49:01 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:01 [cpu_model_runner.py:140] Warming up model for the compilation...
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:38 [decorators.py:719] saved AOT compiled function to /home/sysadmin/.cache/vllm/torch_compile_cache/torch_aot_compile/23900a8c9f84a6e92e4dd577c2cda695ec928d9f4a0bca862f4eaf1e00b386a0/rank_0_0/model
+(Worker_TP0 pid=1938175) INFO 09-25 18:49:39 [monitor.py:81] Initial profiling/warmup run took 0.60 s
