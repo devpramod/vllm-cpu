@@ -143,3 +143,17 @@
 [18:48:31]   -> ok in 181s
 [18:48:42] start layout TP4x1
 [18:48:42]   replica 0: TP4 on nodes [0, 1, 2, 3], port 8200
+[18:49:54] TP4x1: 1 replicas ready
+[18:49:55]   TP4x1 round_robin rand_128_1k conc=64
+[18:51:39]   -> ok in 105s
+[18:51:39]   TP4x1 round_robin rand_128_1k conc=128
+[18:54:06]   -> ok in 147s
+[18:54:06]   TP4x1 round_robin rand_1k_128 conc=64
+[18:54:41]   -> ok in 35s
+[18:54:41]   TP4x1 round_robin rand_1k_128 conc=128
+[18:55:37]   -> ok in 56s
+[18:55:37]   TP4x1 round_robin multiturn conc=64
+[18:57:04]   -> ok in 87s
+[18:57:04]   TP4x1 round_robin multiturn conc=128
+[18:59:01]   -> ok in 117s
+QUEUE DONE 18:59:12
