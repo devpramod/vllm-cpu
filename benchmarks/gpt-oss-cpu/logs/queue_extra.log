@@ -122,3 +122,13 @@
 [18:27:10]   -> ok in 82s
 [18:27:10]   TP4_TP2 cache_aware multiturn conc=128
 [18:29:35]   -> ok in 144s
+[18:29:36]   TP4_TP2 round_robin multiturn conc=64
+[18:30:58]   -> ok in 82s
+[18:30:58]   TP4_TP2 round_robin multiturn conc=128
+[18:33:13]   -> ok in 135s
+[18:33:24] start layout TP4x1
+[18:33:24]   replica 0: TP4 on nodes [0, 1, 2, 3], port 8200
+[18:34:25] TP4x1: 1 replicas ready
+[18:34:26]   TP4x1 round_robin rand_128_1k conc=64
+[18:36:58]   -> ok in 152s
+[18:36:58]   TP4x1 round_robin rand_128_1k conc=128
