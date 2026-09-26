@@ -37,3 +37,162 @@
 [10:20:51]   TP4 sgpt_1k_128 conc=128 prompts=256
 [10:21:45]   -> ok in 55s
 [10:21:45]   TP4 sgpt_2k_128 conc=64 prompts=128
+[10:22:36]   -> ok in 51s
+[10:22:36]   TP4 sgpt_2k_128 conc=128 prompts=256
+[10:24:02]   -> ok in 86s
+[10:24:03] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --max-num-seqs 128
+[10:24:58] TP4: ready
+[10:25:10]   TP4 gsm8k conc=64 prompts=128
+[10:26:23]   -> ok in 74s
+[10:26:23]   TP4 gsm8k conc=128 prompts=256
+[10:27:56]   -> ok in 92s
+[10:27:56]   TP4 humaneval conc=64 prompts=128
+[10:29:49]   -> ok in 113s
+[10:29:49]   TP4 humaneval conc=128 prompts=164
+[10:31:36]   -> ok in 107s
+[10:31:36] start TP4_DFLASH_HYB_K7: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 7} --max-num-seqs 128
+[10:32:56] TP4_DFLASH_HYB_K7: ready
+[10:33:13]   TP4_DFLASH_HYB_K7 gsm8k conc=64 prompts=128
+[10:34:25]   -> ok in 72s
+[10:34:25]   TP4_DFLASH_HYB_K7 gsm8k conc=128 prompts=256
+[10:36:23]   -> ok in 118s
+[10:36:23]   TP4_DFLASH_HYB_K7 humaneval conc=64 prompts=128
+[10:38:34]   -> ok in 131s
+[10:38:34]   TP4_DFLASH_HYB_K7 humaneval conc=128 prompts=164
+[10:41:05]   -> ok in 150s
+[10:41:05] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --max-num-seqs 128
+[10:42:00] TP4: ready
+[10:42:12]   TP4 mtbench conc=64 prompts=80
+[10:43:42]   -> ok in 90s
+[10:43:43] start TP4_DFLASH_HYB_K7: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 7} --max-num-seqs 128
+[10:44:48] TP4_DFLASH_HYB_K7: ready
+[10:45:05]   TP4_DFLASH_HYB_K7 mtbench conc=64 prompts=80
+[10:47:02]   -> ok in 117s
+[10:47:02] start layout TP1x6
+[10:47:02]   replica 0: TP1 on nodes [0], port 8200
+[10:47:02]   replica 1: TP1 on nodes [1], port 8201
+[10:47:02]   replica 2: TP1 on nodes [2], port 8202
+[10:47:02]   replica 3: TP1 on nodes [3], port 8203
+[10:47:02]   replica 4: TP1 on nodes [4], port 8204
+[10:47:02]   replica 5: TP1 on nodes [5], port 8205
+[10:48:24] TP1x6: 6 replicas ready
+[10:48:25]   TP1x6 cache_aware rand_128_1k conc=64
+[10:50:43]   -> ok in 139s
+[10:50:43]   TP1x6 cache_aware rand_128_1k conc=128
+[10:53:35]   -> ok in 172s
+[10:53:35]   TP1x6 cache_aware rand_1k_128 conc=64
+[10:54:04]   -> ok in 29s
+[10:54:04]   TP1x6 cache_aware rand_1k_128 conc=128
+[10:54:45]   -> ok in 40s
+[10:54:45]   TP1x6 cache_aware multiturn conc=64
+[10:56:25]   -> ok in 100s
+[10:56:25]   TP1x6 cache_aware multiturn conc=128
+[10:59:00]   -> ok in 155s
+[10:59:01]   TP1x6 round_robin multiturn conc=64
+[11:00:45]   -> ok in 104s
+[11:00:45]   TP1x6 round_robin multiturn conc=128
+[11:03:05]   -> ok in 140s
+[11:03:19] start layout TP2x3
+[11:03:19]   replica 0: TP2 on nodes [0, 1], port 8200
+[11:03:19]   replica 1: TP2 on nodes [3, 4], port 8201
+[11:03:19]   replica 2: TP2 on nodes [2, 5], port 8202
+[11:04:38] TP2x3: 3 replicas ready
+[11:04:39]   TP2x3 cache_aware rand_128_1k conc=64
+[11:06:29]   -> ok in 110s
+[11:06:29]   TP2x3 cache_aware rand_128_1k conc=128
+[11:08:52]   -> ok in 143s
+[11:08:53]   TP2x3 cache_aware rand_1k_128 conc=64
+[11:09:19]   -> ok in 27s
+[11:09:19]   TP2x3 cache_aware rand_1k_128 conc=128
+[11:09:59]   -> ok in 40s
+[11:09:59]   TP2x3 cache_aware multiturn conc=64
+[11:11:20]   -> ok in 81s
+[11:11:20]   TP2x3 cache_aware multiturn conc=128
+[11:13:11]   -> ok in 110s
+[11:13:12]   TP2x3 round_robin multiturn conc=64
+[11:14:34]   -> ok in 82s
+[11:14:34]   TP2x3 round_robin multiturn conc=128
+[11:16:18]   -> ok in 104s
+[11:17:29] start layout TP2x2
+[11:17:29]   replica 0: TP2 on nodes [0, 1], port 8200
+[11:17:29]   replica 1: TP2 on nodes [3, 4], port 8201
+[11:18:32] TP2x2: 2 replicas ready
+[11:18:33]   TP2x2 cache_aware rand_128_1k conc=64
+[11:20:26]   -> ok in 114s
+[11:20:26]   TP2x2 cache_aware rand_128_1k conc=128
+[11:22:56]   -> ok in 149s
+[11:22:56]   TP2x2 cache_aware rand_1k_128 conc=64
+[11:23:27]   -> ok in 31s
+[11:23:27]   TP2x2 cache_aware rand_1k_128 conc=128
+[11:24:15]   -> ok in 48s
+[11:24:15]   TP2x2 cache_aware multiturn conc=64
+[11:25:47]   -> ok in 92s
+[11:25:47]   TP2x2 cache_aware multiturn conc=128
+[11:27:45]   -> ok in 118s
+[11:27:47]   TP2x2 round_robin multiturn conc=64
+[11:29:15]   -> ok in 89s
+[11:29:15]   TP2x2 round_robin multiturn conc=128
+[11:31:14]   -> ok in 119s
+[11:32:25] start layout TP2x2_TP1x2
+[11:32:25]   replica 0: TP2 on nodes [0, 1], port 8200
+[11:32:25]   replica 1: TP2 on nodes [3, 4], port 8201
+[11:32:25]   replica 2: TP1 on nodes [2], port 8202
+[11:32:25]   replica 3: TP1 on nodes [5], port 8203
+[11:33:31] TP2x2_TP1x2: 4 replicas ready
+[11:33:32]   TP2x2_TP1x2 cache_aware rand_128_1k conc=64
+[11:36:01]   -> ok in 149s
+[11:36:01]   TP2x2_TP1x2 cache_aware rand_128_1k conc=128
+[11:39:11]   -> ok in 190s
+[11:39:12]   TP2x2_TP1x2 cache_aware rand_1k_128 conc=64
+[11:39:43]   -> ok in 32s
+[11:39:44]   TP2x2_TP1x2 cache_aware rand_1k_128 conc=128
+[11:40:28]   -> ok in 45s
+[11:40:28]   TP2x2_TP1x2 cache_aware multiturn conc=64
+[11:42:09]   -> ok in 100s
+[11:42:09]   TP2x2_TP1x2 cache_aware multiturn conc=128
+[11:44:48]   -> ok in 160s
+[11:44:49]   TP2x2_TP1x2 round_robin multiturn conc=64
+[11:46:31]   -> ok in 102s
+[11:46:31]   TP2x2_TP1x2 round_robin multiturn conc=128
+[11:48:53]   -> ok in 142s
+[11:50:05] start layout TP4_TP1x2
+[11:50:05]   replica 0: TP4 on nodes [0, 1, 2, 3], port 8200
+[11:50:05]   replica 1: TP1 on nodes [4], port 8201
+[11:50:05]   replica 2: TP1 on nodes [5], port 8202
+[11:51:09] TP4_TP1x2: 3 replicas ready
+[11:51:10]   TP4_TP1x2 cache_aware rand_128_1k conc=64
+[11:53:53]   -> ok in 163s
+[11:53:53]   TP4_TP1x2 cache_aware rand_128_1k conc=128
+[11:57:03]   -> ok in 190s
+[11:57:03]   TP4_TP1x2 cache_aware rand_1k_128 conc=64
+[11:57:37]   -> ok in 34s
+[11:57:38]   TP4_TP1x2 cache_aware rand_1k_128 conc=128
+[11:58:25]   -> ok in 48s
+[11:58:25]   TP4_TP1x2 cache_aware multiturn conc=64
+[12:00:01]   -> ok in 96s
+[12:00:01]   TP4_TP1x2 cache_aware multiturn conc=128
+[12:02:18]   -> ok in 137s
+[12:02:20]   TP4_TP1x2 round_robin multiturn conc=64
+[12:04:17]   -> ok in 117s
+[12:04:17]   TP4_TP1x2 round_robin multiturn conc=128
+[12:06:41]   -> ok in 144s
+[12:07:52] start layout TP4_TP2
+[12:07:52]   replica 0: TP4 on nodes [0, 1, 2, 3], port 8200
+[12:07:52]   replica 1: TP2 on nodes [4, 5], port 8201
+[12:08:54] TP4_TP2: 2 replicas ready
+[12:08:55]   TP4_TP2 cache_aware rand_128_1k conc=64
+[12:10:52]   -> ok in 116s
+[12:10:52]   TP4_TP2 cache_aware rand_128_1k conc=128
+[12:13:25]   -> ok in 153s
+[12:13:25]   TP4_TP2 cache_aware rand_1k_128 conc=64
+[12:13:56]   -> ok in 32s
+[12:13:56]   TP4_TP2 cache_aware rand_1k_128 conc=128
+[12:14:42]   -> ok in 46s
+[12:14:42]   TP4_TP2 cache_aware multiturn conc=64
+[12:16:05]   -> ok in 82s
+[12:16:05]   TP4_TP2 cache_aware multiturn conc=128
+[12:17:53]   -> ok in 109s
+[12:17:54]   TP4_TP2 round_robin multiturn conc=64
+[12:19:23]   -> ok in 88s
+[12:19:23]   TP4_TP2 round_robin multiturn conc=128
+[12:21:11]   -> ok in 108s
