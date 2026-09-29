@@ -25,3 +25,13 @@
 [11:48:28] TP1 cord c=128: rc=0 382s
 [11:50:53] TP1 omnidoc_greedy c=1: rc=0 145s
 [11:53:29] TP1 omnidoc_greedy c=16: rc=0 156s
+[12:09:49] TP1 omnidoc_greedy c=128: rc=0 980s
+[12:11:17] TP1 syn768_o512 c=1: rc=0 88s
+[12:11:44] TP1 syn768_o512 c=4: rc=0 27s
+[12:12:29] TP1 syn768_o512 c=16: rc=0 45s
+[12:14:38] TP1 syn768_o512 c=64: rc=0 129s
+[12:18:33] TP1 syn768_o512 c=128: rc=0 235s
+[12:20:05] TP1 syn1024_o512 c=1: rc=0 92s
+[12:20:36] TP1 syn1024_o512 c=4: rc=0 31s
+[12:21:39] TP1 syn1024_o512 c=16: rc=0 63s
+[12:24:56] TP1 syn1024_o512 c=64: rc=0 197s
