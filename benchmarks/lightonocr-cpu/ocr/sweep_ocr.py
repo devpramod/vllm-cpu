@@ -118,7 +118,7 @@ def stop(proc):
 
 
 def bench(port, cpus, page_set, hargs, c, out):
-    cmd = ["taskset", "-c", cpus, str(S.VENV / "bin/python"),
+    cmd = (["taskset", "-c", cpus] if cpus else []) + [str(S.VENV / "bin/python"),
            str(BENCH / "ocr/bench_ocr.py"), "--port", str(port), "--set", page_set,
            "--concurrency", str(c), "--pages-per-user", "2", "--min-pages", "8",
            "--out", str(out), "--records", str(out.with_suffix(".rec.jsonl")),
