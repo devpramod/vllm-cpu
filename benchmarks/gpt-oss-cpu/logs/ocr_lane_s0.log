@@ -54,3 +54,11 @@
 [13:40:32] TP1_MNBT4K: ready
 [13:43:13] TP1_MNBT4K omnidoc c=8: rc=0 155s
 [13:49:13] TP1_MNBT4K omnidoc c=32: rc=0 359s
+[14:07:33] TP1_MNBT4K omnidoc c=128: rc=0 1100s
+[14:10:18] TP1_MNBT4K cord c=32: rc=0 166s
+[14:16:14] TP1_MNBT4K cord c=128: rc=0 356s
+[14:16:47] TP1_MNBT4K syn1024_o128 c=16: rc=0 33s
+[14:20:29] TP1_MNBT4K syn1024_o128 c=128: rc=0 222s
+[14:21:40] TP1_MNBT8K: ready
+[14:24:15] TP1_MNBT8K omnidoc c=8: rc=0 149s
+[14:30:11] TP1_MNBT8K omnidoc c=32: rc=0 356s
