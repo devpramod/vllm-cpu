@@ -1,0 +1,23 @@
+{
+  "set": "omnidoc",
+  "concurrency": 64,
+  "num_pages": 128,
+  "completed": 128,
+  "failed": 0,
+  "duration_s": 368.4071229530964,
+  "pages_per_s": 0.347441707896338,
+  "latency_mean_s": 142.7929936709461,
+  "latency_p50_s": 134.45791377406567,
+  "latency_p90_s": 258.88346219807863,
+  "latency_p99_s": 356.5546586790588,
+  "ttft_mean_s": 13.931704636417635,
+  "ttft_p50_s": 1.9270425559952855,
+  "ttft_p99_s": 52.85173950018361,
+  "tpot_mean_ms": 135.44470571836197,
+  "tok_s_user": 7.383086660318477,
+  "output_tok_s": 411.4334130811518,
+  "out_tokens_mean": 1184.1796875,
+  "prompt_tokens_mean": 2272.28125,
+  "finish_length": 6,
+  "errors": []
+}

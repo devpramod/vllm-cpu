@@ -54,3 +54,10 @@
 [12:21:35] TP2_DATA: ready
 [12:24:40] TP2_DATA omnidoc c=1: rc=0 181s
 [12:26:55] TP2_DATA omnidoc c=2: rc=0 134s
+[12:28:46] TP2_DATA omnidoc c=4: rc=0 111s
+[12:30:36] TP2_DATA omnidoc c=8: rc=0 110s
+[12:32:54] TP2_DATA omnidoc c=16: rc=0 138s
+[12:36:53] TP2_DATA omnidoc c=32: rc=0 238s
+[12:43:02] TP2_DATA omnidoc c=64: rc=0 369s
+[12:54:03] TP2_DATA omnidoc c=128: rc=0 661s
+[12:57:09] TP2_DATA olmocr c=1: rc=0 186s
