@@ -507,8 +507,98 @@ behind <code>vllm-router</code> (cache-aware policy unless stated).</li>
     return f"<!doctype html><html><head><meta charset='utf-8'><title>gpt-oss-20b CPU serving report</title><style>{css}</style></head><body>{body}</body></html>"
 
 
-FINDINGS = """<div class="box"><p>Findings are filled in once all runs
-complete.</p></div>"""
+FINDINGS = """
+<div class="box">
+<p><b>Short version.</b> For interactive use up to about 32 concurrent users,
+run <b>one TP4 instance</b>, adding DFlash if load stays at 16 users or fewer.
+For 64+ users or long prompts, run <b>three TP2 replicas</b> (or TP4 + TP2)
+behind vllm-router, with <code>--max-num-seqs</code> sized to the load.</p>
+</div>
+
+<h3>Recommended deployments</h3>
+<table>
+<thead><tr><th>Scenario</th><th>Deployment</th><th>What you get</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Latency-sensitive chat, ≤16 concurrent users</td>
+<td>TP4 + DFlash (k=7)</td>
+<td>106–116 tok/s/user at 1 user; 60–68 at 8 users</td>
+<td>DFlash gives 1.3–1.5× per-user speed below 16 users (acceptance length
+3.2–3.6) with unchanged GSM8K accuracy (93.2%).</td></tr>
+<tr><td>General chat, up to ~32 concurrent users</td>
+<td>TP4 (no speculation), prefix caching on</td>
+<td>84 tok/s/user at 1 user, 29 at 32; ~900 tok/s total</td>
+<td>Fastest single instance at every load ≤32; DFlash is break-even at 32
+users.</td></tr>
+<tr><td>High concurrency (64–128 users), decode-heavy</td>
+<td>TP2 ×3 or TP4 + TP2 behind the router,
+<code>--max-num-seqs</code> ≥ users per replica</td>
+<td>1,800–1,935 tok/s at 128 users, 16–17 tok/s/user</td>
+<td>Uses all 6 NUMA nodes; TP4 alone uses 4 of them. Beats single TP4
+(1,883) on throughput and TTFT.</td></tr>
+<tr><td>Long prompts, short answers (RAG, summarization)</td>
+<td>TP2 ×3</td>
+<td>1,054 tok/s at 128 users vs 688 for TP4 (+53%); TTFT 3.1 s vs 4.8 s</td>
+<td>Prompt processing parallelizes across independent engines.</td></tr>
+<tr><td>Shared system prompts / few-shot templates</td>
+<td>Keep prefix caching on (default)</td>
+<td>+17–29% throughput and −17–25% TTFT at 32 users with a 512-token
+shared prefix</td><td>Shared prefix is computed once per instance.</td></tr>
+</tbody></table>
+
+<h3>What drives per-user speed</h3>
+<ul>
+<li><b>Concurrency is the main lever.</b> On TP4, per-user speed falls from
+84 tok/s (1 user) to 29 (32 users) to 15 (128 users) on decode-heavy work,
+while total throughput rises from 84 to 1,880 tok/s.</li>
+<li><b>Prompt length matters at load.</b> At 32 users, 128-token prompts give
+29–31 tok/s/user, but 2048-token prompts give 13, because every step also
+processes other users' prefills. At 128 users with 2048-token prompts, users
+see only 4 tok/s and 9 s TTFT on a single TP4.</li>
+<li><b>Content doesn't.</b> ShareGPT prompts track random prompts of the same
+length within about 6%.</li>
+</ul>
+
+<h3>Configuration guidance</h3>
+<ul>
+<li><b>Size <code>--max-num-seqs</code> to the expected load per instance.</b>
+With 32, TP4 plateaus at about 900 tok/s beyond 32 users and TTFT climbs to
+28–83 s because requests queue. With 128 it reaches 1,880 tok/s at 1.1 s
+TTFT. Below 32 users, smaller values (8 or 16) only cap throughput.</li>
+<li><b><code>--max-num-batched-tokens</code> barely matters</b> (1,024–8,192
+change throughput by a few percent). 2,048 slightly lowers TTFT; 8,192
+raises it.</li>
+<li><b>Parallelism for one instance:</b> TP4 &gt; TP2 &gt; TP2×PP3 &gt;
+pure PP. Pipeline parallelism halves per-user speed. Expert and data
+parallelism currently fail on CPU (see Issues).</li>
+<li><b>Speculative decoding is a low-load feature.</b> DFlash raises
+throughput 1.25–1.74× at ≤16 users, is neutral at 32 and costs 25–28% at
+64–128 users. Its gain is capped by memory bandwidth: verifying 8 tokens
+activates about 21 of 32 experts per MoE layer (≈2–2.4 forward passes of
+cost), and the drafter costs another half step.</li>
+</ul>
+
+<h3>Replicas and routing</h3>
+<ul>
+<li><b>Replicas win only once each replica has enough users to batch.</b> At
+≤32 users, TP4 gives the best per-user speed. TP1 ×6 is the weakest layout:
+43 tok/s/user at low load and 21 at 32 users.</li>
+<li><b>Homogeneous replicas: prefer round-robin or load-based routing.</b>
+Cache-aware routing changed multi-turn throughput by −10% to +4% on equal
+replicas and was worse at 128 users (TP2 ×3: 1,269 vs 1,353; TP1 ×6: 889
+vs 987), because conversation affinity piles load onto some replicas.</li>
+<li><b>Mixed replica sizes: cache-aware routing helps.</b> It balances by
+load, while round-robin overloads the small replicas: TP4 + TP1 ×2 gains
++23% at 32–64 users.</li>
+<li><b>Among mixed layouts, TP4 + TP2 is the only good one</b>, matching TP4
+at low load and TP2 ×3 at high load. Layouts with TP1 replicas lag.</li>
+</ul>
+
+<div class="box warn"><b>Caveats.</b> Per-user speed is the decode rate after
+the first token (1000 / TPOT). Points with few requests are noisy (±5–10%),
+notably MT-Bench at 32–64 users (80 prompts) and HumanEval at 128 users
+(164 prompts). Results come from one machine with NUMA balancing on. The
+vLLM wheel carries two local patches needed for DFlash on CPU.</div>
+"""
 
 ISSUES = """<ul>
 <li>Expert parallelism crashes on CPU: <code>CPUExpertsMxfp4</code> ignores
