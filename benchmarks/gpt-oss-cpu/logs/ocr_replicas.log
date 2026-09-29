@@ -1,0 +1,8 @@
+[17:33:19] TP1x6: 6 replicas ready
+[17:37:03] TP1x6 round_robin omnidoc c=1: rc=0 223s
+[17:38:53] TP1x6 round_robin omnidoc c=4: rc=0 110s
+[17:40:42] TP1x6 round_robin omnidoc c=16: rc=0 108s
+[17:43:13] TP1x6 round_robin omnidoc c=32: rc=0 151s
+[17:46:12] TP1x6 round_robin omnidoc c=64: rc=0 179s
+[17:51:01] TP1x6 round_robin omnidoc c=128: rc=0 289s
+[17:59:13] TP1x6 round_robin omnidoc c=256: rc=0 492s

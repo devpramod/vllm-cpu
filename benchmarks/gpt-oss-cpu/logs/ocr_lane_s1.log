@@ -103,3 +103,5 @@
 [14:23:32] TP2_DATA syn1024_o2048 c=4: rc=0 94s
 [14:25:58] TP2_DATA syn1024_o2048 c=16: rc=0 146s
 [14:32:38] TP2_DATA syn1024_o2048 c=64: rc=0 400s
+[14:44:35] TP2_DATA syn1024_o2048 c=128: rc=0 718s
+[14:44:36] lane s1 done

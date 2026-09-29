@@ -1,0 +1,23 @@
+{
+  "set": "synth_1024x1024",
+  "concurrency": 16,
+  "num_pages": 32,
+  "completed": 32,
+  "failed": 0,
+  "duration_s": 15.21061315597035,
+  "pages_per_s": 2.1037942173580038,
+  "latency_mean_s": 7.562414505780907,
+  "latency_p50_s": 7.560276909032837,
+  "latency_p90_s": 7.666494217934087,
+  "latency_p99_s": 7.698262010933831,
+  "ttft_mean_s": 3.1397730919343303,
+  "ttft_p50_s": 3.285953512880951,
+  "ttft_p99_s": 4.684027672978118,
+  "tpot_mean_ms": 34.82394814052423,
+  "tok_s_user": 28.71587092780877,
+  "output_tok_s": 269.2856598218245,
+  "out_tokens_mean": 128.0,
+  "prompt_tokens_mean": 1381,
+  "finish_length": 32,
+  "errors": []
+}

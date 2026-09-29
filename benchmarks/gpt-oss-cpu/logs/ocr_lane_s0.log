@@ -62,3 +62,17 @@
 [14:21:40] TP1_MNBT8K: ready
 [14:24:15] TP1_MNBT8K omnidoc c=8: rc=0 149s
 [14:30:11] TP1_MNBT8K omnidoc c=32: rc=0 356s
+[14:48:16] TP1_MNBT8K omnidoc c=128: rc=0 1085s
+[14:50:48] TP1_MNBT8K cord c=32: rc=0 152s
+[14:56:42] TP1_MNBT8K cord c=128: rc=0 354s
+[14:57:14] TP1_MNBT8K syn1024_o128 c=16: rc=0 32s
+[15:00:53] TP1_MNBT8K syn1024_o128 c=128: rc=0 219s
+[15:02:09] TP1_MNBT16K: ready
+[15:04:49] TP1_MNBT16K omnidoc c=8: rc=0 154s
+[15:10:47] TP1_MNBT16K omnidoc c=32: rc=0 358s
+[15:28:50] TP1_MNBT16K omnidoc c=128: rc=0 1082s
+[15:31:20] TP1_MNBT16K cord c=32: rc=0 150s
+[15:37:50] TP1_MNBT16K cord c=128: rc=0 390s
+[15:38:22] TP1_MNBT16K syn1024_o128 c=16: rc=0 33s
+[15:42:06] TP1_MNBT16K syn1024_o128 c=128: rc=0 223s
+[15:42:06] lane s0 done

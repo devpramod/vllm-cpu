@@ -1,0 +1,23 @@
+{
+  "set": "olmocr",
+  "concurrency": 2,
+  "num_pages": 8,
+  "completed": 8,
+  "failed": 0,
+  "duration_s": 103.39727597800083,
+  "pages_per_s": 0.07737147738497586,
+  "latency_mean_s": 24.44400181499077,
+  "latency_p50_s": 21.336313256062567,
+  "latency_p90_s": 40.743898062966764,
+  "latency_p99_s": 50.85647700401023,
+  "ttft_mean_s": 0.6994970926607493,
+  "ttft_p50_s": 0.673731978982687,
+  "ttft_p99_s": 1.1897001219913363,
+  "tpot_mean_ms": 18.335499783630198,
+  "tok_s_user": 54.53900966979874,
+  "output_tok_s": 99.81887726129199,
+  "out_tokens_mean": 1290.125,
+  "prompt_tokens_mean": 2225.75,
+  "finish_length": 0,
+  "errors": []
+}
