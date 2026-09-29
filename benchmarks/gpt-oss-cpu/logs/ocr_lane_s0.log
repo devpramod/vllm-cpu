@@ -1,1 +1,8 @@
 [09:58:58] TP1: ready
+[10:03:51] TP1 omnidoc c=1: rc=0 287s
+[10:06:38] TP1 omnidoc c=2: rc=0 167s
+[10:08:52] TP1 omnidoc c=4: rc=0 134s
+[10:11:10] TP1 omnidoc c=8: rc=0 139s
+[10:14:29] TP1 omnidoc c=16: rc=0 198s
+[10:20:27] TP1 omnidoc c=32: rc=0 358s
+[10:29:42] TP1 omnidoc c=64: rc=0 555s

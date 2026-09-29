@@ -1,2 +1,9 @@
 [09:58:58] TP2: ready
 [10:02:06] TP2 omnidoc c=1: rc=0 181s
+[10:04:02] TP2 omnidoc c=2: rc=0 116s
+[10:05:45] TP2 omnidoc c=4: rc=0 103s
+[10:07:27] TP2 omnidoc c=8: rc=0 102s
+[10:09:46] TP2 omnidoc c=16: rc=0 140s
+[10:13:44] TP2 omnidoc c=32: rc=0 238s
+[10:19:34] TP2 omnidoc c=64: rc=0 350s
+[10:30:28] TP2 omnidoc c=128: rc=0 654s
