@@ -6,3 +6,11 @@
 [10:14:29] TP1 omnidoc c=16: rc=0 198s
 [10:20:27] TP1 omnidoc c=32: rc=0 358s
 [10:29:42] TP1 omnidoc c=64: rc=0 555s
+[10:48:01] TP1 omnidoc c=128: rc=0 1099s
+[10:51:54] TP1 olmocr c=1: rc=0 233s
+[10:54:15] TP1 olmocr c=2: rc=0 141s
+[10:56:02] TP1 olmocr c=4: rc=0 107s
+[10:57:59] TP1 olmocr c=8: rc=0 117s
+[11:00:47] TP1 olmocr c=16: rc=0 168s
+[11:05:54] TP1 olmocr c=32: rc=0 307s
+[11:14:42] TP1 olmocr c=64: rc=0 528s
