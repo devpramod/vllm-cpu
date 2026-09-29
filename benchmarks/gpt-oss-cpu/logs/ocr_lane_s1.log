@@ -61,3 +61,16 @@
 [12:43:02] TP2_DATA omnidoc c=64: rc=0 369s
 [12:54:03] TP2_DATA omnidoc c=128: rc=0 661s
 [12:57:09] TP2_DATA olmocr c=1: rc=0 186s
+[12:59:05] TP2_DATA olmocr c=2: rc=0 116s
+[13:00:29] TP2_DATA olmocr c=4: rc=0 85s
+[13:01:55] TP2_DATA olmocr c=8: rc=0 86s
+[13:03:51] TP2_DATA olmocr c=16: rc=0 116s
+[13:07:14] TP2_DATA olmocr c=32: rc=0 203s
+[13:12:48] TP2_DATA olmocr c=64: rc=0 334s
+[13:23:00] TP2_DATA olmocr c=128: rc=0 612s
+[13:23:25] TP2_DATA cord c=1: rc=0 25s
+[13:23:43] TP2_DATA cord c=2: rc=0 18s
+[13:23:53] TP2_DATA cord c=4: rc=0 10s
+[13:24:16] TP2_DATA cord c=8: rc=0 24s
+[13:24:45] TP2_DATA cord c=16: rc=0 28s
+[13:26:34] TP2_DATA cord c=32: rc=0 109s
