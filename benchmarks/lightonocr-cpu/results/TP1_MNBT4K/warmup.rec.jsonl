@@ -1,0 +1,2 @@
+{"id": "cord_000", "category": "receipt", "idx": 0, "start": 1209553.733869644, "e2e": 3.58432959089987, "ttft": 1.5382585329934955, "out_tokens": 102, "finish": "stop", "prompt_tokens": 396, "tpot": 0.020258129286201725}
+{"id": "cord_001", "category": "receipt", "idx": 1, "start": 1209557.318258112, "e2e": 2.155536277918145, "ttft": 1.0806605948600918, "out_tokens": 52, "finish": "stop", "prompt_tokens": 1622, "tpot": 0.021075993785452024}

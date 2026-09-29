@@ -50,3 +50,7 @@
 [13:06:12] TP1 syn1024_o2048 c=4: rc=0 114s
 [13:09:37] TP1 syn1024_o2048 c=16: rc=0 205s
 [13:19:48] TP1 syn1024_o2048 c=64: rc=0 611s
+[13:39:21] TP1 syn1024_o2048 c=128: rc=0 1174s
+[13:40:32] TP1_MNBT4K: ready
+[13:43:13] TP1_MNBT4K omnidoc c=8: rc=0 155s
+[13:49:13] TP1_MNBT4K omnidoc c=32: rc=0 359s
