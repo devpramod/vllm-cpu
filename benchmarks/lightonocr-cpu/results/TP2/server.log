@@ -1,0 +1,1 @@
+/home/sysadmin/pramod/bench/.venv/bin/vllm serve /home/sysadmin/pramod/bench/models/LightOnOCR-2-1B --served-model-name lightonocr --port 8111 --dtype bfloat16 --max-model-len 8192 --limit-mm-per-prompt {"image":1} --mm-processor-cache-gb 0 --no-enable-prefix-caching -tp 2

@@ -1,0 +1,166 @@
+diff --git a/tests/v1/worker/test_cpu_triton_fallbacks.py b/tests/v1/worker/test_cpu_triton_fallbacks.py
+new file mode 100644
+index 000000000000..c93420bfc809
+--- /dev/null
++++ b/tests/v1/worker/test_cpu_triton_fallbacks.py
+@@ -0,0 +1,83 @@
++# SPDX-License-Identifier: Apache-2.0
++# SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++"""CPU Triton fallbacks must land on the dispatchers that launch the kernels.
++
++`CPUModelRunner._postprocess_triton` swaps Triton kernels for C++ CPU
++implementations when Triton is unavailable (arm64, macOS). Kernels wrapped by
++`triton_kernel_dispatcher_with_warmup` are captured on the dispatcher instance
++at import time, so rebinding the module-level kernel name never reaches the
++launch path and the fallback is silently not installed.
++"""
++
++import pytest
++
++import vllm.utils.cpu_triton_utils as cpu_tl
++import vllm.v1.sample.rejection_sampler as rejection_sampler
++import vllm.v1.spec_decode.utils as spec_decode_utils
++from vllm.v1.worker.cpu_model_runner import CPUModelRunner
++
++# (module, dispatcher attribute, expected CPU fallback in cpu_triton_utils)
++DISPATCHER_FALLBACKS = [
++    (
++        spec_decode_utils,
++        "_eagle_prepare_inputs_padded",
++        "eagle_prepare_inputs_padded_kernel",
++    ),
++    (
++        spec_decode_utils,
++        "_eagle_prepare_next_token_padded",
++        "eagle_prepare_next_token_padded_kernel",
++    ),
++    (
++        spec_decode_utils,
++        "_copy_and_expand_eagle_inputs",
++        "copy_and_expand_eagle_inputs_kernel",
++    ),
++    (
++        spec_decode_utils,
++        "_copy_and_expand_dflash_inputs",
++        "copy_and_expand_dflash_inputs_kernel",
++    ),
++    (
++        spec_decode_utils,
++        "_eagle_step_slot_mapping_metadata",
++        "eagle_step_slot_mapping_metadata_kernel",
++    ),
++    (rejection_sampler, "_rejection_greedy_sample", "rejection_greedy_sample_kernel"),
++    (rejection_sampler, "_rejection_random_sample", "rejection_random_sample_kernel"),
++    (rejection_sampler, "_expand", "expand_kernel"),
++    (rejection_sampler, "_sample_recovered_tokens", "sample_recovered_tokens_kernel"),
++]
++
++
++@pytest.fixture
++def restore_patched_kernels(monkeypatch):
++    """Undo the global kernel swaps `_postprocess_triton` performs."""
++    import vllm.v1.worker.block_table as block_table
++    import vllm.v1.worker.mamba_utils as mamba_utils
++
++    for module, dispatcher_name, _ in DISPATCHER_FALLBACKS:
++        dispatcher = getattr(module, dispatcher_name)
++        monkeypatch.setattr(dispatcher, "kernel", dispatcher.kernel)
++    monkeypatch.setattr(
++        block_table._COMPUTE_SLOT_MAPPING_KERNEL,
++        "kernel",
++        block_table._COMPUTE_SLOT_MAPPING_KERNEL.kernel,
++    )
++    monkeypatch.setattr(
++        mamba_utils, "batch_memcpy_kernel", mamba_utils.batch_memcpy_kernel
++    )
++
++
++@pytest.mark.parametrize("module, dispatcher_name, fallback_name", DISPATCHER_FALLBACKS)
++def test_postprocess_triton_installs_cpu_fallback(
++    monkeypatch, restore_patched_kernels, module, dispatcher_name, fallback_name
++):
++    """Each dispatcher launches the CPU fallback once Triton is unavailable."""
++    monkeypatch.setattr("vllm.triton_utils.HAS_TRITON", False)
++
++    # `_postprocess_triton` reads no instance state, so it can run unbound.
++    CPUModelRunner._postprocess_triton(None)
++
++    dispatcher = getattr(module, dispatcher_name)
++    assert dispatcher.kernel is getattr(cpu_tl, fallback_name)
+diff --git a/vllm/utils/cpu_triton_utils.py b/vllm/utils/cpu_triton_utils.py
+index d1696317aab8..6f9b62c8a04c 100644
+--- a/vllm/utils/cpu_triton_utils.py
++++ b/vllm/utils/cpu_triton_utils.py
+@@ -119,7 +119,7 @@ def _eagle_prepare_next_token_padded_kernel_impl(
+ def _eagle_step_slot_mapping_metadata_kernel_impl(
+     positions,
+     block_table,
+-    stride,
++    block_table_stride,
+     seq_lens,
+     out_clamped_positions,
+     out_slot_mapping,
+@@ -405,7 +405,7 @@ def _rejection_random_sample_kernel_impl(
+ 
+ def _expand_kernel_impl(
+     output,
+-    input_val,
++    input,
+     cu_num_tokens,
+     replace_from,
+     replace_to,
+@@ -413,7 +413,7 @@ def _expand_kernel_impl(
+ ):
+     torch.ops._C.expand_kernel_impl(
+         _ensure_int64(output),
+-        _ensure_int64(input_val),
++        _ensure_int64(input),
+         _ensure_int64(cu_num_tokens),
+         replace_from,
+         replace_to,
+diff --git a/vllm/v1/worker/cpu_model_runner.py b/vllm/v1/worker/cpu_model_runner.py
+index 04ca2b9194e4..5bcf768fa5b0 100644
+--- a/vllm/v1/worker/cpu_model_runner.py
++++ b/vllm/v1/worker/cpu_model_runner.py
+@@ -1,6 +1,5 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
+-import sys
+ from contextlib import AbstractContextManager, contextmanager
+ from typing import Any
+ 
+@@ -91,28 +90,20 @@ def _postprocess_triton(self) -> None:
+         spec_decode_utils._copy_and_expand_eagle_inputs.kernel = (
+             cpu_tl.copy_and_expand_eagle_inputs_kernel
+         )
+-        spec_decode_utils.copy_and_expand_dflash_inputs_kernel = (
++        spec_decode_utils._copy_and_expand_dflash_inputs.kernel = (
+             cpu_tl.copy_and_expand_dflash_inputs_kernel
+         )
+-        dflash_module = sys.modules.get("vllm.v1.spec_decode.dflash")
+-        if dflash_module is not None:
+-            dflash_kernel_name = "copy_and_expand_dflash_inputs_kernel"
+-            setattr(
+-                dflash_module,
+-                dflash_kernel_name,
+-                cpu_tl.copy_and_expand_dflash_inputs_kernel,
+-            )
+-        spec_decode_utils.eagle_step_slot_mapping_metadata_kernel = (
++        spec_decode_utils._eagle_step_slot_mapping_metadata.kernel = (
+             cpu_tl.eagle_step_slot_mapping_metadata_kernel
+         )
+-        vllm.v1.sample.rejection_sampler.rejection_greedy_sample_kernel = (
++        vllm.v1.sample.rejection_sampler._rejection_greedy_sample.kernel = (
+             cpu_tl.rejection_greedy_sample_kernel
+         )
+-        vllm.v1.sample.rejection_sampler.rejection_random_sample_kernel = (
++        vllm.v1.sample.rejection_sampler._rejection_random_sample.kernel = (
+             cpu_tl.rejection_random_sample_kernel
+         )
+-        vllm.v1.sample.rejection_sampler.expand_kernel = cpu_tl.expand_kernel
+-        vllm.v1.sample.rejection_sampler.sample_recovered_tokens_kernel = (
++        vllm.v1.sample.rejection_sampler._expand.kernel = cpu_tl.expand_kernel
++        vllm.v1.sample.rejection_sampler._sample_recovered_tokens.kernel = (
+             cpu_tl.sample_recovered_tokens_kernel
+         )
+ 

@@ -5,3 +5,7 @@ path=/home/sysadmin/pramod/bench/models/LightOnOCR-2-1B
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
 path=/home/sysadmin/pramod/bench/ocr/data/cord-v2
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+path=/home/sysadmin/pramod/bench/ocr/data/OmniDocBench
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+path=/home/sysadmin/pramod/bench/ocr/data/olmOCR-bench
+DOWNLOADS DONE 08:01:53
