@@ -14,3 +14,14 @@
 [11:00:47] TP1 olmocr c=16: rc=0 168s
 [11:05:54] TP1 olmocr c=32: rc=0 307s
 [11:14:42] TP1 olmocr c=64: rc=0 528s
+[11:31:52] TP1 olmocr c=128: rc=0 1030s
+[11:33:53] TP1 cord c=1: rc=0 121s
+[11:34:16] TP1 cord c=2: rc=0 23s
+[11:34:35] TP1 cord c=4: rc=0 19s
+[11:35:02] TP1 cord c=8: rc=0 28s
+[11:35:43] TP1 cord c=16: rc=0 41s
+[11:38:12] TP1 cord c=32: rc=0 149s
+[11:42:06] TP1 cord c=64: rc=0 234s
+[11:48:28] TP1 cord c=128: rc=0 382s
+[11:50:53] TP1 omnidoc_greedy c=1: rc=0 145s
+[11:53:29] TP1 omnidoc_greedy c=16: rc=0 156s
