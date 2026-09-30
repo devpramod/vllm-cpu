@@ -31,3 +31,15 @@
 [18:53:23] TP1x12 round_robin omnidoc c=1: rc=0 257s
 [18:55:21] TP1x12 round_robin omnidoc c=4: rc=0 118s
 [18:57:12] TP1x12 round_robin omnidoc c=16: rc=0 112s
+[18:59:50] TP1x12 round_robin omnidoc c=32: rc=0 157s
+[19:02:52] TP1x12 round_robin omnidoc c=64: rc=0 182s
+[19:07:36] TP1x12 round_robin omnidoc c=128: rc=0 284s
+[19:15:00] TP1x12 round_robin omnidoc c=256: rc=0 444s
+[19:15:34] TP1x12 round_robin cord c=1: rc=0 34s
+[19:15:45] TP1x12 round_robin cord c=4: rc=0 11s
+[19:17:22] TP1x12 round_robin cord c=16: rc=0 98s
+[19:17:57] TP1x12 round_robin cord c=32: rc=0 34s
+[19:20:03] TP1x12 round_robin cord c=64: rc=0 127s
+[19:22:25] TP1x12 round_robin cord c=128: rc=0 142s
+[19:25:40] TP1x12 round_robin cord c=256: rc=0 195s
+[19:29:31] TP1x12 power_of_two omnidoc c=1: rc=0 229s
