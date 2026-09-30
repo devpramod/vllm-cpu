@@ -1,0 +1,122 @@
+{
+  "results/ocr/TP1/omnidoc_c128.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.16783504894693294,
+    "ned_median": 0.05787423483583751,
+    "by_category": {
+      "PPT2PDF": 0.25794748078291074,
+      "academic_literature": 0.21172281014709068,
+      "book": 0.11817532430581172,
+      "colorful_textbook": 0.2515422237563436,
+      "exam_paper": 0.046180085560732234,
+      "magazine": 0.17079786617681317,
+      "newspaper": 0.08914490173952236,
+      "research_report": 0.9729596853490659
+    }
+  },
+  "results/ocr/TP2/omnidoc_c128.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.16483978567328578,
+    "ned_median": 0.058381984987489574,
+    "by_category": {
+      "PPT2PDF": 0.2683096271088289,
+      "academic_literature": 0.18443834311052626,
+      "book": 0.11548067324774368,
+      "colorful_textbook": 0.23350504027281077,
+      "exam_paper": 0.051329029886250606,
+      "magazine": 0.182786271754338,
+      "newspaper": 0.08791462498339313,
+      "research_report": 0.9729596853490659
+    }
+  },
+  "results/ocr/TP2_DATA/omnidoc_c128.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.16661262952151565,
+    "ned_median": 0.05798816568047337,
+    "by_category": {
+      "PPT2PDF": 0.2681049523670424,
+      "academic_literature": 0.1883146584020982,
+      "book": 0.11711864810447077,
+      "colorful_textbook": 0.23964693417993746,
+      "exam_paper": 0.04821732168304911,
+      "magazine": 0.16758127729136207,
+      "newspaper": 0.10755580106358302,
+      "research_report": 0.9729596853490659
+    }
+  },
+  "results/ocr/TP4/omnidoc_c128.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.1631408586331538,
+    "ned_median": 0.05798816568047337,
+    "by_category": {
+      "PPT2PDF": 0.2704169251582936,
+      "academic_literature": 0.18695175368923356,
+      "book": 0.11560606313191478,
+      "colorful_textbook": 0.23818306800607988,
+      "exam_paper": 0.05404164895022138,
+      "magazine": 0.16347624804496536,
+      "newspaper": 0.08336901184234954,
+      "research_report": 0.9729596853490659
+    }
+  },
+  "results/ocr/TP1/omnidoc_greedy_c128.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.16782712731236332,
+    "ned_median": 0.058381984987489574,
+    "by_category": {
+      "PPT2PDF": 0.2666165343514209,
+      "academic_literature": 0.18830015649016515,
+      "book": 0.11439339392702683,
+      "colorful_textbook": 0.2380497960714721,
+      "exam_paper": 0.05141757831014918,
+      "magazine": 0.178559487126728,
+      "newspaper": 0.10754639526241395,
+      "research_report": 0.9729596853490659
+    }
+  },
+  "results/ocr/TP2/omnidoc_greedy_c128.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.1657077299085358,
+    "ned_median": 0.05798816568047337,
+    "by_category": {
+      "PPT2PDF": 0.2666165343514209,
+      "academic_literature": 0.1879934792333956,
+      "book": 0.11439339392702683,
+      "colorful_textbook": 0.2401088545091284,
+      "exam_paper": 0.046198368420150605,
+      "magazine": 0.18515498772525668,
+      "newspaper": 0.08973996990806461,
+      "research_report": 0.9729596853490659
+    }
+  },
+  "results/ocr/TP4/omnidoc_greedy_c128.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.1650015870047474,
+    "ned_median": 0.05798816568047337,
+    "by_category": {
+      "PPT2PDF": 0.2666165343514209,
+      "academic_literature": 0.18830015649016515,
+      "book": 0.11439339392702683,
+      "colorful_textbook": 0.240020523084572,
+      "exam_paper": 0.051345801459865024,
+      "magazine": 0.17914111000592672,
+      "newspaper": 0.08542780628230928,
+      "research_report": 0.9729596853490659
+    }
+  },
+  "results/ocr/replicas/TP1x6/round_robin/omnidoc_c256.rec.jsonl": {
+    "pages": 196,
+    "ned_mean": 0.16423293778894626,
+    "ned_median": 0.05798816568047337,
+    "by_category": {
+      "PPT2PDF": 0.2639931271516952,
+      "academic_literature": 0.18446819311644266,
+      "book": 0.1180219181927238,
+      "colorful_textbook": 0.22292974528981924,
+      "exam_paper": 0.05313826026740614,
+      "magazine": 0.16396634229608864,
+      "newspaper": 0.11248656403541821,
+      "research_report": 0.9729596853490659
+    }
+  }
+}
