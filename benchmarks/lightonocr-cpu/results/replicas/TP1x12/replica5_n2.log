@@ -875,3 +875,117 @@ WARNING 09-29 18:46:48 [vllm.py:709] Model Runner V2 requires Triton; using the 
 (APIServer pid=3090150) INFO:     127.0.0.1:46624 - "POST /v1/chat/completions HTTP/1.1" 200 OK
 (APIServer pid=3090150) INFO:     127.0.0.1:46636 - "POST /v1/chat/completions HTTP/1.1" 200 OK
 (APIServer pid=3090150) INFO:     127.0.0.1:46652 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:46654 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO 09-29 19:59:37 [loggers.py:315] Engine 000: Avg prompt throughput: 639.6 tokens/s, Avg generation throughput: 43.8 tokens/s, Running: 9 reqs, Waiting: 0 reqs, CPU KV cache usage: 3.8%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:44528 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:48166 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 19:59:47 [loggers.py:315] Engine 000: Avg prompt throughput: 146.9 tokens/s, Avg generation throughput: 167.3 tokens/s, Running: 3 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.8%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 19:59:57 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 54.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:00:07 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 41.5 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.7%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:49928 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:00:17 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 41.0 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.8%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:00:27 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 40.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:00:37 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 39.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:60176 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:60178 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:00:47 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 39.3 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:00:57 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 38.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:01:07 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 38.4 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:47588 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:01:17 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 38.2 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:38976 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38980 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38962 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38978 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38984 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39036 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39020 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39064 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39012 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39000 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39058 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39042 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39128 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39084 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39074 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39092 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39130 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39140 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39108 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39122 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO 09-29 20:01:27 [loggers.py:315] Engine 000: Avg prompt throughput: 66.3 tokens/s, Avg generation throughput: 15.3 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:01:37 [loggers.py:315] Engine 000: Avg prompt throughput: 881.6 tokens/s, Avg generation throughput: 3.0 tokens/s, Running: 21 reqs, Waiting: 0 reqs, CPU KV cache usage: 3.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:56454 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:56462 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:01:47 [loggers.py:315] Engine 000: Avg prompt throughput: 921.4 tokens/s, Avg generation throughput: 6.5 tokens/s, Running: 21 reqs, Waiting: 0 reqs, CPU KV cache usage: 5.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:01:57 [loggers.py:315] Engine 000: Avg prompt throughput: 759.1 tokens/s, Avg generation throughput: 116.3 tokens/s, Running: 18 reqs, Waiting: 0 reqs, CPU KV cache usage: 6.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:38982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39020 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38984 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO 09-29 20:02:07 [loggers.py:315] Engine 000: Avg prompt throughput: 357.1 tokens/s, Avg generation throughput: 186.4 tokens/s, Running: 17 reqs, Waiting: 0 reqs, CPU KV cache usage: 6.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:39020 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:51734 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:51750 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:51766 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:51776 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO:     127.0.0.1:51776 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO 09-29 20:02:17 [loggers.py:315] Engine 000: Avg prompt throughput: 758.0 tokens/s, Avg generation throughput: 48.0 tokens/s, Running: 21 reqs, Waiting: 0 reqs, CPU KV cache usage: 8.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:38980 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39042 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38978 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:37504 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO 09-29 20:02:27 [loggers.py:315] Engine 000: Avg prompt throughput: 452.6 tokens/s, Avg generation throughput: 151.1 tokens/s, Running: 19 reqs, Waiting: 0 reqs, CPU KV cache usage: 7.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:39130 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38982 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39064 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39684 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39680 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO 09-29 20:02:37 [loggers.py:315] Engine 000: Avg prompt throughput: 571.4 tokens/s, Avg generation throughput: 111.0 tokens/s, Running: 22 reqs, Waiting: 0 reqs, CPU KV cache usage: 8.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:39128 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:38980 - "POST /v1/chat/completions HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:34934 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:39092 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:02:47 [loggers.py:315] Engine 000: Avg prompt throughput: 465.9 tokens/s, Avg generation throughput: 85.7 tokens/s, Running: 19 reqs, Waiting: 0 reqs, CPU KV cache usage: 7.7%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:02:57 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 262.9 tokens/s, Running: 6 reqs, Waiting: 0 reqs, CPU KV cache usage: 2.7%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:03:07 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 161.2 tokens/s, Running: 3 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:39020 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:03:17 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 77.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:03:27 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 48.3 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:03:37 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 47.0 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.6%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:36748 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:36756 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:03:47 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 46.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.8%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:03:57 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 46.1 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.9%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:04:07 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 45.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:59042 - "GET /get_load HTTP/1.1" 404 Not Found
+(APIServer pid=3090150) INFO 09-29 20:04:17 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 45.0 tokens/s, Running: 1 reqs, Waiting: 0 reqs, CPU KV cache usage: 1.1%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:04:27 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 6.8 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO 09-29 20:04:37 [loggers.py:315] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, CPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=3090150) INFO:     127.0.0.1:45026 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=3090150) INFO:     127.0.0.1:45030 - "GET /get_load HTTP/1.1" 404 Not Found
+(EngineCore pid=3096792) INFO 09-29 20:04:49 [core.py:1342] [shutdown] EngineCore: trigger received signal=SIGTERM
+(APIServer pid=3090150) INFO 09-29 20:04:49 [launcher.py:129] [shutdown] API server: shutdown triggered
+(APIServer pid=3090150) INFO 09-29 20:04:49 [launcher.py:145] [shutdown] API server: stopping engine client mode=abort timeout=0s
+(EngineCore pid=3096792) INFO 09-29 20:04:49 [core.py:1493] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=3096792) INFO 09-29 20:04:49 [core.py:1524] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=3096792) INFO 09-29 20:04:49 [core.py:1355] [shutdown] EngineCore: exiting busy loop
+(APIServer pid=3090150) INFO 09-29 20:04:49 [core_client.py:744] [shutdown] MPClient: start timeout=0s
+(APIServer pid=3090150) INFO 09-29 20:04:49 [core_client.py:746] [shutdown] MPClient: stopping engine manager
+(EngineCore pid=3096792) INFO 09-29 20:04:49 [multiproc_executor.py:472] [shutdown] Executor: waiting for worker exit count=1
+(APIServer pid=3090150) INFO 09-29 20:04:49 [utils.py:632] [shutdown] Process manager: send sigterm to process EngineCore
+(APIServer pid=3090150) WARNING 09-29 20:04:49 [utils.py:652] [shutdown] Process manager: force killing remaining processes count=1
+(APIServer pid=3090150) WARNING 09-29 20:04:49 [utils.py:657] [shutdown] Process manager: force killing remaining process EngineCore pid 3096792
+(APIServer pid=3090150) INFO 09-29 20:04:50 [core_client.py:748] [shutdown] MPClient: engine manager stopped
+(APIServer pid=3090150) INFO 09-29 20:04:50 [core_client.py:749] [shutdown] MPClient: cleaning up background resources
+(APIServer pid=3090150) INFO 09-29 20:04:50 [core_client.py:751] [shutdown] MPClient: complete
+(APIServer pid=3090150) INFO 09-29 20:04:50 [launcher.py:154] [shutdown] API server: engine client stopped
+(APIServer pid=3090150) INFO 09-29 20:04:50 [launcher.py:157] [shutdown] API server: signalling HTTP server shutdown
+(APIServer pid=3090150) INFO 09-29 20:04:50 [launcher.py:179] [shutdown] API server: shutting down FastAPI HTTP server
+(APIServer pid=3090150) INFO:     Shutting down
+(APIServer pid=3090150) INFO:     Waiting for application shutdown.
+(APIServer pid=3090150) INFO:     Application shutdown complete.
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 2 leaked shared_memory objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

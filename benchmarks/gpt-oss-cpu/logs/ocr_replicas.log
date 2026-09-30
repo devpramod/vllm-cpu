@@ -54,3 +54,5 @@
 [19:55:04] TP1x12 power_of_two cord c=16: rc=0 93s
 [19:56:50] TP1x12 power_of_two cord c=32: rc=0 106s
 [19:58:55] TP1x12 power_of_two cord c=64: rc=0 124s
+[20:01:24] TP1x12 power_of_two cord c=128: rc=0 150s
+[20:04:46] TP1x12 power_of_two cord c=256: rc=0 202s
