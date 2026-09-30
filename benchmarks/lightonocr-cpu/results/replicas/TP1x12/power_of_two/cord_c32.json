@@ -1,0 +1,23 @@
+{
+  "set": "cord",
+  "concurrency": 32,
+  "num_pages": 64,
+  "completed": 64,
+  "failed": 0,
+  "duration_s": 105.76056769490242,
+  "pages_per_s": 0.6051404733815999,
+  "latency_mean_s": 14.014343096408993,
+  "latency_p50_s": 10.872973969904706,
+  "latency_p90_s": 21.815349079901353,
+  "latency_p99_s": 94.59946655994281,
+  "ttft_mean_s": 2.5044809687205998,
+  "ttft_p50_s": 1.849665880901739,
+  "ttft_p99_s": 7.610182781005278,
+  "tpot_mean_ms": 41.022946639777004,
+  "tok_s_user": 24.37660094924463,
+  "output_tok_s": 215.6569362013677,
+  "out_tokens_mean": 356.375,
+  "prompt_tokens_mean": 1292.359375,
+  "finish_length": 2,
+  "errors": []
+}
