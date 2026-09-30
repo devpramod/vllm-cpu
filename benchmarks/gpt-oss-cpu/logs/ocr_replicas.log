@@ -19,3 +19,15 @@
 [18:19:14] TP1x6 power_of_two omnidoc c=32: rc=0 145s
 [18:22:31] TP1x6 power_of_two omnidoc c=64: rc=0 197s
 [18:27:31] TP1x6 power_of_two omnidoc c=128: rc=0 301s
+[18:35:01] TP1x6 power_of_two omnidoc c=256: rc=0 449s
+[18:35:29] TP1x6 power_of_two cord c=1: rc=0 29s
+[18:35:40] TP1x6 power_of_two cord c=4: rc=0 11s
+[18:37:14] TP1x6 power_of_two cord c=16: rc=0 94s
+[18:37:50] TP1x6 power_of_two cord c=32: rc=0 36s
+[18:39:53] TP1x6 power_of_two cord c=64: rc=0 123s
+[18:42:10] TP1x6 power_of_two cord c=128: rc=0 137s
+[18:46:13] TP1x6 power_of_two cord c=256: rc=0 243s
+[18:49:04] TP1x12: 12 replicas ready
+[18:53:23] TP1x12 round_robin omnidoc c=1: rc=0 257s
+[18:55:21] TP1x12 round_robin omnidoc c=4: rc=0 118s
+[18:57:12] TP1x12 round_robin omnidoc c=16: rc=0 112s
