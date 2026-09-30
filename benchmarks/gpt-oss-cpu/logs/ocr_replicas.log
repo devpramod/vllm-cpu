@@ -6,3 +6,16 @@
 [17:46:12] TP1x6 round_robin omnidoc c=64: rc=0 179s
 [17:51:01] TP1x6 round_robin omnidoc c=128: rc=0 289s
 [17:59:13] TP1x6 round_robin omnidoc c=256: rc=0 492s
+[17:59:39] TP1x6 round_robin cord c=1: rc=0 27s
+[17:59:50] TP1x6 round_robin cord c=4: rc=0 11s
+[18:00:10] TP1x6 round_robin cord c=16: rc=0 20s
+[18:00:43] TP1x6 round_robin cord c=32: rc=0 32s
+[18:02:42] TP1x6 round_robin cord c=64: rc=0 119s
+[18:04:55] TP1x6 round_robin cord c=128: rc=0 133s
+[18:08:17] TP1x6 round_robin cord c=256: rc=0 202s
+[18:13:00] TP1x6 power_of_two omnidoc c=1: rc=0 282s
+[18:14:53] TP1x6 power_of_two omnidoc c=4: rc=0 113s
+[18:16:49] TP1x6 power_of_two omnidoc c=16: rc=0 116s
+[18:19:14] TP1x6 power_of_two omnidoc c=32: rc=0 145s
+[18:22:31] TP1x6 power_of_two omnidoc c=64: rc=0 197s
+[18:27:31] TP1x6 power_of_two omnidoc c=128: rc=0 301s
