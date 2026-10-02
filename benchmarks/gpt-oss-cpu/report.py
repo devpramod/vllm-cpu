@@ -74,6 +74,22 @@ def p1(cfg, w, c):
     return bench_m(load(R / f"p1/{cfg}/{w}_c{c}.json"))
 
 
+CSS = """
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:1180px;
+margin:24px auto;padding:0 18px;color:#222;line-height:1.45}
+h1{font-size:26px;margin-bottom:4px}h2{border-bottom:2px solid #e5e5e5;
+padding-bottom:4px;margin-top:38px}h3{margin-top:22px}
+figure{margin:14px 0}figure img{max-width:100%}figcaption{font-size:12px;
+color:#666}table{border-collapse:collapse;font-size:12px;margin:10px 0;
+width:100%}th,td{border:1px solid #ddd;padding:4px 7px;text-align:right}
+th{background:#f4f6f8}td:first-child,th:first-child{text-align:left}
+table.cap td:nth-child(2){text-align:left}.note{font-size:12px;color:#666}
+.box{background:#f6f9fc;border-left:4px solid #3b7dd8;padding:10px 16px;
+margin:14px 0}.warn{border-left-color:#d88b3b;background:#fdf8f2}
+ul{margin:6px 0}li{margin:3px 0}code{background:#f2f2f2;padding:0 3px}
+"""
+
+
 # ----------------------------------------------------------------- plotting
 
 FIG_DIR = R / "report_figs"
@@ -440,20 +456,7 @@ def section_profile():
 
 
 def build():
-    css = """
-body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:1180px;
-margin:24px auto;padding:0 18px;color:#222;line-height:1.45}
-h1{font-size:26px;margin-bottom:4px}h2{border-bottom:2px solid #e5e5e5;
-padding-bottom:4px;margin-top:38px}h3{margin-top:22px}
-figure{margin:14px 0}figure img{max-width:100%}figcaption{font-size:12px;
-color:#666}table{border-collapse:collapse;font-size:12px;margin:10px 0;
-width:100%}th,td{border:1px solid #ddd;padding:4px 7px;text-align:right}
-th{background:#f4f6f8}td:first-child,th:first-child{text-align:left}
-table.cap td:nth-child(2){text-align:left}.note{font-size:12px;color:#666}
-.box{background:#f6f9fc;border-left:4px solid #3b7dd8;padding:10px 16px;
-margin:14px 0}.warn{border-left-color:#d88b3b;background:#fdf8f2}
-ul{margin:6px 0}li{margin:3px 0}code{background:#f2f2f2;padding:0 3px}
-"""
+    css = CSS
     body = f"""
 <h1>gpt-oss-20b on CPU with vLLM: serving benchmark report</h1>
 <p class="note">2× Xeon 6972P (192 cores, SNC3 → 6 NUMA nodes of 32 cores,
