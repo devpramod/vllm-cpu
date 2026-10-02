@@ -42,6 +42,7 @@ FULL = {
     "olmocr": ("olmocr", ["--save-text"], CONC),
     "cord": ("cord", ["--save-text"], CONC),
     "omnidoc_greedy": ("omnidoc", ["--save-text", *GREEDY], [1, 16, 128]),
+    "cord_greedy": ("cord", ["--save-text", *GREEDY], []),
     "syn768_o512": ("synth_768x768", ["--ignore-eos", "--max-tokens", "512"],
                     SYN_CONC),
     "syn1024_o512": ("synth_1024x1024", ["--ignore-eos", "--max-tokens", "512"],
@@ -63,9 +64,13 @@ LANES = {
            ("TP1_MNBT16K", MNBT)],
     "s1": [("TP2", FULL), ("TP2_DATA", FULL)],
     "all": [("TP4", FULL)],
+    "c20": [("TP4", {k: FULL[k][:2] + ([20],)
+                     for k in ("omnidoc_greedy", "cord_greedy")})],
 }
-LANE_PORT = {"s0": 8110, "s1": 8111, "all": 8112}
-LANE_CLIENT_CPUS = {"s0": "64-95", "s1": "160-191", "all": "160-191"}
+LANE_PORT = {"s0": 8110, "s1": 8111, "all": 8112, "c20": 8112}
+LANE_CLIENT_CPUS = {"s0": "64-95", "s1": "160-191", "all": "160-191",
+                    "c20": "160-191"}
+PAGES_PER_USER = {20: 3}
 
 
 def log(msg):
@@ -120,7 +125,8 @@ def stop(proc):
 def bench(port, cpus, page_set, hargs, c, out):
     cmd = (["taskset", "-c", cpus] if cpus else []) + [str(S.VENV / "bin/python"),
            str(BENCH / "ocr/bench_ocr.py"), "--port", str(port), "--set", page_set,
-           "--concurrency", str(c), "--pages-per-user", "2", "--min-pages", "8",
+           "--concurrency", str(c),
+           "--pages-per-user", str(PAGES_PER_USER.get(c, 2)), "--min-pages", "8",
            "--out", str(out), "--records", str(out.with_suffix(".rec.jsonl")),
            *hargs]
     with open(out.with_suffix(".log"), "w") as fh:

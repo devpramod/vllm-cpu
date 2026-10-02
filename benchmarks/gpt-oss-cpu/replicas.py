@@ -37,6 +37,8 @@ PLAN = {
     "rand_128_1k": ["cache_aware"],
     "rand_1k_128": ["cache_aware"],
     "multiturn": ["round_robin", "cache_aware"],
+    **{w: ["round_robin"] for w in ["rand_2k_256", "rand_8k_1k", "rand_1k_2k",
+                                    "rand_12k_2k", "sharegpt_chat"]},
 }
 CONCS = [1, 2, 4, 8, 16, 32]
 

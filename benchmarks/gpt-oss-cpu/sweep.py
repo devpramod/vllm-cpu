@@ -129,6 +129,10 @@ WORKLOADS: dict[str, list[str]] = {
     "sgpt_128_1k": sharegpt_shape_wl(128, 1024),
     "sgpt_1k_128": sharegpt_shape_wl(1024, 128),
     "sgpt_2k_128": sharegpt_shape_wl(2048, 128),
+    "rand_2k_256": random_wl(2048, 256),
+    "rand_8k_1k": random_wl(8192, 1024),
+    "rand_1k_2k": random_wl(1024, 2048),
+    "rand_12k_2k": random_wl(12288, 2048),
 }
 
 # Distinct prompts available; points never sample more than this.
@@ -181,6 +185,24 @@ PHASES = {
         prompts_per_user=4,
         min_prompts=16,
         accuracy=True,
+        prefix_caching=True,
+    ),
+    # Client sizing: 20 users, 16K context (run with --max-model-len 16384).
+    "p8": dict(
+        configs=["TP4"],
+        workloads=["rand_2k_256", "rand_8k_1k", "rand_1k_2k", "rand_12k_2k",
+                   "sharegpt_chat"],
+        concurrency=[20],
+        prompts_per_user=4,
+        min_prompts=8,
+        prefix_caching=True,
+    ),
+    "p9": dict(
+        configs=["TP4", "TP4_DFLASH_HYB_K7"],
+        workloads=["sharegpt_chat", "mtbench", "humaneval", "gsm8k"],
+        concurrency=[20],
+        prompts_per_user=4,
+        min_prompts=16,
         prefix_caching=True,
     ),
 }

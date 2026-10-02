@@ -1,0 +1,12 @@
+[09:00:41] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --max-model-len 16384
+[09:01:46] TP4: ready
+[09:01:59]   TP4 rand_2k_256 conc=20 prompts=80
+[09:02:58]   -> ok in 59s
+[09:02:58]   TP4 rand_8k_1k conc=20 prompts=80
+[09:07:01]   -> ok in 243s
+[09:07:01]   TP4 rand_1k_2k conc=20 prompts=80
+[09:11:41]   -> ok in 280s
+[09:11:41]   TP4 rand_12k_2k conc=20 prompts=80
+[09:19:35]   -> ok in 475s
+[09:19:35]   TP4 sharegpt_chat conc=20 prompts=80
+[09:20:20]   -> ok in 45s

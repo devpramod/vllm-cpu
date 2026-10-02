@@ -69,11 +69,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--layouts", nargs="*", default=list(LAYOUTS))
     ap.add_argument("--policies", nargs="*", default=POLICIES)
+    ap.add_argument("--workloads", nargs="*", default=list(WORKLOADS))
+    ap.add_argument("--concurrency", nargs="*", type=int, default=CONCS)
     a = ap.parse_args()
+    WORKLOADS.update({w: O.FULL[w] for w in a.workloads})
     root = O.RESULTS / "replicas"
     for layout in a.layouts:
         ldir = root / layout
-        todo = {p: [(w, c) for w in WORKLOADS for c in CONCS
+        todo = {p: [(w, c) for w in a.workloads for c in a.concurrency
                     if not (ldir / p / f"{w}_c{c}.json").exists()]
                 for p in a.policies}
         if not any(todo.values()):
