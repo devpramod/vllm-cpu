@@ -1,0 +1,20 @@
+[09:39:27] start TP4: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --max-model-len 16384
+[09:40:23] TP4: ready
+[09:40:35]   TP4 sharegpt_chat conc=20 prompts=80
+[09:41:19]   -> ok in 44s
+[09:41:19]   TP4 mtbench conc=20 prompts=80
+[09:43:56]   -> ok in 157s
+[09:43:56]   TP4 humaneval conc=20 prompts=80
+[09:46:10]   -> ok in 134s
+[09:46:10]   TP4 gsm8k conc=20 prompts=80
+[09:47:25]   -> ok in 76s
+[09:47:26] start TP4_DFLASH_HYB_K7: /home/sysadmin/pramod/bench/models/gpt-oss-20b --served-model-name gpt-oss-20b --port 8100 --dtype bfloat16 --max-model-len 4096 --max-num-seqs 32 --max-num-batched-tokens 4096 -tp 4 --speculative-config {"model": "/home/sysadmin/pramod/bench/models/gpt-oss-20b-DFlash", "method": "dflash", "num_speculative_tokens": 7} --max-model-len 16384
+[09:48:46] TP4_DFLASH_HYB_K7: ready
+[09:49:06]   TP4_DFLASH_HYB_K7 sharegpt_chat conc=20 prompts=80
+[09:49:56]   -> ok in 50s
+[09:49:56]   TP4_DFLASH_HYB_K7 mtbench conc=20 prompts=80
+[09:52:27]   -> ok in 151s
+[09:52:27]   TP4_DFLASH_HYB_K7 humaneval conc=20 prompts=80
+[09:54:21]   -> ok in 114s
+[09:54:21]   TP4_DFLASH_HYB_K7 gsm8k conc=20 prompts=80
+[09:55:29]   -> ok in 68s
