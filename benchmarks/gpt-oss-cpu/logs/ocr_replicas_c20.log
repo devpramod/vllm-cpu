@@ -1,0 +1,4 @@
+[10:01:45] TP1x6: 6 replicas ready
+[10:03:44] TP1x6 round_robin omnidoc_greedy c=20: rc=0 118s
+[10:04:10] TP1x6 round_robin cord_greedy c=20: rc=0 25s
+[10:07:07] TP1x6 round_robin omnidoc c=20: rc=0 177s

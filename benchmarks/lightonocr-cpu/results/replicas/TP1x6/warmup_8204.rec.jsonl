@@ -1,2 +1,2 @@
-{"id": "cord_000", "category": "receipt", "idx": 0, "start": 1223510.244800779, "e2e": 2.4288076339289546, "ttft": 0.4345515889581293, "out_tokens": 102, "finish": "stop", "prompt_tokens": 396, "tpot": 0.019745109356146786}
-{"id": "cord_001", "category": "receipt", "idx": 1, "start": 1223512.673676319, "e2e": 2.089277012972161, "ttft": 1.0487547081429511, "out_tokens": 52, "finish": "stop", "prompt_tokens": 1622, "tpot": 0.02040239813390608}
+{"id": "cord_000", "category": "receipt", "idx": 0, "start": 1455617.582133091, "e2e": 2.4129753878805786, "ttft": 0.43764055287465453, "out_tokens": 102, "finish": "stop", "prompt_tokens": 396, "tpot": 0.01955777064362301}
+{"id": "cord_001", "category": "receipt", "idx": 1, "start": 1455619.995127094, "e2e": 2.095729992026463, "ttft": 1.0616670050658286, "out_tokens": 52, "finish": "stop", "prompt_tokens": 1622, "tpot": 0.020275744842365384}
