@@ -8,3 +8,8 @@
 [09:22:37]   TP2x3 round_robin rand_8k_1k conc=20
 [09:26:02]   -> ok in 205s
 [09:26:02]   TP2x3 round_robin rand_1k_2k conc=20
+[09:30:46]   -> ok in 284s
+[09:30:46]   TP2x3 round_robin rand_12k_2k conc=20
+[09:37:27]   -> ok in 401s
+[09:37:27]   TP2x3 round_robin sharegpt_chat conc=20
+[09:38:13]   -> ok in 46s
