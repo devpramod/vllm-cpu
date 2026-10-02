@@ -1,0 +1,10 @@
+[09:20:25] start layout TP2x3
+[09:20:25]   replica 0: TP2 on nodes [0, 1], port 8200
+[09:20:25]   replica 1: TP2 on nodes [3, 4], port 8201
+[09:20:25]   replica 2: TP2 on nodes [2, 5], port 8202
+[09:21:44] TP2x3: 3 replicas ready
+[09:21:45]   TP2x3 round_robin rand_2k_256 conc=20
+[09:22:37]   -> ok in 52s
+[09:22:37]   TP2x3 round_robin rand_8k_1k conc=20
+[09:26:02]   -> ok in 205s
+[09:26:02]   TP2x3 round_robin rand_1k_2k conc=20
